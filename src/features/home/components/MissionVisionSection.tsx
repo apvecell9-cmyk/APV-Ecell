@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Compass, Target, ArrowRight } from "lucide-react";
+import { Compass, Target } from "lucide-react";
 
 export function MissionVisionSection() {
   const [activeTab, setActiveTab] = useState<"vision" | "mission">("vision");

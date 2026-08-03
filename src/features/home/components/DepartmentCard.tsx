@@ -1,22 +1,5 @@
 import React from "react";
-
-export interface DeptMember {
-  name: string;
-  role: string;
-}
-
-export interface DeptCardProps {
-  id: string;
-  department: string;
-  subtitle: string;
-  description: string;
-  headName: string;
-  headRole: string;
-  headPhoto: string;
-  linkedin?: string;
-  members: DeptMember[];
-  bgClass?: string;
-}
+import type { DeptCardProps } from "@/types/team";
 
 export function DepartmentCard({
   department,
@@ -44,9 +27,7 @@ export function DepartmentCard({
         <h3 className="text-2xl font-serif text-foreground font-normal tracking-tight">
           {subtitle}
         </h3>
-        <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
-          {description}
-        </p>
+        <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">{description}</p>
       </div>
 
       {/* Middle/Bottom: By default shows quick stats, ON HOVER slides up to reveal Head + Members */}

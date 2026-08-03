@@ -1,6 +1,6 @@
 import React from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { EventsContent } from "@/components/EventsContent";
+import { EventsContent } from "@/features/events/components/EventsContent";
 
 export const Route = createFileRoute("/events")({
   head: () => ({

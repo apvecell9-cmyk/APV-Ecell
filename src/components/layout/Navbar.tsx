@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { ArrowUpRight, Menu, X } from "lucide-react";
+import { NAV_LINKS, JOIN_COMMUNITY_TO } from "@/constants/navigation";
+import { BRAND_INITIALS } from "@/constants/branding";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -21,11 +23,7 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
-    { label: "Home", to: "/" },
-    { label: "Events", to: "/events" },
-    { label: "About & Contact", to: "/about-contact" },
-  ];
+  const navLinks = NAV_LINKS;
 
   const isHome = pathname === "/";
   // On home page, use transparent bg at top and solid when scrolled. On other pages, keep solid minimal.
@@ -41,7 +39,7 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3 font-semibold tracking-tight text-lg group">
           <div className="w-8 h-8 rounded-full bg-foreground text-background flex items-center justify-center font-mono text-xs font-bold transition-transform group-hover:scale-105">
-            APV
+            {BRAND_INITIALS}
           </div>
           <span className="font-sans font-medium">
             E-CELL <span className="text-muted-foreground font-light text-xs ml-1">VASHI</span>
@@ -74,7 +72,7 @@ export function Navbar() {
         {/* Action Button */}
         <div className="hidden md:flex items-center gap-4">
           <Link
-            to="/about-contact"
+            to={JOIN_COMMUNITY_TO}
             className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium tracking-wide transition-all duration-300 ${
               scrolled || !isHome
                 ? "bg-foreground text-background hover:bg-foreground/90"
@@ -113,7 +111,7 @@ export function Navbar() {
             ))}
             <div className="pt-2">
               <Link
-                to="/about-contact"
+                to={JOIN_COMMUNITY_TO}
                 onClick={() => setMobileMenuOpen(false)}
                 className="inline-flex items-center justify-center gap-2 w-full py-3 rounded-full bg-foreground text-background text-sm font-medium"
               >

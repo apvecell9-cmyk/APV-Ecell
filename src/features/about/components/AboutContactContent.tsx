@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { PageLayout } from "@/components/PageLayout";
+import { PageLayout } from "@/components/layout/PageLayout";
 import { Mail, MapPin, Building2, CheckCircle2, ArrowUpRight } from "lucide-react";
+import { CONTACT_EMAILS, CAMPUS_LOCATION, INCUBATION_PARTNER } from "@/constants/contact";
 
 export function AboutContactContent() {
   const [submitted, setSubmitted] = useState(false);
@@ -105,10 +106,7 @@ export function AboutContactContent() {
                 </div>
                 <div>
                   <h4 className="font-medium text-sm text-foreground">Campus Location</h4>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Agnel Technical Education Complex, Sector 9A, Vashi, Navi Mumbai, Maharashtra
-                    400703
-                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">{CAMPUS_LOCATION}</p>
                 </div>
               </div>
 
@@ -118,8 +116,14 @@ export function AboutContactContent() {
                 </div>
                 <div>
                   <h4 className="font-medium text-sm text-foreground">Email Inquiries</h4>
-                  <p className="text-xs text-muted-foreground mt-1">ecell@agnelpolytechnic.ac.in</p>
-                  <p className="text-xs text-muted-foreground">support@ecellapv.in</p>
+                  {CONTACT_EMAILS.map((email, i) => (
+                    <p
+                      key={email}
+                      className={`text-xs text-muted-foreground ${i === 0 ? "mt-1" : ""}`}
+                    >
+                      {email}
+                    </p>
+                  ))}
                 </div>
               </div>
 
@@ -130,7 +134,7 @@ export function AboutContactContent() {
                 <div>
                   <h4 className="font-medium text-sm text-foreground">Incubation Desk</h4>
                   <p className="text-xs text-muted-foreground mt-1">
-                    In partnership with CIBA (Centre for Incubation & Business Acceleration)
+                    In partnership with {INCUBATION_PARTNER}
                   </p>
                 </div>
               </div>

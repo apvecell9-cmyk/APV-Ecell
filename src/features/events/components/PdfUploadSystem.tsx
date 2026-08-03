@@ -1,34 +1,10 @@
 import React, { useState } from "react";
-import { Upload, FileText, Download, Trash2, CheckCircle2, ArrowRight } from "lucide-react";
-
-export interface UploadedPdf {
-  id: string;
-  name: string;
-  size: string;
-  date: string;
-  url: string;
-  category: string;
-}
+import { Upload, FileText, Download, Trash2 } from "lucide-react";
+import type { UploadedPdf } from "@/types/events";
+import { initialPdfs } from "@/features/events/data/initialPdfs";
 
 export function PdfUploadSystem() {
-  const [pdfs, setPdfs] = useState<UploadedPdf[]>([
-    {
-      id: "1",
-      name: "APV_ECell_Annual_Report_2025.pdf",
-      size: "2.4 MB",
-      date: "2026-07-28",
-      url: "#",
-      category: "Annual Reports",
-    },
-    {
-      id: "2",
-      name: "Pitchnova_Rulebook_and_Guidelines.pdf",
-      size: "1.1 MB",
-      date: "2026-07-15",
-      url: "#",
-      category: "Guidelines",
-    },
-  ]);
+  const [pdfs, setPdfs] = useState<UploadedPdf[]>(initialPdfs);
 
   const [dragActive, setDragActive] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("Annual Reports");
@@ -57,9 +33,7 @@ export function PdfUploadSystem() {
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
         <div>
           <span className="eyebrow">Document Repository</span>
-          <h3 className="text-2xl font-serif text-foreground mt-1">
-            E-Cell PDF Upload & Archive
-          </h3>
+          <h3 className="text-2xl font-serif text-foreground mt-1">E-Cell PDF Upload & Archive</h3>
           <p className="text-sm text-muted-foreground mt-1">
             Share event rulebooks, reports, or incubation guidelines with the community.
           </p>

@@ -1,11 +1,11 @@
 import React from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { PageLayout } from "@/components/PageLayout";
-import { HeroSection } from "@/components/HeroSection";
-import { LeadershipSection } from "@/components/LeadershipSection";
-import { MissionVisionSection } from "@/components/MissionVisionSection";
-import { TeamSection } from "@/components/TeamSection";
-import { CombinedPartnersSection } from "@/components/CombinedPartnersSection";
+import { PageLayout } from "@/components/layout/PageLayout";
+import { HeroSection } from "@/features/home/components/HeroSection";
+import { LeadershipSection } from "@/features/home/components/LeadershipSection";
+import { MissionVisionSection } from "@/features/home/components/MissionVisionSection";
+import { TeamSection } from "@/features/home/components/TeamSection";
+import { CombinedPartnersSection } from "@/features/home/components/CombinedPartnersSection";
 
 export const Route = createFileRoute("/")({
   component: Index,

@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
-import heroBg from "@/assets/hero-bg.jpg";
+import heroBg from "@/assets/backgrounds/hero-bg.jpg";
+import { ESTABLISHED_YEAR } from "@/constants/branding";
 
 export function HeroSection() {
   return (
@@ -63,7 +64,7 @@ export function HeroSection() {
             <div className="font-mono text-xs text-muted-foreground uppercase tracking-widest">
               Established
             </div>
-            <div className="text-xl font-serif mt-1 text-foreground">1983 • APV</div>
+            <div className="text-xl font-serif mt-1 text-foreground">{ESTABLISHED_YEAR} • APV</div>
           </div>
           <div>
             <div className="font-mono text-xs text-muted-foreground uppercase tracking-widest">

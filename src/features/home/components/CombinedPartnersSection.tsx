@@ -1,36 +1,8 @@
 import React from "react";
-import { SectionHeader } from "@/components/SectionHeader";
+import { SectionHeader } from "@/components/shared/SectionHeader";
+import { references } from "@/features/home/data/references";
 
 export function CombinedPartnersSection() {
-  const references = [
-    {
-      name: "E-Cell NEC",
-      subtitle: "National Entrepreneurship Challenge 2025",
-      tag: "Reference",
-    },
-    {
-      name: "Agnel Polytechnic, Vashi",
-      subtitle: "Leading Technical Education Institution",
-      tag: "Institution",
-    },
-    {
-      name: "E-Cell IIT Bombay",
-      subtitle: "Premier Technological Institute in India",
-      tag: "Reference",
-    },
-    {
-      name: "Eureka!",
-      subtitle: "Startup Idea Pitching Competition",
-      tag: "Reference",
-    },
-    {
-      name: "CIBA",
-      subtitle: "Centre for Incubation & Business Acceleration",
-      tag: "Incubation Partner",
-      highlight: true,
-    },
-  ];
-
   return (
     <section className="py-24 px-6 lg:px-12 border-t border-border bg-background">
       <div className="max-w-7xl mx-auto">
