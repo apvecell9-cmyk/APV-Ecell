@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { ArrowUpRight, Menu, X, Sparkles, Building2, Calendar, Users, Mail } from "lucide-react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -24,7 +24,6 @@ export function Navbar() {
   const navLinks = [
     { label: "Home", to: "/" },
     { label: "Events", to: "/events" },
-    { label: "Timeline", to: "/timeline" },
     { label: "About & Contact", to: "/about-contact" },
   ];
 
@@ -40,14 +39,13 @@ export function Navbar() {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${headerClass}`}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
-        <Link
-          to="/"
-          className="flex items-center gap-3 font-semibold tracking-tight text-lg group"
-        >
+        <Link to="/" className="flex items-center gap-3 font-semibold tracking-tight text-lg group">
           <div className="w-8 h-8 rounded-full bg-foreground text-background flex items-center justify-center font-mono text-xs font-bold transition-transform group-hover:scale-105">
             APV
           </div>
-          <span className="font-sans font-medium">E-CELL <span className="text-muted-foreground font-light text-xs ml-1">VASHI</span></span>
+          <span className="font-sans font-medium">
+            E-CELL <span className="text-muted-foreground font-light text-xs ml-1">VASHI</span>
+          </span>
         </Link>
 
         {/* Desktop links */}

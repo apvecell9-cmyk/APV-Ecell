@@ -1,5 +1,6 @@
 import React from "react";
 import { DepartmentCard, type DeptCardProps } from "./DepartmentCard";
+import { SectionHeader } from "@/components/SectionHeader";
 
 export function TeamSection() {
   const departments: DeptCardProps[] = [
@@ -110,17 +111,11 @@ export function TeamSection() {
   return (
     <section className="py-24 px-6 lg:px-12 bg-background border-t border-border" id="team">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
-          <div className="space-y-2">
-            <span className="eyebrow">Our Departments</span>
-            <h2 className="text-3xl md:text-5xl font-serif tracking-tight text-foreground">
-              Our Teams & Departments
-            </h2>
-          </div>
-          <p className="text-muted-foreground max-w-md text-sm leading-relaxed">
-            Hover over any department card to view the Department Head and key team members driving our initiatives.
-          </p>
-        </div>
+        <SectionHeader
+          eyebrow="Our Departments"
+          title="Our Teams & Departments"
+          description="Hover over any department card to view the Department Head and key team members driving our initiatives."
+        />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {departments.map((dept) => (

@@ -1,4 +1,5 @@
 import React from "react";
+import { SectionHeader } from "@/components/SectionHeader";
 
 export function CombinedPartnersSection() {
   const references = [
@@ -33,18 +34,12 @@ export function CombinedPartnersSection() {
   return (
     <section className="py-24 px-6 lg:px-12 border-t border-border bg-background">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
-          <div className="space-y-2">
-            <span className="eyebrow">Ecosystem & Trust</span>
-            <h2 className="text-3xl md:text-4xl font-serif tracking-tight text-foreground">
-              References & Incubation Partner
-            </h2>
-          </div>
-          <p className="text-muted-foreground max-w-md text-sm leading-relaxed">
-            Combined institutions, premier national entrepreneurship bodies, and our dedicated
-            incubation partner supporting entrepreneurial growth.
-          </p>
-        </div>
+        <SectionHeader
+          eyebrow="Ecosystem & Trust"
+          title="References & Incubation Partner"
+          description="Combined institutions, premier national entrepreneurship bodies, and our dedicated incubation partner supporting entrepreneurial growth."
+          size="md"
+        />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           {references.map((item, index) => (
@@ -66,9 +61,7 @@ export function CombinedPartnersSection() {
                 >
                   {item.tag}
                 </span>
-                <h3 className="font-serif text-lg font-normal tracking-tight">
-                  {item.name}
-                </h3>
+                <h3 className="font-serif text-lg font-normal tracking-tight">{item.name}</h3>
               </div>
               <p
                 className={`text-xs mt-4 leading-normal ${

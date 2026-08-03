@@ -1,4 +1,5 @@
 import React from "react";
+import { SectionHeader } from "@/components/SectionHeader";
 
 export function LeadershipSection() {
   const leaders = [
@@ -32,17 +33,11 @@ export function LeadershipSection() {
   return (
     <section className="py-24 px-6 lg:px-12 bg-background border-t border-border" id="leadership">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
-          <div className="space-y-2">
-            <span className="eyebrow">Guidance & Strategy</span>
-            <h2 className="text-3xl md:text-5xl font-serif tracking-tight text-foreground">
-              Our Leadership
-            </h2>
-          </div>
-          <p className="text-muted-foreground max-w-md text-sm leading-relaxed">
-            Meet the visionary leaders guiding our academic excellence and empowering student founders.
-          </p>
-        </div>
+        <SectionHeader
+          eyebrow="Guidance & Strategy"
+          title="Our Leadership"
+          description="Meet the visionary leaders guiding our academic excellence and empowering student founders."
+        />
 
         {/* Side-by-side cards grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -70,9 +65,7 @@ export function LeadershipSection() {
                     <h3 className="text-xl font-serif font-normal text-foreground">
                       {leader.name}
                     </h3>
-                    <p className="text-xs font-mono text-muted-foreground mt-0.5">
-                      {leader.role}
-                    </p>
+                    <p className="text-xs font-mono text-muted-foreground mt-0.5">{leader.role}</p>
                   </div>
                 </div>
 

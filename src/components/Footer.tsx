@@ -31,12 +31,7 @@ export function Footer() {
             </li>
             <li>
               <Link to="/events" className="hover:text-foreground transition-colors">
-                Events & Pitchnova
-              </Link>
-            </li>
-            <li>
-              <Link to="/timeline" className="hover:text-foreground transition-colors">
-                Timeline & PDF Uploads
+                Events
               </Link>
             </li>
             <li>
@@ -82,7 +77,9 @@ export function Footer() {
       </div>
 
       <div className="max-w-7xl mx-auto pt-8 border-t border-border/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
-        <p>© {new Date().getFullYear()} APV E-Cell • Agnel Polytechnic Vashi. All rights reserved.</p>
+        <p>
+          © {new Date().getFullYear()} APV E-Cell • Agnel Polytechnic Vashi. All rights reserved.
+        </p>
         <div className="flex items-center gap-6">
           <span>Creating Change Makers</span>
           <span>•</span>

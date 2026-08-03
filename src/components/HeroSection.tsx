@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowUpRight, Sparkles } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 
 export function HeroSection() {
@@ -35,17 +35,17 @@ export function HeroSection() {
 
         {/* Subtitle */}
         <p className="max-w-2xl mx-auto text-base sm:text-lg text-muted-foreground leading-relaxed mb-10 font-normal">
-          Empowering visionaries to transform ideas into reality. Building the next generation
-          of entrepreneurs, ethical changemakers, and innovators at Agnel Polytechnic, Vashi.
+          Empowering visionaries to transform ideas into reality. Building the next generation of
+          entrepreneurs, ethical changemakers, and innovators at Agnel Polytechnic, Vashi.
         </p>
 
         {/* Buttons */}
         <div className="flex flex-wrap items-center justify-center gap-4">
           <Link
-            to="/timeline"
+            to="/events"
             className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-foreground text-background text-sm font-medium tracking-wide transition-all duration-300 hover:bg-foreground/90 shadow-sm"
           >
-            Explore Timeline
+            Explore Events
             <ArrowUpRight className="w-4 h-4" />
           </Link>
 

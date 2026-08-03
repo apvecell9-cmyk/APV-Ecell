@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Sparkles, Compass, Target, ArrowRight } from "lucide-react";
+import { Compass, Target, ArrowRight } from "lucide-react";
 
 export function MissionVisionSection() {
   const [activeTab, setActiveTab] = useState<"vision" | "mission">("vision");
@@ -15,7 +15,9 @@ export function MissionVisionSection() {
               Championing ideas into lasting societal change.
             </h2>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              At Agnel Polytechnic, Vashi, we redefine entrepreneurship. It is not merely about launching companies—it is about cultivating resilience, strategic thinking, and ethical leadership that stands the test of time.
+              At Agnel Polytechnic, Vashi, we redefine entrepreneurship. It is not merely about
+              launching companies—it is about cultivating resilience, strategic thinking, and
+              ethical leadership that stands the test of time.
             </p>
 
             {/* Interactive selector pills */}
@@ -57,7 +59,9 @@ export function MissionVisionSection() {
                     <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-foreground">
                       <Compass className="w-5 h-5" />
                     </div>
-                    <span className="font-mono text-xs text-muted-foreground">EST. 2024 • APV VASHI</span>
+                    <span className="font-mono text-xs text-muted-foreground">
+                      EST. 2024 • APV VASHI
+                    </span>
                   </div>
 
                   <div className="space-y-4">
@@ -67,15 +71,23 @@ export function MissionVisionSection() {
                     <ul className="space-y-3 text-sm text-muted-foreground">
                       <li className="flex items-start gap-3">
                         <span className="w-1.5 h-1.5 rounded-full bg-foreground mt-2 shrink-0" />
-                        <span>Champion entrepreneurship as an essential life skill across all technical disciplines.</span>
+                        <span>
+                          Champion entrepreneurship as an essential life skill across all technical
+                          disciplines.
+                        </span>
                       </li>
                       <li className="flex items-start gap-3">
                         <span className="w-1.5 h-1.5 rounded-full bg-foreground mt-2 shrink-0" />
-                        <span>Cultivate a community where resilience, creativity, and empathy drive innovation.</span>
+                        <span>
+                          Cultivate a community where resilience, creativity, and empathy drive
+                          innovation.
+                        </span>
                       </li>
                       <li className="flex items-start gap-3">
                         <span className="w-1.5 h-1.5 rounded-full bg-foreground mt-2 shrink-0" />
-                        <span>Redefine success by the lasting, positive difference we create in society.</span>
+                        <span>
+                          Redefine success by the lasting, positive difference we create in society.
+                        </span>
                       </li>
                     </ul>
                   </div>
@@ -96,15 +108,24 @@ export function MissionVisionSection() {
                     <ul className="space-y-3 text-sm text-muted-foreground">
                       <li className="flex items-start gap-3">
                         <span className="w-1.5 h-1.5 rounded-full bg-foreground mt-2 shrink-0" />
-                        <span>Empower students with hands-on incubation, mentorship, and training experiences.</span>
+                        <span>
+                          Empower students with hands-on incubation, mentorship, and training
+                          experiences.
+                        </span>
                       </li>
                       <li className="flex items-start gap-3">
                         <span className="w-1.5 h-1.5 rounded-full bg-foreground mt-2 shrink-0" />
-                        <span>Equip future leaders with ethical values, strategic thinking, and execution mastery.</span>
+                        <span>
+                          Equip future leaders with ethical values, strategic thinking, and
+                          execution mastery.
+                        </span>
                       </li>
                       <li className="flex items-start gap-3">
                         <span className="w-1.5 h-1.5 rounded-full bg-foreground mt-2 shrink-0" />
-                        <span>Foster an inclusive ecosystem that encourages calculated risk-taking and learning from failure.</span>
+                        <span>
+                          Foster an inclusive ecosystem that encourages calculated risk-taking and
+                          learning from failure.
+                        </span>
                       </li>
                     </ul>
                   </div>
