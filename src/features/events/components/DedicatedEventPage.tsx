@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowLeft, Calendar, Clock, MapPin, ArrowUpRight } from "lucide-react";
+import { ArrowLeft, Calendar, Clock, MapPin } from "lucide-react";
 import type { EventData } from "@/types/events";
 import { getEventBySlug } from "@/services/eventLoader";
-import { PageLayout } from "@/components/layout/PageLayout";
 
 interface DedicatedEventPageProps {
   slug: string;
@@ -53,36 +52,32 @@ export function DedicatedEventPage({ slug }: DedicatedEventPageProps) {
 
   if (loading) {
     return (
-      <PageLayout>
-        <div className="flex h-96 items-center justify-center">
-          <span className="text-sm text-muted-foreground">Loading event…</span>
-        </div>
-      </PageLayout>
+      <div className="flex h-96 items-center justify-center">
+        <span className="text-sm text-muted-foreground">Loading event…</span>
+      </div>
     );
   }
 
   if (notFound || !event) {
     return (
-      <PageLayout>
-        <div className="mx-auto max-w-3xl px-6 py-32 lg:px-12">
-          <Link
-            to="/events"
-            className="inline-flex items-center gap-2 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
-          >
-            <ArrowLeft className="h-3.5 w-3.5" />
-            Back to Events
-          </Link>
-          <h1 className="mt-8 font-serif text-4xl text-foreground md:text-5xl">Event not found</h1>
-          <p className="mt-4 text-muted-foreground">
-            The event you are looking for could not be found.
-          </p>
-        </div>
-      </PageLayout>
+      <div className="mx-auto max-w-3xl px-6 py-32 lg:px-12">
+        <Link
+          to="/events"
+          className="inline-flex items-center gap-2 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <ArrowLeft className="h-3.5 w-3.5" />
+          Back to Events
+        </Link>
+        <h1 className="mt-8 font-serif text-4xl text-foreground md:text-5xl">Event not found</h1>
+        <p className="mt-4 text-muted-foreground">
+          The event you are looking for could not be found.
+        </p>
+      </div>
     );
   }
 
   return (
-    <PageLayout>
+    <>
       <section className="relative border-b border-border bg-surface px-6 py-20 lg:px-12">
         <div className="mx-auto max-w-5xl">
           <Link
@@ -158,6 +153,6 @@ export function DedicatedEventPage({ slug }: DedicatedEventPageProps) {
           </aside>
         </div>
       </section>
-    </PageLayout>
+    </>
   );
 }

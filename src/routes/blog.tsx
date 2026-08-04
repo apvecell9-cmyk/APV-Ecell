@@ -2,11 +2,11 @@ import React from "react";
 import { Outlet, createFileRoute } from "@tanstack/react-router";
 import { PageLayout } from "@/components/layout/PageLayout";
 
-export const Route = createFileRoute("/events")({
-  component: EventsLayout,
+export const Route = createFileRoute("/blog")({
+  component: BlogLayout,
 });
 
-function EventsLayout() {
+function BlogLayout() {
   return (
     <PageLayout>
       <Outlet />
