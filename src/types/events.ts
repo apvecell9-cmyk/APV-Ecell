@@ -1,22 +1,24 @@
-export type EventStatus = "Completed" | "Upcoming" | "Annual Flagship";
+export type EventStatus = "Upcoming" | "Completed" | "Flagship";
 
-export interface EventItem {
-  id: string;
-  year: string;
+export interface EventData {
   title: string;
   subtitle: string;
+  year: number;
+  status: EventStatus | string;
   date: string;
-  location: string;
+  time: string;
+  venue: string;
   description: string;
   highlights: string[];
-  status: EventStatus;
+  dedicatedPage: boolean;
+  pageUrl?: string;
 }
 
-export interface UploadedPdf {
-  id: string;
-  name: string;
-  size: string;
-  date: string;
-  url: string;
-  category: string;
+export interface EventManifestYear {
+  year: number;
+  events: string[];
+}
+
+export interface EventManifest {
+  years: EventManifestYear[];
 }
