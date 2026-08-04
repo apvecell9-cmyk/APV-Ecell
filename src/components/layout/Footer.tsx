@@ -55,7 +55,7 @@ export function Footer() {
               </li>
             ))}
             <li>
-              <Link to="/about-contact" className="hover:text-foreground transition-colors">
+              <Link to="/contact" className="hover:text-foreground transition-colors">
                 Partner with us
               </Link>
             </li>
@@ -70,7 +70,7 @@ export function Footer() {
         <div className="flex items-center gap-6">
           <span>{TAGLINE}</span>
           <span>•</span>
-          <Link to="/about-contact" className="hover:underline">
+          <Link to="/contact" className="hover:underline">
             Get in touch
           </Link>
         </div>
