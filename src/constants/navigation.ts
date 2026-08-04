@@ -3,6 +3,7 @@ import type { NavItem } from "@/types/common";
 export const NAV_LINKS: NavItem[] = [
   { label: "Home", to: "/" },
   { label: "Events", to: "/events" },
+  { label: "Gallery", to: "/gallery" },
   { label: "About & Contact", to: "/about-contact" },
 ];
 

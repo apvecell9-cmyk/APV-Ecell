@@ -4,7 +4,10 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
+    "predev": "node scripts/generate-gallery.js",
     "dev": "vite dev",
+    "prebuild": "node scripts/generate-gallery.js",
+    "prebuild:dev": "node scripts/generate-gallery.js",
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
