@@ -1,8 +1,9 @@
 import React from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import { PageLayout } from "@/components/layout/PageLayout";
 import { DedicatedEventPage } from "@/features/events/components/DedicatedEventPage";
 
-export const Route = createFileRoute("/events/$slug")({
+export const Route = createFileRoute("/events_/$slug")({
   head: () => ({
     meta: [
       { title: "Event — APV E-Cell Vashi" },
@@ -22,5 +23,9 @@ export const Route = createFileRoute("/events/$slug")({
 
 function DedicatedEventRoute() {
   const { slug } = Route.useParams();
-  return <DedicatedEventPage slug={slug} />;
+  return (
+    <PageLayout>
+      <DedicatedEventPage slug={slug} />
+    </PageLayout>
+  );
 }
