@@ -1,0 +1,12 @@
+{
+  "years": [
+    {
+      "year": 2026,
+      "events": ["ignite"]
+    },
+    {
+      "year": 2025,
+      "events": ["illuminate", "pitchnova"]
+    }
+  ]
+}
