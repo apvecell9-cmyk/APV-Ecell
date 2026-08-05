@@ -48,13 +48,6 @@ export function HeroSection() {
             Explore Events
             <ArrowUpRight className="w-4 h-4" />
           </Link>
-
-          <Link
-            to="/events"
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-surface/80 backdrop-blur-md border border-border text-foreground text-sm font-medium tracking-wide transition-all duration-300 hover:bg-background"
-          >
-            Our Events
-          </Link>
         </div>
 
       </div>
