@@ -2,6 +2,76 @@ import type { DeptCardProps } from "@/types/team";
 
 export const departments: DeptCardProps[] = [
   {
+    id: "executive-office",
+    department: "Executive Office",
+    subtitle: "Overall E-Cell Leadership & Strategy",
+    description:
+      "Leading the vision and strategic direction of APV E-Cell, driving innovation, and empowering young founders across campus.",
+    headName: "Rosemia James",
+    headRole: "President, APV E-Cell",
+    headPhoto: "/head/rosemia_james.jpg",
+    linkedin: "https://www.linkedin.com/",
+    members: [
+      { name: "Executive Council", role: "Leadership Strategy" },
+    ],
+  },
+  {
+    id: "finance-ops",
+    department: "Finance & Operations",
+    subtitle: "Fiscal Strategy & Budgeting",
+    description:
+      "Managing financial strategies, budgets, sponsorships, and operational excellence across all E-Cell initiatives.",
+    headName: "Ritesh Jogdankar",
+    headRole: "Head of Finance",
+    headPhoto: "/head/ritesh_jogdankar.jpg",
+    members: [
+      { name: "Nitu Patil", role: "Team Member" },
+      { name: "Ashley Dsouza", role: "Team Member" },
+    ],
+  },
+  {
+    id: "liaison",
+    department: "Liaison & Outreach",
+    subtitle: "Institutional & External Relations",
+    description:
+      "Building strong partnerships, industry connections, and coordinating external collaborations for APV E-Cell.",
+    headName: "Harsh Vaidya",
+    headRole: "Head of Liaison",
+    headPhoto: "/head/harsh_vaidya.jpg",
+    members: [
+      { name: "Shreya Gupta", role: "Team Member" },
+      { name: "Mukadam Mohammed", role: "Team Member" },
+    ],
+  },
+  {
+    id: "social-media",
+    department: "Social Media & Content",
+    subtitle: "Digital Voice & Storytelling",
+    description:
+      "Creating engaging visual content, podcasting, managing social channels, and amplifying APV E-Cell digital presence.",
+    headName: "Shifa Khan",
+    headRole: "Head of Social Media",
+    headPhoto: "/head/shifa_khan.jpg",
+    members: [
+      { name: "Tanvi Patil", role: "Team Member" },
+      { name: "Nandan Temkar", role: "Team Member" },
+    ],
+  },
+  {
+    id: "hospitality",
+    department: "Hospitality & Logistics",
+    subtitle: "Guest Relations & Operations",
+    description:
+      "Ensuring exceptional experience for guests, judges, speakers, and seamless event management.",
+    headName: "Neil Kulkarni",
+    headRole: "Head of Hospitality",
+    headPhoto: "/head/neil_kulkarni.jpg",
+    members: [
+      { name: "Tanvi Gawande", role: "Team Member" },
+      { name: "Arnav Gatkal", role: "Team Member" },
+    ],
+  },
+  {
     id: "pr-marketing",
     department: "PR & Marketing",
     subtitle: "Community & Brand Outreach",
@@ -33,57 +103,6 @@ export const departments: DeptCardProps[] = [
       { name: "Devansh Patil", role: "System Arch" },
       { name: "Ananya Rao", role: "UI/UX Code" },
       { name: "Yash Shinde", role: "Full-Stack" },
-    ],
-  },
-  {
-    id: "social-media",
-    department: "Social Media & Content",
-    subtitle: "Digital Voice & Storytelling",
-    description:
-      "Creating engaging content, podcasts, startup stories, and building an active digital presence.",
-    headName: "Rajvi Gaikwad",
-    headRole: "Head of Content and Social Media",
-    headPhoto: "https://ecellapv.in/RG.png",
-    linkedin: "https://www.linkedin.com/in/rajvi-gaikwad-567089339",
-    members: [
-      { name: "Isha Sawant", role: "Video Editor" },
-      { name: "Aditya More", role: "Copywriter" },
-      { name: "Simran Pawar", role: "Social Strategist" },
-      { name: "Mihir Gokhale", role: "Media Specialist" },
-    ],
-  },
-  {
-    id: "finance-ops",
-    department: "Finance & Operations",
-    subtitle: "Fiscal Strategy & Execution",
-    description:
-      "Managing financial strategies, budgets, sponsorships, and operational excellence across all initiatives.",
-    headName: "Parth Naukudkar",
-    headRole: "Head of Finance and Operations",
-    headPhoto: "https://ecellapv.in/Parth%20Naukudkar.jpg",
-    linkedin: "https://www.linkedin.com/in/parth-naukudkar-bab2b9376",
-    members: [
-      { name: "Chaitanya Kale", role: "Budget Lead" },
-      { name: "Shruti Chavan", role: "Logistics Mgr" },
-      { name: "Vedant Thakur", role: "Sponsorships" },
-      { name: "Prachi Rane", role: "Accounts" },
-    ],
-  },
-  {
-    id: "events",
-    department: "Events & Operations",
-    subtitle: "Pitchnova & Hackathons",
-    description:
-      "Orchestrating memorable flagship competitions, entrepreneurship workshops, and speaker series.",
-    headName: "Jatin Sharma",
-    headRole: "Head of Events and Operations",
-    headPhoto: "https://ecellapv.in/Jatin%20Sharma.JPG",
-    linkedin: "https://www.linkedin.com/in/jatin-sharma-75895b378",
-    members: [
-      { name: "Atharva Kadam", role: "Stage Coordinator" },
-      { name: "Sanika Jadhav", role: "Speaker Relations" },
-      { name: "Omkar Mhatre", role: "Event Ops" },
-      { name: "Pooja Salvi", role: "Volunteer Lead" },
     ],
   },
   {

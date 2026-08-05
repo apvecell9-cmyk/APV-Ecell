@@ -24,13 +24,4 @@ export const leaders: Leader[] = [
       "Our E-Cell fosters innovation, leadership, and entrepreneurship beyond the classroom. We empower students to think independently, pitch real-world ideas, and connect with industry leaders to become confident changemakers.",
     tag: "Faculty Leader",
   },
-  {
-    name: "Soham Dhanokar",
-    role: "President, APV E-Cell",
-    image: "https://ecellapv.in/Soham%20Dhanokar%20(President).png",
-    quote:
-      "Leading the vision and strategic direction of APV E-Cell. Together with our department heads, we are creating an inclusive ecosystem where resilience, creativity, and real social impact drive student success.",
-    tag: "Student President",
-    linkedin: "https://www.linkedin.com/in/soham-dhanokar-13807a355",
-  },
 ];
