@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 import heroBg from "@/assets/backgrounds/hero-bg.jpg";
-import { ESTABLISHED_YEAR } from "@/constants/branding";
 
 export function HeroSection() {
   return (
@@ -58,33 +57,6 @@ export function HeroSection() {
           </Link>
         </div>
 
-        {/* Key stats banner at bottom of hero */}
-        <div className="mt-20 pt-10 border-t border-border/60 grid grid-cols-2 md:grid-cols-4 gap-6 text-left">
-          <div>
-            <div className="font-mono text-xs text-muted-foreground uppercase tracking-widest">
-              Established
-            </div>
-            <div className="text-xl font-serif mt-1 text-foreground">{ESTABLISHED_YEAR} • APV</div>
-          </div>
-          <div>
-            <div className="font-mono text-xs text-muted-foreground uppercase tracking-widest">
-              Flagship
-            </div>
-            <div className="text-xl font-serif mt-1 text-foreground">Pitchnova</div>
-          </div>
-          <div>
-            <div className="font-mono text-xs text-muted-foreground uppercase tracking-widest">
-              Branches
-            </div>
-            <div className="text-xl font-serif mt-1 text-foreground">5 Tech Disciplines</div>
-          </div>
-          <div>
-            <div className="font-mono text-xs text-muted-foreground uppercase tracking-widest">
-              Ecosystem
-            </div>
-            <div className="text-xl font-serif mt-1 text-foreground">NEC & IITB Ref</div>
-          </div>
-        </div>
       </div>
     </section>
   );
