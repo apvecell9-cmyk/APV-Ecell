@@ -33,6 +33,12 @@ export function getEventsByName(name: string): GalleryEvent[] {
   return galleryEvents.filter((event) => event.event === name);
 }
 
+export function getEventNamesByYear(year: number): string[] {
+  return [
+    ...new Set(galleryEvents.filter((event) => event.year === year).map((event) => event.event)),
+  ].sort((a, b) => a.localeCompare(b));
+}
+
 export function getFilteredEvents(filter: Partial<GalleryFilter> = {}): GalleryEvent[] {
   const resolvedFilter: GalleryFilter = { ...DEFAULT_FILTER, ...filter };
   return galleryEvents.filter((event) => matchesFilter(event, resolvedFilter));

@@ -25,7 +25,7 @@ export const Route = createFileRoute("/events")({
 
 function EventsRoute() {
   return (
-    <PageLayout>
+    <PageLayout mainClassName="flex-1">
       <EventsPage />
     </PageLayout>
   );

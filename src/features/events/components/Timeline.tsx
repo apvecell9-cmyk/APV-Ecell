@@ -17,9 +17,9 @@ export function Timeline({ events, selectedIndex, onSelect, shiftX }: TimelinePr
   }
 
   return (
-    <div className="relative w-full overflow-visible px-2 py-6 sm:px-8 md:px-14 lg:px-20">
+    <div className="relative w-full overflow-visible px-2 py-2 sm:px-8 md:px-14 lg:px-20">
       <div
-        className="pointer-events-none absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 bg-hairline"
+        className="pointer-events-none absolute left-1/2 top-0 bottom-0 w-[2px] -translate-x-1/2 bg-foreground/15"
         aria-hidden="true"
       />
 
@@ -34,7 +34,7 @@ export function Timeline({ events, selectedIndex, onSelect, shiftX }: TimelinePr
           return (
             <div
               key={`${event.year}-${event.title}-${index}`}
-              className="relative grid grid-cols-2 items-center py-10"
+              className="relative grid grid-cols-2 items-center py-6"
             >
               <div className="flex justify-end pr-6 sm:pr-10 md:pr-14">
                 {side === "left" && (
