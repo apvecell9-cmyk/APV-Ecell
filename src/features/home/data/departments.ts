@@ -9,7 +9,7 @@ export const departments: DeptCardProps[] = [
       "Leading the vision and strategic direction of APV E-Cell, driving innovation, and empowering young founders across campus.",
     headName: "Rosemia James",
     headRole: "President, APV E-Cell",
-    headPhoto: "/head/rosemia_james.jpg",
+    headPhoto: "/team/executive-office/head.jpg",
     linkedin: "https://www.linkedin.com/",
     members: [
       { name: "Executive Council", role: "Leadership Strategy" },
@@ -23,7 +23,7 @@ export const departments: DeptCardProps[] = [
       "Managing financial strategies, budgets, sponsorships, and operational excellence across all E-Cell initiatives.",
     headName: "Ritesh Jogdankar",
     headRole: "Head of Finance",
-    headPhoto: "/head/ritesh_jogdankar.jpg",
+    headPhoto: "/team/finance-ops/head.jpg",
     members: [
       { name: "Nitu Patil", role: "Team Member" },
       { name: "Ashley Dsouza", role: "Team Member" },
@@ -37,7 +37,7 @@ export const departments: DeptCardProps[] = [
       "Building strong partnerships, industry connections, and coordinating external collaborations for APV E-Cell.",
     headName: "Harsh Vaidya",
     headRole: "Head of Liaison",
-    headPhoto: "/head/harsh_vaidya.jpg",
+    headPhoto: "/team/liaison/head.jpg",
     members: [
       { name: "Shreya Gupta", role: "Team Member" },
       { name: "Mukadam Mohammed", role: "Team Member" },
@@ -51,7 +51,7 @@ export const departments: DeptCardProps[] = [
       "Creating engaging visual content, podcasting, managing social channels, and amplifying APV E-Cell digital presence.",
     headName: "Shifa Khan",
     headRole: "Head of Social Media",
-    headPhoto: "/head/shifa_khan.jpg",
+    headPhoto: "/team/social-media/head.jpg",
     members: [
       { name: "Tanvi Patil", role: "Team Member" },
       { name: "Nandan Temkar", role: "Team Member" },
@@ -65,7 +65,7 @@ export const departments: DeptCardProps[] = [
       "Ensuring exceptional experience for guests, judges, speakers, and seamless event management.",
     headName: "Neil Kulkarni",
     headRole: "Head of Hospitality",
-    headPhoto: "/head/neil_kulkarni.jpg",
+    headPhoto: "/team/hospitality/head.jpg",
     members: [
       { name: "Tanvi Gawande", role: "Team Member" },
       { name: "Arnav Gatkal", role: "Team Member" },
@@ -79,7 +79,7 @@ export const departments: DeptCardProps[] = [
       "Building strong relationships, strategic partnerships, and expanding APV E-Cell community reach across institutions.",
     headName: "Swara Hande",
     headRole: "Head of PR and Marketing",
-    headPhoto: "https://ecellapv.in/Swara%20Hande.JPG",
+    headPhoto: "/team/pr-marketing/head.jpg",
     linkedin: "https://www.linkedin.com/in/swara-hande-9a8277356",
     members: [
       { name: "Aarav Mehta", role: "Outreach Lead" },
@@ -96,7 +96,7 @@ export const departments: DeptCardProps[] = [
       "Driving innovation through cutting-edge web platforms, hackathon infrastructure, and developer training.",
     headName: "Arush Wavhal",
     headRole: "Head of Technology and Development",
-    headPhoto: "https://ecellapv.in/Arush%20Waval.PNG",
+    headPhoto: "/team/technical/head.jpg",
     linkedin: "https://www.linkedin.com/in/arush-wavhal-292647377",
     members: [
       { name: "Kabir Joshi", role: "Frontend Dev" },
@@ -113,7 +113,7 @@ export const departments: DeptCardProps[] = [
       "Crafting visual stories, high-end brand identities, posters, and creative event aesthetics.",
     headName: "Harshali Bhosale",
     headRole: "Head of Design and Creative",
-    headPhoto: "https://ecellapv.in/HB.jpg",
+    headPhoto: "/team/design-creative/head.jpg",
     linkedin: "https://www.linkedin.com/in/harshali-bhosale-8768a3377",
     members: [
       { name: "Mayank Desai", role: "Illustrator" },
