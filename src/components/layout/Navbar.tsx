@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { NAV_LINKS } from "@/constants/navigation";
+import { BRAND_INITIALS } from "@/constants/branding";
 import { CommunityModal } from "./CommunityModal";
 
 export function Navbar() {
@@ -39,11 +40,9 @@ export function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3 font-semibold tracking-tight text-lg group">
-            <img
-              src="/logos/logo.png"
-              alt="Agnel Polytechnic Vashi logo"
-              className="w-10 h-10 rounded-full object-contain bg-white ring-1 ring-border/60 shadow-xs transition-transform group-hover:scale-105"
-            />
+            <div className="w-8 h-8 rounded-full bg-foreground text-background flex items-center justify-center font-mono text-xs font-bold transition-transform group-hover:scale-105">
+              {BRAND_INITIALS}
+            </div>
             <span className="font-sans font-medium">
               E-CELL <span className="text-muted-foreground font-light text-xs ml-1">VASHI</span>
             </span>
