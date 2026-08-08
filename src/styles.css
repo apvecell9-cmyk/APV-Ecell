@@ -190,6 +190,36 @@
   100% { background-position: -4px 12px; }
 }
 
+@keyframes hex-pulse {
+  0% { opacity: 0; }
+  50% { opacity: 0.04; }
+  100% { opacity: 0; }
+}
+
+@keyframes hex-wave {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+/* Hex animation classes — applied by HexagonBackground component */
+.hex-anim-drift {
+  animation: hex-drift 30s ease-in-out infinite alternate;
+}
+.hex-anim-pulse {
+  animation: hex-pulse 8s ease-in-out infinite alternate;
+}
+.hex-anim-wave {
+  animation: hex-wave 45s ease-in-out infinite alternate;
+}
+/* Speed modifiers — .hex-speed-* is on the parent wrapper div */
+.hex-speed-slow .hex-anim-drift { animation-duration: 45s; }
+.hex-speed-slow .hex-anim-pulse { animation-duration: 12s; }
+.hex-speed-slow .hex-anim-wave { animation-duration: 67s; }
+.hex-speed-fast .hex-anim-drift { animation-duration: 18s; }
+.hex-speed-fast .hex-anim-pulse { animation-duration: 5s; }
+.hex-speed-fast .hex-anim-wave { animation-duration: 27s; }
+
 @keyframes fade-in-up {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
@@ -210,6 +240,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .hex-bg-animated { animation: none !important; }
+  .hex-anim-drift, .hex-anim-pulse, .hex-anim-wave { animation: none !important; }
   .animate-fade-in-up { animation: none !important; opacity: 1 !important; transform: none !important; }
   .hero-flow { animation: none !important; }
 }

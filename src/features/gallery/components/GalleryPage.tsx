@@ -71,8 +71,8 @@ export function GalleryPage() {
 
   return (
     <PageLayout mainClassName="flex-1">
-      {/* Full-page hex background */}
-      <div className="relative min-h-screen">
+      {/* Full-page hex background — isolation: isolate creates stacking context so z-index works */}
+      <div className="relative min-h-screen" style={{ isolation: "isolate" }}>
         <HexagonBackground animated />
 
         {/* Hero */}
