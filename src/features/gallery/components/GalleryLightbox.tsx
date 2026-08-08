@@ -17,35 +17,29 @@ interface GalleryLightboxProps {
 export function GalleryLightbox({ images, index, onIndexChange, onClose }: GalleryLightboxProps) {
   const total = images.length;
   const current = images[index];
+  const hasPrev = index > 0;
+  const hasNext = index < total - 1;
 
   useEffect(() => {
-    if (total === 0) {
-      return;
-    }
+    if (total === 0) return;
 
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        onClose();
-      } else if (event.key === "ArrowRight") {
-        onIndexChange((index + 1) % total);
-      } else if (event.key === "ArrowLeft") {
-        onIndexChange((index - 1 + total) % total);
-      }
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      else if (e.key === "ArrowRight" && hasNext) onIndexChange(index + 1);
+      else if (e.key === "ArrowLeft" && hasPrev) onIndexChange(index - 1);
     };
 
     window.addEventListener("keydown", handleKeyDown);
-    const previousOverflow = document.body.style.overflow;
+    const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = previousOverflow;
+      document.body.style.overflow = prev;
     };
-  }, [total, index, onClose, onIndexChange]);
+  }, [total, index, onClose, onIndexChange, hasPrev, hasNext]);
 
-  if (!current) {
-    return null;
-  }
+  if (!current) return null;
 
   return (
     <div
@@ -57,7 +51,7 @@ export function GalleryLightbox({ images, index, onIndexChange, onClose }: Galle
     >
       <div
         className="relative flex h-full w-full flex-col items-center justify-center p-4"
-        onClick={(event) => event.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
       >
         <button
           type="button"
@@ -76,13 +70,13 @@ export function GalleryLightbox({ images, index, onIndexChange, onClose }: Galle
           <img
             key={current.src}
             src={current.src}
-            alt={`${current.event} — ${current.year}`}
+            alt={`${current.event} — ${index + 1}`}
             className="max-h-[75vh] max-w-full rounded-lg object-contain shadow-2xl animate-fade-in"
           />
         </div>
 
         <p className="mt-6 font-serif text-lg text-white">
-          {current.event} <span className="text-white/50">•</span>{" "}
+          {current.event} <span className="text-white/50">&bull;</span>{" "}
           <span className="font-mono text-sm uppercase tracking-wider text-white/60">
             {current.year}
           </span>
@@ -90,17 +84,19 @@ export function GalleryLightbox({ images, index, onIndexChange, onClose }: Galle
 
         <button
           type="button"
-          onClick={() => onIndexChange((index - 1 + total) % total)}
+          onClick={() => hasPrev && onIndexChange(index - 1)}
+          disabled={!hasPrev}
           aria-label="Previous image"
-          className="absolute left-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 text-white transition-colors hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white md:left-8"
+          className="absolute left-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 text-white transition-colors hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white disabled:opacity-20 disabled:hover:bg-transparent md:left-8"
         >
           <ChevronLeft className="h-5 w-5" />
         </button>
         <button
           type="button"
-          onClick={() => onIndexChange((index + 1) % total)}
+          onClick={() => hasNext && onIndexChange(index + 1)}
+          disabled={!hasNext}
           aria-label="Next image"
-          className="absolute right-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 text-white transition-colors hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white md:right-8"
+          className="absolute right-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 text-white transition-colors hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white disabled:opacity-20 disabled:hover:bg-transparent md:right-8"
         >
           <ChevronRight className="h-5 w-5" />
         </button>

@@ -27,11 +27,9 @@ export function Navbar() {
 
   const navLinks = NAV_LINKS;
 
-  const isHome = pathname === "/";
-  const headerClass =
-    scrolled || !isHome
-      ? "bg-background/90 backdrop-blur-md border-b border-border text-foreground shadow-xs"
-      : "bg-transparent text-foreground";
+  const headerClass = scrolled
+    ? "bg-background/90 backdrop-blur-md border-b border-border text-foreground shadow-xs"
+    : "bg-transparent text-foreground";
 
   return (
     <>
@@ -77,7 +75,7 @@ export function Navbar() {
               type="button"
               onClick={() => setCommunityOpen(true)}
               className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium tracking-wide transition-all duration-300 ${
-                scrolled || !isHome
+                scrolled
                   ? "bg-foreground text-background hover:bg-foreground/90"
                   : "bg-background/80 backdrop-blur-sm text-foreground hover:bg-background border border-border/60 shadow-xs"
               }`}

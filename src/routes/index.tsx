@@ -5,6 +5,7 @@ import { HeroSection } from "@/features/home/components/HeroSection";
 import { LeadershipSection } from "@/features/home/components/LeadershipSection";
 import { MissionVisionSection } from "@/features/home/components/MissionVisionSection";
 import { TeamSection } from "@/features/home/components/TeamSection";
+import { LandingGallerySection } from "@/features/home/components/LandingGallerySection";
 import { CombinedPartnersSection } from "@/features/home/components/CombinedPartnersSection";
 
 export const Route = createFileRoute("/")({
@@ -28,6 +29,9 @@ function Index() {
 
       {/* Our Teams: departmental cards with hover head photo + member reveal */}
       <TeamSection />
+
+      {/* Gallery preview: cinematic event cards with animated hex background */}
+      <LandingGallerySection />
 
       {/* Combined References & Incubation Partner in one cohesive section */}
       <CombinedPartnersSection />
