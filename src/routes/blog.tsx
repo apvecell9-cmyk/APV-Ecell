@@ -25,7 +25,7 @@ export const Route = createFileRoute("/blog")({
 
 function BlogListRoute() {
   return (
-    <PageLayout>
+    <PageLayout mainClassName="flex-1 pt-16 pb-24 lg:pt-20">
       <BlogListPage />
     </PageLayout>
   );

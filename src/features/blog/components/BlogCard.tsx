@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Clock } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import type { BlogSummary } from "@/types/blog";
 import { BLOG_PLACEHOLDER_IMAGE } from "@/features/blog/utils/blogUtils";
 import { calculateReadingTime, formatBlogDate } from "@/features/blog/utils/blogUtils";
@@ -17,48 +17,61 @@ export function BlogCard({ blog, readingTime }: BlogCardProps) {
     <Link
       to="/blog/$slug"
       params={{ slug: blog.slug }}
-      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface transition-all duration-500 hover:-translate-y-1 hover:border-foreground/40 hover:shadow-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-muted transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      style={{ minHeight: "420px" }}
     >
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-muted">
-        <img
-          src={imageSrc}
-          alt={blog.title}
-          loading="lazy"
-          onError={() => {
-            if (imageSrc !== BLOG_PLACEHOLDER_IMAGE) {
-              setImageSrc(BLOG_PLACEHOLDER_IMAGE);
-            }
-          }}
-          className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-        />
-        {blog.featured && (
-          <span className="absolute left-4 top-4 rounded-full bg-foreground px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-background">
-            Featured
-          </span>
-        )}
-      </div>
+      {/* Full-bleed image */}
+      <img
+        src={imageSrc}
+        alt={blog.title}
+        loading="lazy"
+        onError={() => {
+          if (imageSrc !== BLOG_PLACEHOLDER_IMAGE) {
+            setImageSrc(BLOG_PLACEHOLDER_IMAGE);
+          }
+        }}
+        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+      />
 
-      <div className="flex flex-1 flex-col gap-4 p-6">
-        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+      {/* Dark gradient overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.6) 35%, rgba(0,0,0,0.15) 65%, rgba(0,0,0,0) 100%)",
+        }}
+      />
+
+      {/* Featured badge */}
+      {blog.featured && (
+        <span className="absolute left-4 top-4 z-10 rounded-full bg-white/15 backdrop-blur-md border border-white/20 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-white">
+          Featured
+        </span>
+      )}
+
+      {/* Content overlay — positioned at bottom */}
+      <div className="relative z-10 mt-auto flex flex-col gap-2 p-5 sm:p-6">
+        {/* Metadata */}
+        <div className="flex items-center gap-2 text-[11px] text-white/70">
           <span className="font-mono">{formatBlogDate(blog.publishedAt)}</span>
-          <span className="text-muted-foreground/50">•</span>
-          <span className="inline-flex items-center gap-1">
-            <Clock className="h-3 w-3" />
-            {readingTime} min read
-          </span>
+          <span className="text-white/40">•</span>
+          <span>{readingTime} min read</span>
         </div>
 
-        <h3 className="font-serif text-xl font-normal leading-snug tracking-tight text-foreground transition-colors group-hover:text-foreground">
+        {/* Title */}
+        <h3 className="font-serif text-xl sm:text-2xl font-normal leading-snug tracking-tight text-white transition-transform duration-300 group-hover:-translate-y-0.5">
           {blog.title}
         </h3>
 
-        <p className="line-clamp-3 text-sm leading-relaxed text-muted-foreground">{blog.excerpt}</p>
+        {/* Excerpt */}
+        <p className="line-clamp-2 text-sm leading-relaxed text-white/70">
+          {blog.excerpt}
+        </p>
 
-        <div className="mt-auto flex items-center justify-between border-t border-hairline pt-4 text-xs">
-          <span className="font-medium text-foreground">{blog.author}</span>
-          <span className="font-mono uppercase tracking-wider text-muted-foreground transition-colors group-hover:text-foreground">
-            Read →
-          </span>
+        {/* Read action */}
+        <div className="mt-2 flex items-center gap-1.5 text-xs font-medium text-white/90 transition-colors group-hover:text-white">
+          <span>Read article</span>
+          <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </div>
       </div>
     </Link>

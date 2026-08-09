@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import type { Blog } from "@/types/blog";
 import { useBlogList } from "@/hooks/useBlogs";
 import { getAllBlogs as getAllBlogsService } from "@/services/blogService";
+import { HexagonBackground } from "@/features/gallery/components/HexagonBackground";
 import { BlogHero } from "./BlogHero";
 import { BlogGrid } from "./BlogGrid";
 import { EmptyBlogList } from "./EmptyBlogList";
@@ -9,6 +10,7 @@ import { EmptyBlogList } from "./EmptyBlogList";
 export function BlogListPage() {
   const state = useBlogList();
   const [fullBlogs, setFullBlogs] = useState<Blog[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     let cancelled = false;
@@ -25,29 +27,38 @@ export function BlogListPage() {
   }, []);
 
   return (
-    <>
-      <BlogHero />
+    <div className="relative min-h-screen bg-background">
+      {/* Hexagon background covering entire page */}
+      <HexagonBackground
+        opacity={0.4}
+        animated={true}
+        animationSpeed="fast"
+        className="fixed inset-0 z-0"
+      />
 
-      <section className="mx-auto max-w-7xl px-6 py-16 lg:px-12">
+      {/* Content layer */}
+      <div className="relative z-10">
+        <BlogHero searchQuery={searchQuery} onSearchChange={setSearchQuery} />
+
         {state.status === "loading" && (
-          <div className="flex h-64 items-center justify-center">
+          <div className="flex h-64 items-center justify-center px-6">
             <span className="text-sm text-muted-foreground">Loading articles…</span>
           </div>
         )}
 
         {state.status === "error" && (
-          <EmptyBlogList
-            title="Unable to load articles"
-            description="We couldn't reach the blog archive. Please refresh the page to try again."
-          />
+          <div className="px-6">
+            <EmptyBlogList
+              title="Unable to load articles"
+              description="We couldn't reach the blog archive. Please refresh the page to try again."
+            />
+          </div>
         )}
-
-        {state.status === "success" && state.blogs.length === 0 && <EmptyBlogList />}
-
-        {state.status === "success" && state.blogs.length > 0 && (
-          <BlogGrid blogs={state.blogs} fullBlogs={fullBlogs} />
+        
+        {state.status === "success" && (
+          <BlogGrid blogs={fullBlogs} fullBlogs={fullBlogs} />
         )}
-      </section>
-    </>
+      </div>
+    </div>
   );
 }
