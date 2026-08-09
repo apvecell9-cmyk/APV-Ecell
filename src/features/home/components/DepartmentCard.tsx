@@ -3,12 +3,12 @@ import type { DeptCardProps } from "@/types/team";
 import { DepartmentModal } from "./DepartmentModal";
 
 export function DepartmentCard({
+  id,
   department,
   subtitle,
   description,
   headName,
   headRole,
-  headPhoto,
   linkedin,
   members,
 }: DeptCardProps) {
@@ -33,20 +33,15 @@ export function DepartmentCard({
         onBlur={() => setIsHovered(false)}
         onClick={() => setIsModalOpen(true)}
         tabIndex={0}
-        onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") setIsModalOpen(true); }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") setIsModalOpen(true);
+        }}
         role="button"
         aria-label={`View ${department} team`}
       >
         {/* Background subtle watermark letter */}
         <div className="absolute -right-4 -bottom-6 font-mono font-bold text-8xl text-foreground/[0.03] select-none pointer-events-none group-hover:scale-110 transition-transform duration-700">
           {department.slice(0, 2).toUpperCase()}
-        </div>
-
-        {/* Click hint badge */}
-        <div className="absolute top-4 right-4 z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-accent/90 text-accent-foreground text-[10px] font-mono font-bold uppercase tracking-wider shadow">
-            Click for team
-          </span>
         </div>
 
         {/* Top Department Label */}
@@ -58,7 +53,9 @@ export function DepartmentCard({
           <h3 className="text-2xl font-serif text-foreground font-normal tracking-tight">
             {subtitle}
           </h3>
-          <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">{description}</p>
+          <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
+            {description}
+          </p>
         </div>
 
         {/* Middle/Bottom: By default shows quick stats */}
@@ -76,9 +73,9 @@ export function DepartmentCard({
           }`}
         >
           {/* Background photo covering full card */}
-          {!imageError && headPhoto ? (
+          {!imageError ? (
             <img
-              src={headPhoto}
+              src={`/team/${id}/head.jpg`}
               alt={headName}
               className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 ${
                 isHovered ? "scale-105" : "scale-100"
@@ -154,8 +151,8 @@ export function DepartmentCard({
       {/* Modal */}
       {isModalOpen && (
         <DepartmentModal
+          id={id}
           department={department}
-          headPhoto={headPhoto}
           headName={headName}
           headRole={headRole}
           members={members}

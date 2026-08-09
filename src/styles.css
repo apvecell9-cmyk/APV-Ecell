@@ -243,6 +243,9 @@
   .hex-anim-drift, .hex-anim-pulse, .hex-anim-wave { animation: none !important; }
   .animate-fade-in-up { animation: none !important; opacity: 1 !important; transform: none !important; }
   .hero-flow { animation: none !important; }
+  .wave-ribbon-h-1, .wave-ribbon-h-2, .wave-ribbon-h-3, .wave-ribbon-h-4, .wave-ribbon-h-5 { animation: none !important; }
+  .wave-ribbon-v-1, .wave-ribbon-v-2, .wave-ribbon-v-3, .wave-ribbon-v-4, .wave-ribbon-v-5 { animation: none !important; }
+  .wave-blob { animation: none !important; }
 }
 
 @utility hero-flow {
@@ -256,4 +259,122 @@
   to {
     transform: scale(1.16) translate3d(1.5%, 1.5%, 0);
   }
+}
+
+/* ============================================================
+   Animated Wave Ribbon Background — PS3-style flowing ribbons
+   ============================================================ */
+
+/* Horizontal drift — each layer drifts at a different speed/direction.
+   translateX(-1440px) or translateX(1440px) = exactly one PERIOD
+   in the SVG coordinate system → mathematically seamless loop. */
+
+@keyframes wave-ribbon-drift-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-1440px); }
+}
+@keyframes wave-ribbon-drift-right {
+  from { transform: translateX(0); }
+  to   { transform: translateX(1440px); }
+}
+
+/* Vertical breathing — subtle, organic undulation per layer.
+   Each has a unique pattern so layers don't synchronize. */
+
+@keyframes wave-ribbon-bob-1 {
+  0%, 100% { transform: translateY(0); }
+  30%      { transform: translateY(-5px); }
+  60%      { transform: translateY(3px); }
+  85%      { transform: translateY(-2px); }
+}
+@keyframes wave-ribbon-bob-2 {
+  0%, 100% { transform: translateY(0); }
+  25%      { transform: translateY(4px); }
+  55%      { transform: translateY(-3px); }
+  80%      { transform: translateY(2px); }
+}
+@keyframes wave-ribbon-bob-3 {
+  0%, 100% { transform: translateY(0); }
+  35%      { transform: translateY(-4px); }
+  65%      { transform: translateY(5px); }
+  90%      { transform: translateY(-1px); }
+}
+@keyframes wave-ribbon-bob-4 {
+  0%, 100% { transform: translateY(0); }
+  20%      { transform: translateY(3px); }
+  50%      { transform: translateY(-5px); }
+  75%      { transform: translateY(2px); }
+}
+@keyframes wave-ribbon-bob-5 {
+  0%, 100% { transform: translateY(0); }
+  40%      { transform: translateY(-3px); }
+  70%      { transform: translateY(4px); }
+  95%      { transform: translateY(-2px); }
+}
+
+/* Horizontal drift classes — different speeds + alternating directions for parallax */
+.wave-ribbon-h-1 { animation: wave-ribbon-drift-left  42s linear infinite; }
+.wave-ribbon-h-2 { animation: wave-ribbon-drift-right 34s linear infinite; }
+.wave-ribbon-h-3 { animation: wave-ribbon-drift-left  28s linear infinite; }
+.wave-ribbon-h-4 { animation: wave-ribbon-drift-right 22s linear infinite; }
+.wave-ribbon-h-5 { animation: wave-ribbon-drift-left  36s linear infinite; }
+
+/* Vertical breathing classes — different durations + ease-in-out for organic feel */
+.wave-ribbon-v-1 { animation: wave-ribbon-bob-1 18s ease-in-out infinite; }
+.wave-ribbon-v-2 { animation: wave-ribbon-bob-2 14s ease-in-out infinite; }
+.wave-ribbon-v-3 { animation: wave-ribbon-bob-3 12s ease-in-out infinite; }
+.wave-ribbon-v-4 { animation: wave-ribbon-bob-4 16s ease-in-out infinite; }
+.wave-ribbon-v-5 { animation: wave-ribbon-bob-5 20s ease-in-out infinite; }
+
+/* Gradient blob drift */
+@keyframes wave-blob-drift-a {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(30px, -20px) scale(1.05); }
+  66%  { transform: translate(-20px, 15px) scale(0.95); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+@keyframes wave-blob-drift-b {
+  0%   { transform: translate(0, 0) scale(1); }
+  40%  { transform: translate(-25px, 20px) scale(1.08); }
+  70%  { transform: translate(15px, -10px) scale(0.92); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+@keyframes wave-blob-drift-c {
+  0%   { transform: translate(0, 0) scale(1); }
+  35%  { transform: translate(20px, 15px) scale(0.96); }
+  65%  { transform: translate(-30px, -20px) scale(1.04); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+/* Floating gradient blobs */
+.wave-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.25;
+  pointer-events: none;
+}
+.wave-blob-a {
+  width: 500px;
+  height: 500px;
+  top: 10%;
+  left: 15%;
+  background: var(--wave-color-1, oklch(0.92 0.01 80));
+  animation: wave-blob-drift-a 28s ease-in-out infinite;
+}
+.wave-blob-b {
+  width: 400px;
+  height: 400px;
+  top: 30%;
+  right: 10%;
+  background: var(--wave-color-2, oklch(0.88 0.015 75));
+  animation: wave-blob-drift-b 22s ease-in-out infinite;
+}
+.wave-blob-c {
+  width: 350px;
+  height: 350px;
+  bottom: 15%;
+  left: 40%;
+  background: var(--wave-color-3, oklch(0.85 0.01 70));
+  animation: wave-blob-drift-c 26s ease-in-out infinite;
 }

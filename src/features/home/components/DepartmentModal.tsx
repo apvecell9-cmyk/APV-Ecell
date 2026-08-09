@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { createPortal } from "react-dom";
 import type { DeptMember } from "@/types/team";
 import { X } from "lucide-react";
 
 interface DepartmentModalProps {
+  id: string;
   department: string;
-  headPhoto: string;
   headName: string;
   headRole: string;
   members: DeptMember[];
@@ -16,16 +16,44 @@ function placeholderAvatar(seed: string) {
   return `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(seed)}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf`;
 }
 
+/**
+ * MemberAvatar — renders real photo with DiceBear fallback.
+ * Uses a local `errored` state to prevent infinite error loops.
+ */
+function MemberAvatar({ src, alt, className }: { src: string; alt: string; className?: string }) {
+  const [errored, setErrored] = useState(false);
+  const handle = useCallback(
+    (e: React.SyntheticEvent<HTMLImageElement>) => {
+      if (!errored) {
+        e.currentTarget.src = placeholderAvatar(alt);
+        setErrored(true);
+      }
+    },
+    [errored, alt],
+  );
+
+  return (
+    <img
+      src={errored ? placeholderAvatar(alt) : src}
+      alt={alt}
+      className={className}
+      onError={handle}
+    />
+  );
+}
+
 export function DepartmentModal({
+  id,
   department,
-  headPhoto,
   headName,
   headRole,
   members,
   onClose,
 }: DepartmentModalProps) {
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
     document.addEventListener("keydown", handler);
     document.body.style.overflow = "hidden";
     return () => {
@@ -59,11 +87,13 @@ export function DepartmentModal({
         }
         .apv-modal-panel {
           pointer-events: all;
-          width: 100%; max-width: 500px;
+          width: 100%; max-width: 750px;
+          max-height: 85vh;
           background: var(--surface);
           border: 1px solid var(--hairline);
           border-radius: 1.25rem;
           overflow: hidden;
+          display: flex; flex-direction: column;
           box-shadow:
             0 0 0 1px oklch(0.75 0.14 62 / 0.08),
             0 8px 32px -4px oklch(0.08 0.006 70 / 0.5),
@@ -75,6 +105,7 @@ export function DepartmentModal({
           padding: 1rem 1.5rem;
           border-bottom: 1px solid var(--hairline);
           background: var(--background);
+          flex-shrink: 0;
         }
         .apv-modal-close {
           display: flex; align-items: center; justify-content: center;
@@ -94,20 +125,27 @@ export function DepartmentModal({
         .apv-modal-body {
           padding: 2rem 1.5rem 1.5rem;
           background: var(--surface);
+          overflow-y: auto;
+          flex: 1;
+          min-height: 0;
         }
-        .apv-head-section {
+        .apv-modal-layout {
+          display: flex;
+          gap: 2rem;
+        }
+        .apv-head-column {
+          flex: 0 0 38%;
           display: flex;
           flex-direction: column;
           align-items: center;
           gap: 0;
-          margin-bottom: 2rem;
         }
         .apv-head-avatar-wrap {
           position: relative;
           margin-bottom: 1rem;
         }
         .apv-head-avatar {
-          width: 100px; height: 100px;
+          width: 140px; height: 140px;
           border-radius: 50%;
           object-fit: cover;
           border: 2px solid var(--hairline);
@@ -136,7 +174,7 @@ export function DepartmentModal({
         }
         .apv-head-name {
           font-family: var(--font-display);
-          font-size: 1.2rem;
+          font-size: 1.3rem;
           font-weight: 400;
           color: var(--foreground);
           text-align: center;
@@ -151,6 +189,18 @@ export function DepartmentModal({
           letter-spacing: 0.1em;
           text-align: center;
           margin-top: 0.25rem;
+        }
+        .apv-head-divider {
+          width: 1px;
+          background: var(--hairline);
+          align-self: stretch;
+          margin: 0.5rem 0;
+        }
+        .apv-team-column {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          min-width: 0;
         }
         .apv-members-label {
           display: flex; align-items: center; gap: 0.5rem;
@@ -173,20 +223,22 @@ export function DepartmentModal({
         }
         .apv-member-card {
           display: flex;
+          flex-direction: column;
           align-items: center;
-          gap: 0.85rem;
-          padding: 0.65rem 0.85rem;
+          gap: 0.6rem;
+          padding: 1rem 0.75rem;
           border-radius: 0.75rem;
           background: var(--background);
           border: 1px solid var(--hairline);
           transition: border-color 0.2s, box-shadow 0.2s;
+          text-align: center;
         }
         .apv-member-card:hover {
           border-color: var(--accent);
           box-shadow: 0 0 0 2px oklch(0.75 0.14 62 / 0.1);
         }
         .apv-member-avatar {
-          width: 42px; height: 42px;
+          width: 64px; height: 64px;
           border-radius: 50%;
           object-fit: cover;
           border: 1px solid var(--hairline);
@@ -211,6 +263,16 @@ export function DepartmentModal({
           padding: 0.9rem 1.5rem;
           border-top: 1px solid var(--hairline);
           background: var(--background);
+          flex-shrink: 0;
+        }
+        @media (max-width: 640px) {
+          .apv-modal-panel { max-width: 100%; max-height: 90vh; }
+          .apv-modal-layout { flex-direction: column; align-items: center; }
+          .apv-head-column { flex: none; width: 100%; }
+          .apv-head-divider { width: 100%; height: 1px; margin: 0.5rem 0; }
+          .apv-team-column { width: 100%; }
+          .apv-head-avatar { width: 120px; height: 120px; }
+          .apv-member-avatar { width: 56px; height: 56px; }
         }
       `}</style>
 
@@ -220,12 +282,27 @@ export function DepartmentModal({
       {/* Modal wrapper */}
       <div className="apv-modal-wrap" onClick={onClose}>
         <div className="apv-modal-panel" onClick={(e) => e.stopPropagation()}>
-
           {/* Header */}
           <div className="apv-modal-header">
             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--accent)", display: "inline-block" }} />
-              <span style={{ fontSize: "0.68rem", fontFamily: "monospace", textTransform: "uppercase", letterSpacing: "0.15em", color: "var(--muted-foreground)" }}>
+              <span
+                style={{
+                  width: 6,
+                  height: 6,
+                  borderRadius: "50%",
+                  background: "var(--accent)",
+                  display: "inline-block",
+                }}
+              />
+              <span
+                style={{
+                  fontSize: "0.68rem",
+                  fontFamily: "monospace",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.15em",
+                  color: "var(--muted-foreground)",
+                }}
+              >
                 {department}
               </span>
             </div>
@@ -236,64 +313,81 @@ export function DepartmentModal({
 
           {/* Body */}
           <div className="apv-modal-body">
-
-            {/* Head section */}
-            <div className="apv-head-section">
-              <div className="apv-head-avatar-wrap">
-                <div className="apv-head-ring" />
-                <img
-                  src={headPhoto}
-                  alt={headName}
-                  className="apv-head-avatar"
-                  onError={(e) => { (e.currentTarget as HTMLImageElement).src = placeholderAvatar(headName); }}
-                />
-                <span className="apv-head-badge">Head</span>
+            <div className="apv-modal-layout">
+              {/* Left column — Head */}
+              <div className="apv-head-column">
+                <div className="apv-head-avatar-wrap">
+                  <div className="apv-head-ring" />
+                  <MemberAvatar src={`/team/${id}/head.jpg`} alt={headName} className="apv-head-avatar" />
+                  <span className="apv-head-badge">Head</span>
+                </div>
+                <p className="apv-head-name">{headName}</p>
+                <p className="apv-head-role">{headRole}</p>
+                <div className="apv-head-divider" />
               </div>
-              <p className="apv-head-name">{headName}</p>
-              <p className="apv-head-role">{headRole}</p>
+
+              {/* Right column — Team */}
+              {members && members.length > 0 && (
+                <div className="apv-team-column">
+                  <div className="apv-members-label">
+                    <div className="apv-members-label-line" />
+                    <span className="apv-members-label-text">Team · {members.length}</span>
+                    <div className="apv-members-label-line" />
+                  </div>
+
+                  <div
+                    className="apv-members-grid"
+                    style={{ gridTemplateColumns: members.length <= 2 ? "1fr 1fr" : "1fr 1fr 1fr" }}
+                  >
+                    {members.map((member, i) => {
+                      const memberImgSrc = member.image
+                        ? `/team/${id}/${member.image}`
+                        : placeholderAvatar(member.name + i);
+                      return (
+                        <div key={i} className="apv-member-card">
+                          <MemberAvatar
+                            src={memberImgSrc}
+                            alt={member.name}
+                            className="apv-member-avatar"
+                          />
+                          <div>
+                            <p className="apv-member-name">{member.name}</p>
+                            <p className="apv-member-role">{member.role}</p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
-
-            {/* Members */}
-            {members && members.length > 0 && (
-              <>
-                <div className="apv-members-label">
-                  <div className="apv-members-label-line" />
-                  <span className="apv-members-label-text">Team · {members.length}</span>
-                  <div className="apv-members-label-line" />
-                </div>
-
-                <div
-                  className="apv-members-grid"
-                  style={{ gridTemplateColumns: members.length === 1 ? "1fr" : "1fr 1fr" }}
-                >
-                  {members.map((member, i) => (
-                    <div key={i} className="apv-member-card">
-                      <img
-                        src={placeholderAvatar(member.name + i)}
-                        alt={member.name}
-                        className="apv-member-avatar"
-                      />
-                      <div>
-                        <p className="apv-member-name">{member.name}</p>
-                        <p className="apv-member-role">{member.role}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
           </div>
 
           {/* Footer */}
           <div className="apv-modal-footer">
-            <span style={{ fontSize: "0.6rem", fontFamily: "monospace", textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--muted-foreground)", opacity: 0.5 }}>
+            <span
+              style={{
+                fontSize: "0.6rem",
+                fontFamily: "monospace",
+                textTransform: "uppercase",
+                letterSpacing: "0.12em",
+                color: "var(--muted-foreground)",
+                opacity: 0.5,
+              }}
+            >
               APV E-Cell
             </span>
-            <span style={{ fontSize: "0.6rem", fontFamily: "monospace", color: "var(--muted-foreground)", opacity: 0.5 }}>
+            <span
+              style={{
+                fontSize: "0.6rem",
+                fontFamily: "monospace",
+                color: "var(--muted-foreground)",
+                opacity: 0.5,
+              }}
+            >
               Press Esc to close
             </span>
           </div>
-
         </div>
       </div>
     </>

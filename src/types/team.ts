@@ -1,6 +1,7 @@
 export interface DeptMember {
   name: string;
   role: string;
+  image: string;
 }
 
 export interface DeptCardProps {
@@ -10,7 +11,6 @@ export interface DeptCardProps {
   description: string;
   headName: string;
   headRole: string;
-  headPhoto: string;
   linkedin?: string;
   members: DeptMember[];
 }
