@@ -1,6 +1,54 @@
 import React, { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import type { DeptCardProps } from "@/types/team";
 import { DepartmentModal } from "./DepartmentModal";
+
+/* ──────────────────────────────────────────────────────────────────────
+ * DepartmentCard — Editorial department card with scroll animation
+ *
+ * Features:
+ * - Compact card with improved typography hierarchy
+ * - Department-specific visual (bottom-left)
+ * - Scroll-triggered entrance animation
+ * - Preserved hover → head photo interaction
+ * - Graceful image error handling
+ * ────────────────────────────────────────────────────────────────────── */
+
+const ease = [0.22, 1, 0.36, 1] as const;
+
+/* ── Internal content stagger ──────────────────────────────────────── */
+const itemVariants = {
+  hidden: { opacity: 0, y: 8 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, ease },
+  },
+};
+
+const imageVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease, delay: 0.1 },
+  },
+};
+
+/* ── Reduced-motion fallbacks ──────────────────────────────────────── */
+const rmItem = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.25 } },
+};
+
+const rmImage = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.3 } },
+};
+
+interface DepartmentCardExtendedProps extends DeptCardProps {
+  index: number;
+}
 
 export function DepartmentCard({
   id,
@@ -11,10 +59,16 @@ export function DepartmentCard({
   headRole,
   linkedin,
   members,
-}: DeptCardProps) {
+  index,
+}: DepartmentCardExtendedProps) {
   const [imageError, setImageError] = useState(false);
+  const [logoError, setLogoError] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const reducedMotion = useReducedMotion();
+
+  const iVar = reducedMotion ? rmItem : itemVariants;
+  const iObj = reducedMotion ? rmImage : imageVariants;
 
   const initials = headName
     .split(" ")
@@ -26,7 +80,7 @@ export function DepartmentCard({
   return (
     <>
       <div
-        className="group relative rounded-xl border border-border bg-surface hover:bg-background transition-all duration-500 overflow-hidden p-8 flex flex-col justify-between min-h-[420px] shadow-soft hover:shadow-lg hover:border-primary/30 cursor-pointer"
+        className="group relative rounded-xl border border-border bg-surface hover:bg-background transition-all duration-500 overflow-hidden p-6 md:p-7 flex flex-col min-h-[360px] lg:min-h-[380px] shadow-soft hover:shadow-lg hover:border-primary/30 cursor-pointer"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onFocus={() => setIsHovered(true)}
@@ -44,27 +98,58 @@ export function DepartmentCard({
           {department.slice(0, 2).toUpperCase()}
         </div>
 
-        {/* Top Department Label */}
-        <div className="relative z-10 space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/80 text-foreground text-xs font-mono font-medium uppercase tracking-wider">
-            <span className="w-1.5 h-1.5 rounded-full bg-accent inline-block" />
+        {/* ── Top Section: Category + Title + Description ─────────── */}
+        <div className="relative z-10 space-y-3 flex-1">
+          <motion.div
+            variants={iVar}
+            className="text-[1.4rem] md:text-[1.55rem] font-serif text-foreground font-medium tracking-tight leading-tight"
+          >
             {department}
-          </div>
-          <h3 className="text-2xl font-serif text-foreground font-normal tracking-tight">
+          </motion.div>
+
+          <motion.h3
+            variants={iVar}
+            className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-secondary/80 text-foreground text-[10px] font-mono uppercase tracking-widest"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-accent inline-block" />
             {subtitle}
-          </h3>
-          <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
+          </motion.h3>
+
+          <motion.p
+            variants={iVar}
+            className="text-[0.8125rem] text-muted-foreground leading-relaxed line-clamp-2"
+          >
             {description}
-          </p>
+          </motion.p>
         </div>
 
-        {/* Middle/Bottom: By default shows quick stats */}
-        <div className="relative z-10 mt-8 pt-6 border-t border-hairline flex items-center justify-between text-xs text-muted-foreground">
+        {/* ── Department Visual — Bottom Left ─────────────────────── */}
+        <motion.div
+          variants={iObj}
+          className="relative z-10 mt-4"
+        >
+          {!logoError ? (
+            <div className="w-14 h-14 md:w-16 md:h-16 rounded-lg overflow-hidden opacity-50 group-hover:opacity-30 transition-opacity duration-500">
+              <img
+                src={`/team/${id}/department-logo.png`}
+                alt=""
+                className="w-full h-full object-cover"
+                onError={() => setLogoError(true)}
+              />
+            </div>
+          ) : null}
+        </motion.div>
+
+        {/* ── Footer — Department Head ────────────────────────────── */}
+        <motion.div
+          variants={iVar}
+          className="relative z-10 mt-auto pt-4 border-t border-hairline flex items-center justify-between text-xs text-muted-foreground"
+        >
           <span className="font-mono uppercase tracking-wider">Department Head</span>
           <span className="font-medium text-foreground">{headName}</span>
-        </div>
+        </motion.div>
 
-        {/* Hover overlay covering the FULL card with photo */}
+        {/* ── Hover Overlay — Head Photo ──────────────────────────── */}
         <div
           className={`absolute inset-0 z-20 overflow-hidden rounded-xl transition-all duration-500 flex flex-col justify-between ${
             isHovered
@@ -90,21 +175,13 @@ export function DepartmentCard({
           )}
 
           {/* Gradient dark overlay for high contrast text readability */}
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-slate-950/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-slate-950/10" />
 
           {/* Content container inside hover overlay */}
           <div className="relative z-10 p-6 flex flex-col justify-between h-full text-white">
             {/* Top section */}
-            <div className="flex items-center justify-between">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-[11px] font-mono tracking-wide uppercase text-amber-300 font-medium">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                {department}
-              </span>
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-400/20 border border-amber-400/30 text-[10px] font-mono uppercase text-amber-300 tracking-wider animate-pulse">
-                Click for team →
-              </span>
-            </div>
-
+            <div className="flex items-center justify-between" />
+            
             {/* Bottom section */}
             <div className="space-y-4">
               <div>
