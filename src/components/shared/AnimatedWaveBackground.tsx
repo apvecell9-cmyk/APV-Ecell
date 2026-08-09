@@ -162,21 +162,25 @@ export function AnimatedWaveBackground() {
         xmlns="http://www.w3.org/2000/svg"
         style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
       >
-        {BANDS.map((b) => {
-          const rightward = b.dir === "right";
-          // Leftward bands: copies at 0 and +P, animate translateX 0 → -P.
-          // Rightward bands: copies at 0 and -P, animate translateX 0 → +P.
-          // (Copy placement has to be on the side the animation is
-          // heading TOWARD, or the far edge of the viewport goes empty
-          // partway through the loop.)
-          const secondCopyX = rightward ? -P : P;
-          return (
-            <g className={`wb-${b.key}`} key={b.key}>
-              <path d={PATHS[b.key]} fill={b.color} />
-              <path d={PATHS[b.key]} fill={b.color} transform={`translate(${secondCopyX},0)`} />
-            </g>
-          );
-        })}
+        {/* Single vertical offset — shifts the entire wave composition downward
+            without changing wave geometry, animation, or relative positioning. */}
+        <g transform="translate(0, 75)">
+          {BANDS.map((b) => {
+            const rightward = b.dir === "right";
+            // Leftward bands: copies at 0 and +P, animate translateX 0 → -P.
+            // Rightward bands: copies at 0 and -P, animate translateX 0 → +P.
+            // (Copy placement has to be on the side the animation is
+            // heading TOWARD, or the far edge of the viewport goes empty
+            // partway through the loop.)
+            const secondCopyX = rightward ? -P : P;
+            return (
+              <g className={`wb-${b.key}`} key={b.key}>
+                <path d={PATHS[b.key]} fill={b.color} />
+                <path d={PATHS[b.key]} fill={b.color} transform={`translate(${secondCopyX},0)`} />
+              </g>
+            );
+          })}
+        </g>
       </svg>
 
       <style>{`

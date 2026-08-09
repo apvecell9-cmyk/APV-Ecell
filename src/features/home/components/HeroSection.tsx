@@ -5,7 +5,7 @@ import { AnimatedWaveBackground } from "@/components/shared/AnimatedWaveBackgrou
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden border-b border-border bg-background pt-20">
+    <section className="relative min-h-[100vh] flex items-center justify-center overflow-hidden border-b border-border bg-background pt-20">
       {/* Animated wave background — fully code-generated, no image asset */}
       <AnimatedWaveBackground />
 
