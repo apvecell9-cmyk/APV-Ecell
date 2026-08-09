@@ -1,0 +1,191 @@
+/*
+ * ============================================================================
+ * THEME.CSS — single source of truth for the site's color system
+ * ============================================================================
+ *
+ * Palette direction: "Blueish-Purple", inspired by the deep navy of the
+ * Agnel Polytechnic crest (public/logos/logo.png) — pushed a touch toward
+ * violet for a more energetic, modern E-Cell feel.
+ *
+ * All colors are defined in oklch(L C H):
+ *   L = lightness  (0 = black, 1 = white)
+ *   C = chroma     (0 = grey, higher = more saturated)
+ *   H = hue angle  (~265-300 = blue → violet → purple range)
+ *
+ * HOW TO RE-THEME THE ENTIRE SITE:
+ *   Change the values in the :root / .dark blocks below. Every component
+ *   uses semantic Tailwind classes (bg-primary, text-accent, border-border,
+ *   etc.) that map to these variables via the @theme inline block — nothing
+ *   else in the codebase should hardcode a color.
+ *
+ * The @theme inline block maps CSS custom properties to Tailwind utility
+ * classes (e.g. --color-primary -> bg-primary, text-primary).
+ * ============================================================================
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0.25rem;
+
+  /* Neutrals — cool, faintly violet-tinted whites/greys */
+  --background: oklch(0.985 0.006 285);
+  --foreground: oklch(0.22 0.035 275);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.22 0.035 275);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.22 0.035 275);
+
+  /* Primary — deep indigo-navy, pulled straight from the crest */
+  --primary: oklch(0.32 0.13 273);
+  --primary-foreground: oklch(0.98 0.008 285);
+
+  --secondary: oklch(0.94 0.018 280);
+  --secondary-foreground: oklch(0.32 0.13 273);
+
+  --muted: oklch(0.94 0.018 280);
+  --muted-foreground: oklch(0.52 0.03 275);
+
+  /* Accent — vivid blue-purple, the "energy" color for CTAs & highlights */
+  --accent: oklch(0.58 0.19 292);
+  --accent-foreground: oklch(0.98 0.008 285);
+
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0.004 90);
+
+  --border: oklch(0.9 0.016 280);
+  --input: oklch(0.9 0.016 280);
+  --ring: oklch(0.58 0.19 292);
+
+  /* Chart palette — kept inside the blue → violet → magenta family */
+  --chart-1: oklch(0.58 0.19 292);
+  --chart-2: oklch(0.6 0.14 255);
+  --chart-3: oklch(0.5 0.16 310);
+  --chart-4: oklch(0.72 0.14 270);
+  --chart-5: oklch(0.42 0.12 285);
+
+  --sidebar: oklch(0.985 0.006 285);
+  --sidebar-foreground: oklch(0.22 0.035 275);
+  --sidebar-primary: oklch(0.32 0.13 273);
+  --sidebar-primary-foreground: oklch(0.98 0.008 285);
+  --sidebar-accent: oklch(0.94 0.018 280);
+  --sidebar-accent-foreground: oklch(0.32 0.13 273);
+  --sidebar-border: oklch(0.9 0.016 280);
+  --sidebar-ring: oklch(0.58 0.19 292);
+
+  --surface: oklch(1 0 0);
+  --ink-soft: oklch(0.45 0.03 275);
+  --hairline: oklch(0.88 0.016 280);
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-sans: "Inter Tight", system-ui, sans-serif;
+  --shadow-soft: 0 1px 2px oklch(0.25 0.05 275 / 0.06), 0 12px 40px -24px oklch(0.3 0.12 280 / 0.3);
+
+  /* Reusable gradient stops for wave/hero backgrounds — kept here so any
+     component can pull the same on-brand blue-purple gradient. */
+  --wave-color-1: oklch(0.32 0.13 273);
+  --wave-color-2: oklch(0.5 0.17 285);
+  --wave-color-3: oklch(0.58 0.19 292);
+  --wave-color-4: oklch(0.68 0.14 300);
+}
+
+.dark {
+  --background: oklch(0.16 0.03 275);
+  --foreground: oklch(0.96 0.01 285);
+  --card: oklch(0.21 0.035 275);
+  --card-foreground: oklch(0.96 0.01 285);
+  --popover: oklch(0.21 0.035 275);
+  --popover-foreground: oklch(0.96 0.01 285);
+
+  --primary: oklch(0.72 0.15 285);
+  --primary-foreground: oklch(0.16 0.03 275);
+
+  --secondary: oklch(0.27 0.035 275);
+  --secondary-foreground: oklch(0.96 0.01 285);
+
+  --muted: oklch(0.27 0.035 275);
+  --muted-foreground: oklch(0.72 0.02 280);
+
+  --accent: oklch(0.68 0.19 292);
+  --accent-foreground: oklch(0.16 0.03 275);
+
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.96 0.004 90);
+
+  --border: oklch(1 0 0 / 14%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.68 0.19 292);
+
+  --chart-1: oklch(0.68 0.19 292);
+  --chart-2: oklch(0.65 0.14 255);
+  --chart-3: oklch(0.6 0.17 310);
+  --chart-4: oklch(0.78 0.13 270);
+  --chart-5: oklch(0.55 0.12 285);
+
+  --surface: oklch(0.21 0.035 275);
+  --ink-soft: oklch(0.76 0.02 280);
+  --hairline: oklch(1 0 0 / 14%);
+
+  --sidebar: oklch(0.21 0.035 275);
+  --sidebar-foreground: oklch(0.96 0.01 285);
+  --sidebar-primary: oklch(0.72 0.15 285);
+  --sidebar-primary-foreground: oklch(0.16 0.03 275);
+  --sidebar-accent: oklch(0.27 0.035 275);
+  --sidebar-accent-foreground: oklch(0.96 0.01 285);
+  --sidebar-border: oklch(1 0 0 / 14%);
+  --sidebar-ring: oklch(0.68 0.19 292);
+
+  --wave-color-1: oklch(0.72 0.15 285);
+  --wave-color-2: oklch(0.6 0.18 292);
+  --wave-color-3: oklch(0.5 0.17 285);
+  --wave-color-4: oklch(0.4 0.14 275);
+}
+
+@theme inline {
+  --color-surface: var(--surface);
+  --color-ink-soft: var(--ink-soft);
+  --color-hairline: var(--hairline);
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+}
