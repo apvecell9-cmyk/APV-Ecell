@@ -30,8 +30,8 @@ function Index() {
       {/* Our Teams: departmental cards with hover head photo + member reveal */}
       <TeamSection />
 
-      {/* Gallery preview: cinematic event cards with animated hex background */}
-      <LandingGallerySection />
+      {/* Gallery preview: cinematic event cards with animated hex background
+      <LandingGallerySection /> */}
 
       {/* Combined References & Incubation Partner in one cohesive section */}
       <CombinedPartnersSection />

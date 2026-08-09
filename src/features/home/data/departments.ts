@@ -2,36 +2,50 @@ import type { DeptCardProps } from "@/types/team";
 
 export const departments: DeptCardProps[] = [
   {
-    id: "executive-office",
-    department: "Executive Office",
+    id: "president",
+    department: "President",
     subtitle: "Overall E-Cell Leadership & Strategy",
     description:
       "Leading the vision and strategic direction of APV E-Cell, driving innovation, and empowering young founders across campus.",
     headName: "Rosemia James",
     headRole: "President, APV E-Cell",
-    headPhoto: "/team/executive-office/head.jpg",
+    headPhoto: "/team/president/head.jpg",
     linkedin: "https://www.linkedin.com/",
-    members: [
-      { name: "Executive Council", role: "Leadership Strategy" },
-    ],
+    members: [],
   },
   {
-    id: "finance-ops",
+    id: "finance",
     department: "Finance & Operations",
     subtitle: "Fiscal Strategy & Budgeting",
     description:
       "Managing financial strategies, budgets, sponsorships, and operational excellence across all E-Cell initiatives.",
     headName: "Ritesh Jogdankar",
     headRole: "Head of Finance",
-    headPhoto: "/team/finance-ops/head.jpg",
+    headPhoto: "/team/finance/head.jpg",
     members: [
       { name: "Nitu Patil", role: "Team Member" },
       { name: "Ashley Dsouza", role: "Team Member" },
     ],
   },
   {
+    id: "technical",
+    department: "Technical & Web Development",
+    subtitle: "Digital & Engineering Systems",
+    description:
+      "Driving innovation through cutting-edge web platforms, hackathon infrastructure, and developer training.",
+    headName: "Rehan Khan",
+    headRole: "Head of Technology & Web Development",
+    headPhoto: "/team/technical/head.png",
+    linkedin: "https://www.linkedin.com/in/",
+    members: [
+      { name: "Pranav Ingulkar", role: "Team Member" },
+      { name: "Raechel", role: "Team Member" },
+      { name: "Sheikh Namira", role: "Team Member" },
+    ],
+  },
+  {
     id: "liaison",
-    department: "Liaison & Outreach",
+    department: "Liaison & Documentation",
     subtitle: "Institutional & External Relations",
     description:
       "Building strong partnerships, industry connections, and coordinating external collaborations for APV E-Cell.",
@@ -86,23 +100,6 @@ export const departments: DeptCardProps[] = [
       { name: "Tanvi Kulkarni", role: "Campus Ambassador" },
       { name: "Rohan Deshmukh", role: "PR Coordinator" },
       { name: "Siddhi Shinde", role: "Partnerships" },
-    ],
-  },
-  {
-    id: "technical",
-    department: "Technical & Dev",
-    subtitle: "Digital & Engineering Systems",
-    description:
-      "Driving innovation through cutting-edge web platforms, hackathon infrastructure, and developer training.",
-    headName: "Arush Wavhal",
-    headRole: "Head of Technology and Development",
-    headPhoto: "/team/technical/head.jpg",
-    linkedin: "https://www.linkedin.com/in/arush-wavhal-292647377",
-    members: [
-      { name: "Kabir Joshi", role: "Frontend Dev" },
-      { name: "Devansh Patil", role: "System Arch" },
-      { name: "Ananya Rao", role: "UI/UX Code" },
-      { name: "Yash Shinde", role: "Full-Stack" },
     ],
   },
   {

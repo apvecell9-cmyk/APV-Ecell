@@ -2,20 +2,22 @@ import React from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 import heroBg from "@/assets/backgrounds/hero-bg.jpg";
+import { AnimatedWaveBackground } from "@/components/shared/AnimatedWaveBackground";
 
 export function HeroSection() {
   return (
     <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden border-b border-border bg-background pt-20">
       {/* Flowing background image with minimal editorial masking */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        <img
+        <AnimatedWaveBackground />
+        {/* <img
           src={heroBg}
           alt="Abstract flowing liquid silk waves"
           className="w-full h-full object-cover opacity-80 hero-flow filter contrast-105"
         />
         {/* Soft radial gradients to ensure high contrast for typography */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/75 via-background/40 to-background" />
-        <div className="absolute inset-0 bg-radial from-transparent via-background/50 to-background" />
+        {/* <div className="absolute inset-0 bg-gradient-to-b from-background/75 via-background/40 to-background" />
+        <div className="absolute inset-0 bg-radial from-transparent via-background/50 to-background" /> */} */
       </div>
 
       <div className="relative z-10 max-w-5xl mx-auto px-6 lg:px-12 py-24 text-center">
