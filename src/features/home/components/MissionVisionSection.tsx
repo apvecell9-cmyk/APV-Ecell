@@ -1,121 +1,263 @@
 import React from "react";
-import { Compass, Target, CheckCircle2, Sparkles } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
+import { Compass, Target, Check } from "lucide-react";
+
+/* ──────────────────────────────────────────────────────────────────────
+ * MissionVisionSection — Compact editorial two-card layout
+ *
+ * Vision & Mission section with scroll-triggered animations.
+ * Uses framer-motion whileInView for viewport-based reveals.
+ * ────────────────────────────────────────────────────────────────────── */
+
+const ease = [0.22, 1, 0.36, 1] as const;
+
+/* ── Heading animation ─────────────────────────────────────────────── */
+const headingVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease },
+  },
+};
+
+/* ── Card entrance — staggered from bottom ─────────────────────────── */
+const cardVariants = {
+  hidden: (i: number) => ({
+    opacity: 0,
+    y: 40,
+    scale: 0.97,
+  }),
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.6,
+      ease,
+      delay: i * 0.12 + 0.2,
+      staggerChildren: 0.06,
+      delayChildren: 0.15,
+    },
+  }),
+};
+
+/* ── Inner content stagger ─────────────────────────────────────────── */
+const itemVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease },
+  },
+};
+
+const iconVariants = {
+  hidden: { opacity: 0, scale: 0.8, rotate: -10 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    rotate: 0,
+    transition: { duration: 0.6, ease },
+  },
+};
+
+/* ── Reduced-motion fallbacks ──────────────────────────────────────── */
+const rmHeading = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.3 } },
+};
+
+const rmCard = {
+  hidden: (i: number) => ({ opacity: 0 }),
+  visible: (i: number) => ({
+    opacity: 1,
+    transition: { duration: 0.3, delay: i * 0.1 + 0.1, staggerChildren: 0.04, delayChildren: 0.1 },
+  }),
+};
+
+const rmItem = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.25 } },
+};
+
+const rmIcon = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.25 } },
+};
 
 export function MissionVisionSection() {
+  const reducedMotion = useReducedMotion();
+
+  const hVar = reducedMotion ? rmHeading : headingVariants;
+  const cVar = reducedMotion ? rmCard : cardVariants;
+  const iVar = reducedMotion ? rmItem : itemVariants;
+  const iObj = reducedMotion ? rmIcon : iconVariants;
+
+  const cards = [
+    {
+      num: "01",
+      title: "Our Vision",
+      statement: "A transformative mindset for every student.",
+      icon: Compass,
+      iconColor: "text-primary",
+      iconBg: "bg-primary/10",
+      iconBorder: "border-primary/20",
+      accentColor: "text-accent",
+      bullets: [
+        "Champion entrepreneurship as a life skill.",
+        "Build a community where creativity and resilience thrive.",
+        "Create lasting social and economic impact.",
+      ],
+      tags: ["ENTREPRENEURSHIP", "CREATIVITY", "IMPACT"],
+      footer: "FUTURE FOCUSED",
+    },
+    {
+      num: "02",
+      title: "Our Mission",
+      statement: "Turn ideas into real-world innovation.",
+      icon: Target,
+      iconColor: "text-accent",
+      iconBg: "bg-accent/10",
+      iconBorder: "border-accent/20",
+      accentColor: "text-primary",
+      bullets: [
+        "Give students hands-on entrepreneurial experience.",
+        "Develop ethical, strategic future leaders.",
+        "Create an ecosystem where experimentation and learning are encouraged.",
+      ],
+      tags: ["ACTION", "EXPERIENCE", "INNOVATION"],
+      footer: "ACTION DRIVEN",
+    },
+  ];
 
   return (
-    <section className="py-24 px-6 lg:px-12 bg-surface border-t border-border relative overflow-hidden">
+    <section className="py-16 lg:py-20 px-6 lg:px-12 bg-surface border-t border-border relative overflow-hidden">
       {/* Subtle grid pattern background overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#1f2937_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#1f2937_1px,transparent_1px)] [background-size:24px_24px] opacity-30 pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto space-y-16 relative z-10">
-        {/* Header Title */}
-        <div className="max-w-3xl space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary text-foreground text-xs font-mono uppercase tracking-wider">
-            <Sparkles className="w-3.5 h-3.5 text-accent" />
-            <span>Purpose & Impact</span>
-          </div>
-          <h2 className="text-3xl md:text-5xl font-serif tracking-tight text-foreground leading-tight">
-            Championing ideas into lasting societal change.
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* ── Section Heading ──────────────────────────────────────── */}
+        <motion.div
+          variants={hVar}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          className="mb-10 lg:mb-14"
+        >
+          <h2 className="font-serif text-3xl md:text-4xl tracking-tight text-foreground">
+            Vision & Mission
           </h2>
-          <p className="text-muted-foreground text-base leading-relaxed">
-            At Agnel Polytechnic, Vashi, we redefine entrepreneurship. It is not merely about
-            launching companies—it is about cultivating resilience, strategic thinking, and
-            ethical leadership that stands the test of time.
-          </p>
-        </div>
+          <div className="mt-3 w-12 h-0.5 bg-accent/60 rounded-full" />
+        </motion.div>
 
-        {/* Side-by-Side Modern Feature Cards for Vision & Mission */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Card 01: Vision */}
-          <div className="group relative rounded-3xl border border-border bg-background/80 backdrop-blur-md p-8 md:p-10 shadow-soft hover:shadow-2xl hover:border-primary/40 transition-all duration-500 flex flex-col justify-between overflow-hidden">
-            {/* Glowing background accent */}
-            <div className="absolute -top-12 -right-12 w-48 h-48 bg-primary/10 rounded-full blur-3xl group-hover:bg-primary/20 transition-all duration-500 pointer-events-none" />
+        {/* ── Two Cards with Connector ─────────────────────────────── */}
+        <div className="relative">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+            {cards.map((card, i) => {
+              const Icon = card.icon;
 
-            <div className="space-y-8 relative z-10">
-              <div className="flex items-center justify-between">
-                <div className="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-500">
-                  <Compass className="w-6 h-6" />
-                </div>
-                <span className="font-mono text-xs text-muted-foreground uppercase tracking-widest bg-secondary px-3 py-1 rounded-full border border-border">
-                  01 • Our Vision
-                </span>
-              </div>
+              return (
+                <motion.div
+                  key={i}
+                  custom={i}
+                  variants={cVar}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.2 }}
+                  whileHover={
+                    reducedMotion
+                      ? undefined
+                      : { y: -4, transition: { duration: 0.3, ease } }
+                  }
+                  className="group relative rounded-2xl border border-border bg-background/80 backdrop-blur-md p-6 md:p-8 shadow-soft hover:shadow-lg hover:border-primary/30 transition-all duration-500 flex flex-col overflow-hidden"
+                >
+                  {/* Warm accent glow on hover */}
+                  <div className="absolute -top-10 -right-10 w-40 h-40 bg-accent/5 rounded-full blur-3xl group-hover:bg-accent/10 transition-all duration-700 pointer-events-none" />
 
-              <div className="space-y-4">
-                <h3 className="text-2xl md:text-3xl font-serif text-foreground font-medium tracking-tight">
-                  A transformative mindset for every student.
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  We strive to cultivate a vibrant ecosystem where technical knowledge meets entrepreneurial initiative, preparing students to become fearless problem solvers.
-                </p>
+                  <div className="space-y-5 relative z-10 flex-1">
+                    {/* ── Icon + Number Row ─────────────────────────── */}
+                    <motion.div
+                      variants={iVar}
+                      className="flex items-start justify-between"
+                    >
+                      <motion.div
+                        variants={iObj}
+                        className={`w-11 h-11 rounded-xl ${card.iconBg} border ${card.iconBorder} flex items-center justify-center ${card.iconColor} group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500`}
+                      >
+                        <Icon className="w-5.5 h-5.5" />
+                      </motion.div>
+                      <span className="font-mono text-[10px] text-muted-foreground/50 tabular-nums mt-1">
+                        {card.num}
+                      </span>
+                    </motion.div>
 
-                <ul className="space-y-3.5 pt-2">
-                  <li className="flex items-start gap-3 text-sm text-foreground/90">
-                    <CheckCircle2 className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                    <span>Champion entrepreneurship as an essential life skill across all technical disciplines.</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm text-foreground/90">
-                    <CheckCircle2 className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                    <span>Cultivate a community where resilience, creativity, and empathy drive innovation.</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm text-foreground/90">
-                    <CheckCircle2 className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                    <span>Redefine success by the lasting, positive social & economic impact we create.</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
+                    {/* ── Title: "OUR VISION" / "OUR MISSION" ──────── */}
+                    <motion.div variants={iVar}>
+                      <h3 className="text-xl md:text-2xl font-serif font-medium text-foreground tracking-tight leading-tight">
+                        {card.title}
+                      </h3>
+                    </motion.div>
 
-            <div className="mt-8 pt-6 border-t border-hairline flex items-center justify-between text-xs text-muted-foreground font-mono uppercase tracking-wider relative z-10">
-              <span>Future Focused</span>
-              <span>APV Vashi</span>
-            </div>
+                    {/* ── Main Statement (Bold & Prominent) ─────────── */}
+                    <motion.p
+                      variants={iVar}
+                      className="text-base md:text-lg font-medium text-foreground/90 leading-snug"
+                    >
+                      {card.statement}
+                    </motion.p>
+
+                    {/* ── Supporting Bullet Points ──────────────────── */}
+                    <motion.ul
+                      variants={iVar}
+                      className="space-y-3 pt-1"
+                    >
+                      {card.bullets.map((bullet, j) => (
+                        <motion.li
+                          key={j}
+                          variants={iVar}
+                          className="flex items-start gap-2.5 text-sm text-muted-foreground leading-relaxed"
+                        >
+                          <Check
+                            className={`w-4 h-4 ${card.accentColor} shrink-0 mt-0.5`}
+                            strokeWidth={2.5}
+                          />
+                          <span>{bullet}</span>
+                        </motion.li>
+                      ))}
+                    </motion.ul>
+                  </div>
+
+                  {/* ── Footer: Tags + Label ────────────────────────── */}
+                  <motion.div
+                    variants={iVar}
+                    className="mt-6 pt-4 border-t border-hairline flex items-center justify-between relative z-10"
+                  >
+                    <div className="flex gap-1.5 flex-wrap">
+                      {card.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="text-[9px] font-mono text-muted-foreground/60 uppercase tracking-wider px-1.5 py-0.5 rounded bg-secondary/50"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <span className="text-[9px] font-mono text-muted-foreground/50 uppercase tracking-wider">
+                      {card.footer}
+                    </span>
+                  </motion.div>
+                </motion.div>
+              );
+            })}
           </div>
 
-          {/* Card 02: Mission */}
-          <div className="group relative rounded-3xl border border-border bg-background/80 backdrop-blur-md p-8 md:p-10 shadow-soft hover:shadow-2xl hover:border-accent/40 transition-all duration-500 flex flex-col justify-between overflow-hidden">
-            {/* Glowing background accent */}
-            <div className="absolute -bottom-12 -right-12 w-48 h-48 bg-accent/10 rounded-full blur-3xl group-hover:bg-accent/20 transition-all duration-500 pointer-events-none" />
-
-            <div className="space-y-8 relative z-10">
-              <div className="flex items-center justify-between">
-                <div className="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent group-hover:scale-110 transition-transform duration-500">
-                  <Target className="w-6 h-6" />
-                </div>
-                <span className="font-mono text-xs text-muted-foreground uppercase tracking-widest bg-secondary px-3 py-1 rounded-full border border-border">
-                  02 • Our Mission
-                </span>
-              </div>
-
-              <div className="space-y-4">
-                <h3 className="text-2xl md:text-3xl font-serif text-foreground font-medium tracking-tight">
-                  Turn vision into real-world innovation.
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Providing students with actionable pathways, hands-on incubation, seed networking, and mentorship to turn early-stage ideas into scalable ventures.
-                </p>
-
-                <ul className="space-y-3.5 pt-2">
-                  <li className="flex items-start gap-3 text-sm text-foreground/90">
-                    <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                    <span>Empower students with hands-on incubation, mentorship, and practical training experiences.</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm text-foreground/90">
-                    <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                    <span>Equip future leaders with ethical values, strategic thinking, and execution mastery.</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm text-foreground/90">
-                    <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                    <span>Foster an inclusive ecosystem that encourages calculated risk-taking and learning.</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="mt-8 pt-6 border-t border-hairline flex items-center justify-between text-xs text-muted-foreground font-mono uppercase tracking-wider relative z-10">
-              <span>Action Driven</span>
-              <span>APV E-Cell</span>
+          {/* ── Subtle Connector (Desktop Only) ────────────────────── */}
+          <div className="hidden lg:flex absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-px bg-border" />
+              <div className="w-1.5 h-1.5 rounded-full bg-accent/40" />
+              <div className="w-8 h-px bg-border" />
             </div>
           </div>
         </div>
