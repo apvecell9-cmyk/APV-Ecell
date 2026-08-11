@@ -82,7 +82,7 @@ function buildBand(waveFn: WaveFn): string {
 
 /* ── Band recipes ────────────────────────────────────────────────────────
  * Ordered back (darkest, near the top) → front (lightest, near the
- * bottom), matching the reference palette. Direction alternates per band
+ * bottom), matching the APV E-Cell purple palette. Direction alternates per band
  * and speeds vary so each layer visibly drifts past its neighbors.
  * ──────────────────────────────────────────────────────────────────────── */
 const BANDS = [
@@ -92,7 +92,7 @@ const BANDS = [
       { mult: 1, amp: 42, phase: 0.4 },
       { mult: 2, amp: 16, phase: 1.6 },
     ]),
-    color: "#4a76bd",
+    color: "#510C9A",
     dir: "left",
     dur: 62,
   },
@@ -102,7 +102,7 @@ const BANDS = [
       { mult: 1, amp: 52, phase: 2.1 },
       { mult: 2, amp: 20, phase: 0.3 },
     ]),
-    color: "#5a8bce",
+    color: "#6A1FAF",
     dir: "right",
     dur: 50,
   },
@@ -112,7 +112,7 @@ const BANDS = [
       { mult: 1, amp: 48, phase: 0.9 },
       { mult: 2, amp: 22, phase: 2.4 },
     ]),
-    color: "#6fa3db",
+    color: "#8733C0",
     dir: "left",
     dur: 42,
   },
@@ -122,7 +122,7 @@ const BANDS = [
       { mult: 1, amp: 44, phase: 3.0 },
       { mult: 2, amp: 17, phase: 1.0 },
     ]),
-    color: "#8fc0e9",
+    color: "#A855D4",
     dir: "right",
     dur: 55,
   },
@@ -132,7 +132,7 @@ const BANDS = [
       { mult: 1, amp: 40, phase: 1.4 },
       { mult: 2, amp: 14, phase: 2.9 },
     ]),
-    color: "#b9ddf3",
+    color: "#C9B5E5",
     dir: "left",
     dur: 36,
   },
@@ -142,7 +142,7 @@ const BANDS = [
       { mult: 1, amp: 34, phase: 2.6 },
       { mult: 2, amp: 11, phase: 0.7 },
     ]),
-    color: "#ddf1fb",
+    color: "#E8E0F3",
     dir: "right",
     dur: 68,
   },
@@ -154,7 +154,7 @@ export function AnimatedWaveBackground() {
   return (
     <div className="absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
       {/* Darkest tone as the base fill, visible above the first band's peaks */}
-      <div className="absolute inset-0" style={{ background: "#3f68ab" }} />
+      <div className="absolute inset-0" style={{ background: "#2F0553" }} />
 
       <svg
         viewBox={`0 0 ${VB_W} ${VB_H}`}

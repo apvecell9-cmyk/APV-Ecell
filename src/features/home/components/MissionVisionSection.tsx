@@ -134,7 +134,7 @@ export function MissionVisionSection() {
   return (
     <section className="py-16 lg:py-20 px-6 lg:px-12 bg-surface border-t border-border relative overflow-hidden">
       {/* Subtle grid pattern background overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#1f2937_1px,transparent_1px)] [background-size:24px_24px] opacity-30 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(var(--hairline)_1px,transparent_1px)] dark:bg-[radial-gradient(var(--border)_1px,transparent_1px)] [background-size:24px_24px] opacity-30 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* ── Section Heading ──────────────────────────────────────── */}

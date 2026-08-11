@@ -75,7 +75,7 @@ export function DepartmentModal({
         }
         .apv-modal-backdrop {
           position: fixed; inset: 0; z-index: 99998;
-          background: oklch(0.08 0.006 70 / 0.82);
+          background: var(--backdrop, oklch(0.12 0.02 300 / 0.82));
           backdrop-filter: blur(8px);
           animation: apv-fade-in 0.2s ease both;
         }
@@ -95,9 +95,9 @@ export function DepartmentModal({
           overflow: hidden;
           display: flex; flex-direction: column;
           box-shadow:
-            0 0 0 1px oklch(0.75 0.14 62 / 0.08),
-            0 8px 32px -4px oklch(0.08 0.006 70 / 0.5),
-            0 32px 80px -8px oklch(0.08 0.006 70 / 0.4);
+            0 0 0 1px var(--modal-ring, oklch(0.47 0.21 300 / 0.08)),
+            0 8px 32px -4px var(--modal-shadow, oklch(0.12 0.02 300 / 0.5)),
+            0 32px 80px -8px var(--modal-shadow, oklch(0.12 0.02 300 / 0.4));
           animation: apv-modal-in 0.35s cubic-bezier(0.34, 1.46, 0.64, 1) both;
         }
         .apv-modal-header {
@@ -150,7 +150,7 @@ export function DepartmentModal({
           object-fit: cover;
           border: 2px solid var(--hairline);
           display: block;
-          box-shadow: 0 4px 24px oklch(0.08 0.006 70 / 0.25);
+          box-shadow: 0 4px 24px var(--modal-shadow, oklch(0.12 0.02 300 / 0.25));
         }
         .apv-head-ring {
           position: absolute; inset: -5px;
@@ -170,7 +170,7 @@ export function DepartmentModal({
           padding: 3px 8px;
           border-radius: 999px;
           white-space: nowrap;
-          box-shadow: 0 2px 8px oklch(0.08 0.006 70 / 0.3);
+          box-shadow: 0 2px 8px var(--modal-shadow, oklch(0.12 0.02 300 / 0.3));
         }
         .apv-head-name {
           font-family: var(--font-display);
@@ -235,7 +235,7 @@ export function DepartmentModal({
         }
         .apv-member-card:hover {
           border-color: var(--accent);
-          box-shadow: 0 0 0 2px oklch(0.75 0.14 62 / 0.1);
+          box-shadow: 0 0 0 2px var(--modal-ring, oklch(0.47 0.21 300 / 0.1));
         }
         .apv-member-avatar {
           width: 64px; height: 64px;

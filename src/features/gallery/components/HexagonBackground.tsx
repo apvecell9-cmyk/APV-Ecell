@@ -49,14 +49,14 @@ function speedClass(speed: "slow" | "normal" | "fast"): string {
 
 export function HexagonBackground({
   opacity = 0.5,
-  lineColor = "#000000",
+  lineColor = "#510C9A",
   animated = true,
   animationSpeed = "fast",
   className = "",
 }: HexagonBackgroundProps) {
   // If lineColor is non-default, regenerate the SVG with the custom color
   const hexSvg =
-    lineColor !== "#000"
+    lineColor !== "#510C9A"
       ? `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='34.64'%3E%3Cpath d='M10 8.66 5 0 15 0 20 8.66 15 17.32 5 17.32Z' fill='none' stroke='${encodeURIComponent(lineColor)}' stroke-opacity='0.15' stroke-width='0.75'/%3E%3Cpath d='M25 17.32 20 8.66 30 8.66 35 17.32 30 25.98 20 25.98Z' fill='none' stroke='${encodeURIComponent(lineColor)}' stroke-opacity='0.15' stroke-width='0.75'/%3E%3Cpath d='M10 25.98 5 17.32 15 17.32 20 25.98 15 34.64 5 34.64Z' fill='none' stroke='${encodeURIComponent(lineColor)}' stroke-opacity='0.15' stroke-width='0.75'/%3E%3Cpath d='M40 17.32 35 8.66 45 8.66 50 17.32 45 25.98 35 25.98Z' fill='none' stroke='${encodeURIComponent(lineColor)}' stroke-opacity='0.15' stroke-width='0.75'/%3E%3C/svg%3E`
       : HEX_SVG;
 
@@ -96,7 +96,7 @@ export function HexagonBackground({
           className={`absolute -inset-[10%] hex-anim-wave ${speed}`}
           style={{
             background:
-              "radial-gradient(ellipse 60% 50% at 30% 40%, rgba(0,0,0,0.03), transparent 70%)",
+              "radial-gradient(ellipse 60% 50% at 30% 40%, rgba(81,12,154,0.04), transparent 70%)",
           }}
         />
       )}

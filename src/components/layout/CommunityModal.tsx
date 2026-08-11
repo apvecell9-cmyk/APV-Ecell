@@ -89,7 +89,7 @@ export function CommunityModal({ onClose }: CommunityModalProps) {
         }
         .apv-comm-backdrop {
           position: fixed; inset: 0; z-index: 99998;
-          background: oklch(0.08 0.006 70 / 0.80);
+          background: var(--backdrop, oklch(0.12 0.02 300 / 0.80));
           backdrop-filter: blur(10px);
           animation: apv-comm-fade 0.2s ease both;
         }
@@ -107,9 +107,9 @@ export function CommunityModal({ onClose }: CommunityModalProps) {
           border-radius: 1.5rem;
           overflow: hidden;
           box-shadow:
-            0 0 0 1px oklch(0.75 0.14 62 / 0.1),
-            0 8px 40px -4px oklch(0.08 0.006 70 / 0.5),
-            0 40px 80px -12px oklch(0.08 0.006 70 / 0.35);
+            0 0 0 1px var(--modal-ring, oklch(0.47 0.21 300 / 0.1)),
+            0 8px 40px -4px var(--modal-shadow, oklch(0.12 0.02 300 / 0.5)),
+            0 40px 80px -12px var(--modal-shadow, oklch(0.12 0.02 300 / 0.35));
           animation: apv-comm-in 0.35s cubic-bezier(0.34, 1.46, 0.64, 1) both;
         }
         .apv-comm-header {
