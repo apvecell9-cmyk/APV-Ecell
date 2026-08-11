@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { NAV_LINKS } from "@/constants/navigation";
-import { BRAND_INITIALS } from "@/constants/branding";
 import { CommunityModal } from "./CommunityModal";
 
 export function Navbar() {
@@ -37,13 +36,12 @@ export function Navbar() {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${headerClass}`}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3 font-semibold tracking-tight text-lg group">
-            <div className="w-8 h-8 rounded-full bg-foreground text-background flex items-center justify-center font-mono text-xs font-bold transition-transform group-hover:scale-105">
-              {BRAND_INITIALS}
-            </div>
-            <span className="font-sans font-medium">
-              E-CELL <span className="text-muted-foreground font-light text-xs ml-1">VASHI</span>
-            </span>
+          <Link to="/" className="flex items-center group">
+            <img
+              src="/logos/logo.png"
+              alt="APV E-Cell"
+              className="h-10 w-auto md:h-12 transition-transform group-hover:scale-105"
+            />
           </Link>
 
           {/* Desktop links */}
