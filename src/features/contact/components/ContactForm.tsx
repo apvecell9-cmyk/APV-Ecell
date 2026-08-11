@@ -1,5 +1,18 @@
 import React, { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, CheckCircle2 } from "lucide-react";
+
+const ease = [0.22, 1, 0.36, 1] as const;
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease } },
+};
+
+const rmFadeIn = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.3 } },
+};
 
 export function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -10,6 +23,9 @@ export function ContactForm() {
     message: "",
   });
 
+  const reducedMotion = useReducedMotion();
+  const v = reducedMotion ? rmFadeIn : fadeInUp;
+
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     setSubmitted(true);
@@ -17,9 +33,14 @@ export function ContactForm() {
 
   if (submitted) {
     return (
-      <div className="rounded-2xl border border-border bg-surface p-8 shadow-soft md:p-10">
+      <motion.div
+        variants={v}
+        initial="hidden"
+        animate="visible"
+        className="rounded-2xl border border-border bg-surface p-8 shadow-soft md:p-10"
+      >
         <div className="space-y-4 py-12 text-center animate-fade-in">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-foreground text-background">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-brand-purple text-white">
             <CheckCircle2 className="h-6 w-6" />
           </div>
           <h3 className="font-serif text-2xl text-foreground">Message Received</h3>
@@ -30,17 +51,23 @@ export function ContactForm() {
           <button
             type="button"
             onClick={() => setSubmitted(false)}
-            className="pt-4 font-mono text-xs text-foreground underline"
+            className="pt-4 font-mono text-xs text-brand-purple underline underline-offset-2 transition-colors hover:text-brand-violet"
           >
             Send another message
           </button>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
   return (
-    <div className="rounded-2xl border border-border bg-surface p-8 shadow-soft md:p-10">
+    <motion.div
+      variants={v}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.1 }}
+      className="rounded-2xl border border-border bg-surface p-8 shadow-soft md:p-10"
+    >
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-1">
           <h3 className="font-serif text-xl text-foreground">Send a Message</h3>
@@ -51,18 +78,18 @@ export function ContactForm() {
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="space-y-2">
-            <label className="font-mono text-xs uppercase text-muted-foreground">Your Name</label>
+            <label className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Your Name</label>
             <input
               type="text"
               required
               placeholder="e.g. Aarav Mehta"
               value={formData.name}
               onChange={(event) => setFormData({ ...formData, name: event.target.value })}
-              className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+              className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm transition-colors placeholder:text-muted-foreground/50 focus:border-primary/40 focus:outline-none focus:ring-1 focus:ring-primary/20"
             />
           </div>
           <div className="space-y-2">
-            <label className="font-mono text-xs uppercase text-muted-foreground">
+            <label className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
               Email Address
             </label>
             <input
@@ -71,13 +98,13 @@ export function ContactForm() {
               placeholder="e.g. aarav@example.com"
               value={formData.email}
               onChange={(event) => setFormData({ ...formData, email: event.target.value })}
-              className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+              className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm transition-colors placeholder:text-muted-foreground/50 focus:border-primary/40 focus:outline-none focus:ring-1 focus:ring-primary/20"
             />
           </div>
         </div>
 
         <div className="space-y-2">
-          <label className="font-mono text-xs uppercase text-muted-foreground">
+          <label className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
             Subject / Department
           </label>
           <input
@@ -86,30 +113,30 @@ export function ContactForm() {
             placeholder="e.g. Pitchnova Sponsorship / Student Incubation"
             value={formData.subject}
             onChange={(event) => setFormData({ ...formData, subject: event.target.value })}
-            className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+            className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm transition-colors placeholder:text-muted-foreground/50 focus:border-primary/40 focus:outline-none focus:ring-1 focus:ring-primary/20"
           />
         </div>
 
         <div className="space-y-2">
-          <label className="font-mono text-xs uppercase text-muted-foreground">Message</label>
+          <label className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Message</label>
           <textarea
             required
             rows={5}
             placeholder="How can APV E-Cell assist you?"
             value={formData.message}
             onChange={(event) => setFormData({ ...formData, message: event.target.value })}
-            className="w-full resize-none rounded-lg border border-border bg-background px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+            className="w-full resize-none rounded-lg border border-border bg-background px-4 py-2.5 text-sm transition-colors placeholder:text-muted-foreground/50 focus:border-primary/40 focus:outline-none focus:ring-1 focus:ring-primary/20"
           />
         </div>
 
         <button
           type="submit"
-          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-foreground py-3.5 text-sm font-medium text-background transition-colors hover:bg-foreground/90"
+          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand-purple py-3.5 text-sm font-medium text-white transition-all duration-300 hover:bg-brand-violet hover:shadow-md"
         >
           Send Message
-          <ArrowUpRight className="h-4 w-4" />
+          <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </button>
       </form>
-    </div>
+    </motion.div>
   );
 }
