@@ -9,6 +9,7 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [communityOpen, setCommunityOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const isAboutPage = pathname === "/about";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,14 +29,16 @@ export function Navbar() {
 
   const headerClass = scrolled
     ? "bg-background/90 backdrop-blur-md border-b border-border text-foreground shadow-xs"
-    : "bg-transparent text-foreground";
-
+    : isAboutPage
+      ? "bg-transparent text-white"
+      : "bg-transparent text-foreground";
+      
   return (
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${headerClass}`}
       >
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
           <Link to="/" className="flex items-center group">
             <img
               src="/logos/logo.png"
@@ -53,14 +56,20 @@ export function Navbar() {
                   key={link.to}
                   to={link.to}
                   className={`transition-colors relative py-1 ${
-                    isActive
-                      ? "text-foreground font-medium"
+                  isActive
+                    ? `${isAboutPage && !scrolled ? "text-white" : "text-foreground"} font-medium`
+                    : isAboutPage && !scrolled
+                      ? "text-white/80 hover:text-white"
                       : "text-muted-foreground hover:text-foreground"
-                  }`}
+                }`}
                 >
                   {link.label}
                   {isActive && (
-                    <span className="absolute bottom-0 left-0 right-0 h-px bg-foreground" />
+                    <span
+                    className={`absolute bottom-0 left-0 right-0 h-px ${
+                      isAboutPage && !scrolled ? "bg-white" : "bg-foreground"
+                    }`}
+                  />
                   )}
                 </Link>
               );

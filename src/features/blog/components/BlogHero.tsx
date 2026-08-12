@@ -8,7 +8,7 @@ interface BlogHeroProps {
 
 export function BlogHero({ searchQuery, onSearchChange }: BlogHeroProps) {
   return (
-    <section className="relative px-6 pt-8 pb-10 lg:px-12 lg:pt-10 lg:pb-12">
+    <section className="relative px-6 pt-24 pb-10 lg:px-12 lg:pt-28 lg:pb-12">
       <div className="mx-auto max-w-7xl">
         <span className="eyebrow text-muted-foreground/80">Insights & Stories</span>
         <h1 className="mt-3 font-serif text-4xl tracking-tight text-foreground md:text-5xl lg:text-6xl">

@@ -47,7 +47,7 @@ export function ContactPage() {
       {/* Full-page hexagon background - extends behind navbar */}
       <div className="relative min-h-screen">
         <HexagonBackground
-          opacity={0.35}
+          opacity={0.10}
           animated={true}
           animationSpeed="fast"
           className="absolute inset-0 z-0"

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 /**
  * Reusable animated honeycomb/hexagon background.
@@ -7,22 +7,27 @@ import React, { useMemo } from "react";
  * with a subset of edges drawn as doubled "bond" lines for a hand-drawn,
  * molecular feel rather than a uniform grid.
  *
- * Three ambient animation layers create a subtle "living" feel:
+ * Animation layers create a subtle "living" feel:
  *   1. Slow drift — the lattice group translates over 30s
  *   2. Pulse — opacity breathes to create localized variation
  *   3. Wave — a radial gradient slowly sweeps across
+ *   4. Entry — a one-time, on-mount staggered "rise" of a handful of
+ *      individual hexagons, purely decorative and non-repeating
+ *   5. Ambient — reuses the *same* lift → bolden → fall animation as the
+ *      entry effect above, played automatically on a small random group of
+ *      hexagons approximately every 10 seconds (randomized each time), then
+ *      repeated indefinitely at a new random location. Each hexagon starts and ends
+ *      at opacity 0 / no transform, so it returns to its exact original,
+ *      undisplaced state. Not tied to the cursor in any way — there is no
+ *      hover interaction and no pointer/click listener anywhere in this
+ *      file, so nothing here can react to clicks elsewhere on the page.
  *
- * Plus a one-time entry animation: on mount, a handful of individual
- * hexagons "rise" with a soft shadow in a staggered, organic sequence
- * (~2.5s total), then the background is completely static again. It
- * replays whenever the component remounts (e.g. navigating back to the
- * page).
- *
- * All animations are CSS-only (no JS loops/timers). Respects
+ * All animations are CSS-only (no JS loops for the animation itself; a
+ * single JS timer just decides *when* and *where* the ambient burst fires).
+ * Respects
  * `prefers-reduced-motion: reduce`. Always passes pointer events through
  * (`pointer-events: none`).
  */
-
 type HexagonBackgroundProps = {
   /** Base opacity of the hexagon strokes (0–1). Default 0.16. */
   opacity?: number;
@@ -40,21 +45,23 @@ type HexagonBackgroundProps = {
   bondRatio?: number;
   /** Fixed seed so the "hand-drawn" bond placement is stable across renders. */
   seed?: number;
+  /** Enable the one-time page-entry hexagon "rise" animation. Default true. */
+  entryAnimation?: boolean;
+  /** How many hexagons participate in the entry animation. Default 12. */
+  entryHexCount?: number;
+  /** Enable the automatic, randomly-timed/located ambient lift effect. Default true. */
+  ambientAnimation?: boolean;
+  /** How many hexagons participate in each ambient burst. Default 5. */
+  ambientHexCount?: number;
+  /** Minimum ms between ambient bursts. Default 9000 (~9s). */
+  ambientMinDelayMs?: number;
+  /** Maximum ms between ambient bursts. Default 11000 (~11s). */
+  ambientMaxDelayMs?: number;
 };
 
 type Edge = { x1: number; y1: number; x2: number; y2: number; bond: boolean };
-
-/** A single hexagon selected for the one-time entry "rise" animation. */
-type EntryHex = {
-  corners: [number, number][];
-  delayMs: number;
-  durationMs: number;
-};
-
-// Same grid dimensions the base lattice is built with — kept as a shared
-// constant so the entry-animation overlay lines up with the base lattice.
-const GRID_COLS = 34;
-const GRID_ROWS = 26;
+type Cell = { cx: number; cy: number; corners: [number, number][] };
+type EntryCell = Cell & { delay: number; duration: number };
 
 function speedClass(speed: "slow" | "normal" | "fast"): string {
   if (speed === "slow") return "hex-speed-slow";
@@ -62,8 +69,8 @@ function speedClass(speed: "slow" | "normal" | "fast"): string {
   return "";
 }
 
-// Small deterministic PRNG (Park-Miller) so bond placement is stable per seed
-// instead of re-randomizing on every render.
+// Small deterministic PRNG (Park-Miller) so bond placement (and entry-hex
+// selection) is stable per seed instead of re-randomizing on every render.
 function makeRng(seed: number) {
   let s = seed % 2147483647;
   if (s <= 0) s += 2147483646;
@@ -73,17 +80,10 @@ function makeRng(seed: number) {
   };
 }
 
-function hexCorners(cx: number, cy: number, size: number): [number, number][] {
-  const pts: [number, number][] = [];
-  for (let i = 0; i < 6; i++) {
-    const angle = (Math.PI / 180) * (60 * i);
-    pts.push([cx + size * Math.cos(angle), cy + size * Math.sin(angle)]);
-  }
-  return pts;
-}
-
 /**
- * Builds a seamless flat-top hexagon lattice as a list of edges.
+ * Builds a seamless flat-top hexagon lattice as a list of edges (for the
+ * static honeycomb) plus a list of cells/centers (used only to place the
+ * one-time entry-animation highlights — does not affect the static render).
  * Edges shared between neighboring hexagons are deduped so each wall of
  * the honeycomb is only drawn once — then a random subset is flagged as
  * a "bond" edge for the doubled-line treatment.
@@ -95,6 +95,15 @@ function buildHexLattice(cols: number, rows: number, size: number, seed: number,
   const colSpacing = w * 0.75;
   const rowSpacing = h;
 
+  const hexCorners = (cx: number, cy: number): [number, number][] => {
+    const pts: [number, number][] = [];
+    for (let i = 0; i < 6; i++) {
+      const angle = (Math.PI / 180) * (60 * i);
+      pts.push([cx + size * Math.cos(angle), cy + size * Math.sin(angle)]);
+    }
+    return pts;
+  };
+
   const round = (n: number) => Math.round(n * 10) / 10;
   const keyFor = (x1: number, y1: number, x2: number, y2: number) => {
     const a: [number, number] = [round(x1), round(y1)];
@@ -104,11 +113,14 @@ function buildHexLattice(cols: number, rows: number, size: number, seed: number,
   };
 
   const edgeMap = new Map<string, Omit<Edge, "bond">>();
+  const cells: Cell[] = [];
+
   for (let col = 0; col < cols; col++) {
     for (let row = 0; row < rows; row++) {
       const cx = col * colSpacing;
       const cy = row * rowSpacing + (col % 2 === 1 ? rowSpacing / 2 : 0);
-      const corners = hexCorners(cx, cy, size);
+      const corners = hexCorners(cx, cy);
+      cells.push({ cx, cy, corners });
       for (let i = 0; i < 6; i++) {
         const [x1, y1] = corners[i]!;
         const [x2, y2] = corners[(i + 1) % 6]!;
@@ -125,57 +137,68 @@ function buildHexLattice(cols: number, rows: number, size: number, seed: number,
 
   return {
     edges,
+    cells,
     width: cols * colSpacing + w,
     height: rows * rowSpacing + h,
   };
 }
 
 /**
- * Picks a small, scattered set of hexagon cells (from the same grid used by
- * buildHexLattice) to animate on mount. Uses its own RNG instance (seeded
- * independently of the bond RNG) so it never perturbs the existing lattice
- * geometry/bond pattern.
+ * Assigns the same staggered delay/duration used by the page-entry
+ * animation to an arbitrary list of cells. Shared by the mount-time entry
+ * effect and the ambient effect so both play the identical animation.
  */
-function pickEntryHexes(size: number, seed: number, count: number): EntryHex[] {
-  const rng = makeRng(seed + 104729); // arbitrary large prime offset, distinct RNG stream
-  const w = size * 2;
-  const h = size * Math.sqrt(3);
-  const colSpacing = w * 0.75;
-  const rowSpacing = h;
+function assignEntryTiming(cells: Cell[], seed: number): EntryCell[] {
+  const rng = makeRng(seed);
+  return cells.map((c, idx) => {
+    const batch = idx % 4;
+    const batchDelay = batch * 0.4;
+    const jitter = rng() * 0.35;
+    return {
+      ...c,
+      delay: Math.round((batchDelay + jitter) * 100) / 100,
+      duration: 1.0 + Math.round(rng() * 30) / 100, // 1.0 - 1.3s
+    };
+  });
+}
 
-  // Stay away from the outer margin so selected hexagons are unlikely to be
-  // clipped by the container's overflow, and keep them spread across the
-  // visible area rather than clustered.
-  const colMin = Math.floor(GRID_COLS * 0.15);
-  const colMax = Math.ceil(GRID_COLS * 0.85);
-  const rowMin = Math.floor(GRID_ROWS * 0.15);
-  const rowMax = Math.ceil(GRID_ROWS * 0.85);
+/**
+ * Picks `count` random cells from the lattice using a seeded RNG. Shared by
+ * the mount-time entry effect and the ambient effect so both draw from the
+ * same kind of "small random group somewhere on the page" selection.
+ */
+function pickRandomCells(cells: Cell[], count: number, seed: number): Cell[] {
+  if (cells.length === 0 || count <= 0) return [];
+  const rng = makeRng(seed);
+  const pool = cells.map((c) => ({ c, r: rng() }));
+  pool.sort((a, b) => a.r - b.r);
+  return pool.slice(0, Math.min(count, pool.length)).map(({ c }) => c);
+}
 
-  const picks: EntryHex[] = [];
-  const seen = new Set<string>();
-  let guard = 0;
+/**
+ * Picks a small, scattered subset of cells for the one-time entry
+ * animation and assigns each a staggered delay/duration so the group
+ * rises in an organic sequence rather than all at once. Purely additive —
+ * does not touch the static lattice's geometry, color, or opacity.
+ */
+function pickEntryCells(cells: Cell[], count: number, seed: number): EntryCell[] {
+  const chosen = pickRandomCells(cells, count, seed);
+  return assignEntryTiming(chosen, seed + 1);
+}
 
-  while (picks.length < count && guard < count * 40) {
-    guard++;
-    const col = colMin + Math.floor(rng() * (colMax - colMin));
-    const row = rowMin + Math.floor(rng() * (rowMax - rowMin));
-    const key = `${col},${row}`;
-    if (seen.has(key)) continue;
-    seen.add(key);
-
-    const cx = col * colSpacing;
-    const cy = row * rowSpacing + (col % 2 === 1 ? rowSpacing / 2 : 0);
-
-    // Staggered, organic timing: spread starts across ~1.5s with jitter,
-    // slightly varied per-hex duration so the sequence doesn't feel mechanical.
-    const order = picks.length;
-    const delayMs = order * 150 + rng() * 120;
-    const durationMs = 1100 + rng() * 300;
-
-    picks.push({ corners: hexCorners(cx, cy, size), delayMs, durationMs });
-  }
-
-  return picks;
+/**
+ * Tighter delay/duration for the ambient background burst — a smaller
+ * group that pops in ~1–2s total, rather than the entry effect's longer
+ * ~2.5–3s wave across more hexagons. Uses the exact same keyframe
+ * (`hex-entry-rise`), just a shorter animation-duration.
+ */
+function assignAmbientTiming(cells: Cell[], seed: number): EntryCell[] {
+  const rng = makeRng(seed);
+  return cells.map((c, idx) => ({
+    ...c,
+    delay: Math.round((idx * 0.06 + rng() * 0.15) * 100) / 100, // 0 - ~0.45s
+    duration: 0.9 + Math.round(rng() * 40) / 100, // 0.9 - 1.3s
+  }));
 }
 
 function LatticeSvg({
@@ -192,7 +215,12 @@ function LatticeSvg({
   strokeOpacity: number;
 }) {
   return (
-    <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid slice" width="100%" height="100%">
+    <svg
+      viewBox={`0 0 ${width} ${height}`}
+      preserveAspectRatio="xMidYMid slice"
+      width="100%"
+      height="100%"
+    >
       {edges.map((e, i) => {
         if (!e.bond) {
           return (
@@ -251,48 +279,49 @@ function LatticeSvg({
 }
 
 /**
- * One-time entry overlay: draws outlines for a handful of individual
- * hexagons directly on top of the base lattice (same coordinates, same
- * stroke) and animates each with the `hex-entry-rise` CSS animation
- * (staggered via `animationDelay`). The animation is `both`-filled and
- * runs a single iteration, so once it finishes each hexagon is visually
- * identical to — and perfectly overlaps — the corresponding lines already
- * drawn by the base lattice, leaving the background static.
+ * Overlay of a handful of hexagon outlines used for the one-time lift →
+ * bolden → fall animation — reused both at mount (the page-entry effect)
+ * and automatically (the ambient effect, a small random cluster every
+ * 1-2 minutes). Sits exactly on top of the static lattice (same viewBox/scale) so each highlighted hexagon
+ * aligns with the real one beneath it. Starts and ends at opacity 0 / no
+ * transform, so once the animation finishes the background is
+ * pixel-identical to the plain static lattice — nothing lingers, nothing
+ * is displaced.
  */
-function EntryRiseOverlay({
-  hexes,
+function EntryHexOverlay({
+  entryCells,
   width,
   height,
   lineColor,
-  strokeOpacity,
 }: {
-  hexes: EntryHex[];
+  entryCells: EntryCell[];
   width: number;
   height: number;
   lineColor: string;
-  strokeOpacity: number;
 }) {
+  if (entryCells.length === 0) return null;
   return (
-    <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid slice" width="100%" height="100%">
-      {hexes.map((hex, i) => (
+    <svg
+      className="absolute inset-0"
+      viewBox={`0 0 ${width} ${height}`}
+      preserveAspectRatio="xMidYMid slice"
+      width="100%"
+      height="100%"
+    >
+      {entryCells.map((cell, i) => (
         <polygon
-          key={i}
-          className="hex-entry-rise"
-          points={hex.corners.map(([x, y]) => `${x},${y}`).join(" ")}
+          key={`${i}-${cell.delay}-${cell.duration}`}
+          className="hex-entry-cell"
+          points={cell.corners.map(([x, y]) => `${x},${y}`).join(" ")}
           fill="none"
           stroke={lineColor}
-          strokeOpacity={strokeOpacity}
-          strokeWidth={1.1}
+          strokeWidth={1.3}
           strokeLinecap="round"
-          style={
-            {
-              animationDelay: `${hex.delayMs}ms`,
-              animationDuration: `${hex.durationMs}ms`,
-              transformBox: "fill-box",
-              transformOrigin: "center",
-              "--hex-entry-opacity": strokeOpacity,
-            } as React.CSSProperties
-          }
+          style={{
+            transformOrigin: `${cell.cx}px ${cell.cy}px`,
+            animationDelay: `${cell.delay}s`,
+            animationDuration: `${cell.duration}s`,
+          }}
         />
       ))}
     </svg>
@@ -308,20 +337,75 @@ export function HexagonBackground({
   hexSize = 22,
   bondRatio = 0.32,
   seed = 7,
+  entryAnimation = true,
+  entryHexCount = 12,
+  ambientAnimation = true,
+  ambientHexCount = 5,
+  ambientMinDelayMs = 9000,
+  ambientMaxDelayMs = 11000,
 }: HexagonBackgroundProps) {
   const speed = speedClass(animationSpeed);
+
   // Generous virtual grid so drift/pulse translation never reveals an edge,
   // regardless of the container's aspect ratio.
   const lattice = useMemo(
-    () => buildHexLattice(GRID_COLS, GRID_ROWS, hexSize, seed, bondRatio),
+    () => buildHexLattice(34, 26, hexSize, seed, bondRatio),
     [hexSize, seed, bondRatio]
   );
 
-  // Small scattered set of hexagons for the one-time entry animation.
-  // Recomputed only if the geometry inputs change — effectively "once per
-  // mount" for a given instance, and naturally re-runs on remount since the
-  // component instance (and its memoized state) is fresh.
-  const entryHexes = useMemo(() => pickEntryHexes(hexSize, seed, 10), [hexSize, seed]);
+  // Ambient burst: reuses the exact same lift → bolden → fall animation as
+  // the page-entry effect, played automatically on a small random group of
+  // hexagons, then scheduled again after a random ~10 second wait.
+  // `ambientBurst` holds only the currently-playing group (cleared once its
+  // animation finishes) — never a persistent per-pixel state — so the base
+  // lattice/entry animation above stay completely unaffected. There is no
+  // pointer or click listener anywhere in this effect (or file), so nothing
+  // here can be triggered by clicking elsewhere on the page.
+  const [ambientBurst, setAmbientBurst] = useState<EntryCell[]>([]);
+  const ambientSeedRef = useRef(1000);
+
+  useEffect(() => {
+    if (!ambientAnimation) return;
+    let cancelled = false;
+    let scheduleId: ReturnType<typeof setTimeout> | null = null;
+    let clearId: ReturnType<typeof setTimeout> | null = null;
+
+    const scheduleNext = () => {
+      const delay =
+        ambientMinDelayMs + Math.random() * Math.max(0, ambientMaxDelayMs - ambientMinDelayMs);
+      scheduleId = setTimeout(() => {
+        if (cancelled) return;
+
+        ambientSeedRef.current += 1;
+        const group = pickRandomCells(lattice.cells, ambientHexCount, ambientSeedRef.current);
+        const timed = assignAmbientTiming(group, ambientSeedRef.current);
+        setAmbientBurst(timed);
+
+        const totalMs =
+          timed.length > 0 ? Math.max(...timed.map((c) => (c.delay + c.duration) * 1000)) + 50 : 0;
+        clearId = setTimeout(() => {
+          if (!cancelled) setAmbientBurst([]);
+        }, totalMs);
+
+        scheduleNext();
+      }, delay);
+    };
+
+    scheduleNext();
+
+    return () => {
+      cancelled = true;
+      if (scheduleId != null) clearTimeout(scheduleId);
+      if (clearId != null) clearTimeout(clearId);
+    };
+  }, [ambientAnimation, lattice, ambientHexCount, ambientMinDelayMs, ambientMaxDelayMs]);
+
+  // Selected cells for the one-time entry animation. Recomputed only if the
+  // lattice or seed changes — stable for the lifetime of a given mount.
+  const entryCells = useMemo(
+    () => (entryAnimation ? pickEntryCells(lattice.cells, entryHexCount, seed + 101) : []),
+    [lattice.cells, entryAnimation, entryHexCount, seed]
+  );
 
   return (
     <div
@@ -329,9 +413,14 @@ export function HexagonBackground({
       style={{ pointerEvents: "none", zIndex: 0 }}
       aria-hidden="true"
     >
-      {/* Layer 1: Base lattice — slow drift via transform translate */}
-      <div className={`absolute -inset-[10%] ${animated ? `hex-anim-drift ${speed}` : ""}`}>
+      {/* Layer 1: Base lattice — slow drift via transform translate.
+          The entry-animation overlay lives inside this same layer so it
+          drifts together with the base lattice and stays perfectly aligned. */}
+      <div
+        className={`absolute -inset-[10%] ${animated ? `hex-anim-drift ${speed}` : ""}`}
+      >
         <LatticeSvg {...lattice} lineColor={lineColor} strokeOpacity={opacity} />
+        <EntryHexOverlay entryCells={entryCells} width={lattice.width} height={lattice.height} lineColor={lineColor} />
       </div>
 
       {/* Layer 2: Pulse — opacity breathes to create localized variation */}
@@ -346,51 +435,54 @@ export function HexagonBackground({
         <div
           className={`absolute -inset-[10%] hex-anim-wave ${speed}`}
           style={{
-            background: "radial-gradient(ellipse 60% 50% at 30% 40%, rgba(0,0,0,0.05), transparent 70%)",
+            background:
+              "radial-gradient(ellipse 60% 50% at 30% 40%, rgba(0,0,0,0.05), transparent 70%)",
           }}
         />
       )}
 
-      {/* Layer 4: One-time entry animation — a few hexagons "rise" on mount, then settle and stay static */}
-      {animated && (
-        <div className="absolute -inset-[10%]">
-          <EntryRiseOverlay
-            hexes={entryHexes}
-            width={lattice.width}
-            height={lattice.height}
-            lineColor={lineColor}
-            strokeOpacity={opacity}
-          />
-        </div>
+      {/* Layer 5: ambient boost — reuses EntryHexOverlay (the exact same
+          lift → bolden → fall animation as page-entry) automatically, on a
+          small random group, approximately every 10 seconds. `ambientBurst`
+          is empty whenever nothing is playing, so this renders nothing most
+          of the time. No pointer/click involvement whatsoever. */}
+      {ambientAnimation && (
+        <EntryHexOverlay entryCells={ambientBurst} width={lattice.width} height={lattice.height} lineColor={lineColor} />
       )}
 
+      {/* Layer 4: one-time entry-animation keyframes. Scoped to this
+          component via the .hex-entry-cell class name; safe to move into a
+          global stylesheet alongside the hex-anim-* rules if preferred. */}
       <style>{`
-        @keyframes hex-entry-rise {
-          0% {
-            transform: translateY(0);
-            filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0));
-            opacity: var(--hex-entry-opacity, 0.16);
-          }
-          45% {
-            transform: translateY(-4px);
-            filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.16));
-            opacity: calc(var(--hex-entry-opacity, 0.16) * 1.8);
-          }
-          100% {
-            transform: translateY(0);
-            filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0));
-            opacity: var(--hex-entry-opacity, 0.16);
-          }
-        }
-        .hex-entry-rise {
+        .hex-entry-cell {
+          opacity: 0;
+          transform: translateY(0);
           animation-name: hex-entry-rise;
           animation-timing-function: ease-in-out;
           animation-iteration-count: 1;
           animation-fill-mode: both;
         }
+        @keyframes hex-entry-rise {
+          0% {
+            opacity: 0;
+            transform: translateY(0);
+            filter: drop-shadow(0 0px 0px rgba(0, 0, 0, 0));
+          }
+          45% {
+            opacity: 0.9;
+            transform: translateY(-4px);
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.16));
+          }
+          100% {
+            opacity: 0;
+            transform: translateY(0);
+            filter: drop-shadow(0 0px 0px rgba(0, 0, 0, 0));
+          }
+        }
         @media (prefers-reduced-motion: reduce) {
-          .hex-entry-rise {
+          .hex-entry-cell {
             animation: none;
+            opacity: 0;
           }
         }
       `}</style>

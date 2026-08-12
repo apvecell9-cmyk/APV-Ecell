@@ -27,13 +27,13 @@ export function BlogListPage() {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-background">
+    <div className="relative bg-background">
       {/* Hexagon background covering entire page */}
       <HexagonBackground
-        opacity={0.4}
+        opacity={0.10}
         animated={true}
         animationSpeed="fast"
-        className="fixed inset-0 z-0"
+        className="absolute inset-0 z-0 pointer-events-none"
       />
 
       {/* Content layer */}
