@@ -13,9 +13,9 @@
  * no code changes needed on this site.
  */
 export const EMAILJS_CONFIG = {
-  publicKey: "YOUR_EMAILJS_PUBLIC_KEY",
-  serviceId: "YOUR_EMAILJS_SERVICE_ID",
-  templateId: "YOUR_EMAILJS_TEMPLATE_ID",
+  publicKey: "qOAU8C-of-ZOlqAKB",
+  serviceId: "service_tvbry4h",
+  templateId: "template_ioqiswn",
 } as const;
 
 /** Rate-limit ID for the contact form (prevents rapid repeated submissions) */
