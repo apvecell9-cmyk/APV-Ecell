@@ -140,8 +140,7 @@ export function CombinedPartnersSection() {
 
                 {/* Highlight Tag */}
                 {isHighlight && (
-                  <div className="absolute -top-3 right-3 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-accent text-accent-foreground text-[10px] font-mono font-bold uppercase tracking-wider shadow-sm">
-                    <Sparkles className="w-3 h-3" />
+                <div className="absolute -top-3 right-3 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#8733C0]/15 text-[#8733C0] border border-[#8733C0]/30 text-[10px] font-mono font-bold uppercase tracking-wider">                    <Sparkles className="w-3 h-3" />
                     <span>Incubation</span>
                   </div>
                 )}
@@ -161,7 +160,7 @@ export function CombinedPartnersSection() {
                   <div className="space-y-1.5">
                     <span
                       className={`inline-block px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider font-medium ${isHighlight
-                          ? "bg-accent/15 text-accent-foreground border border-accent/30"
+                          ? "bg-[#8733C0]/10 text-[#8733C0] border border-[#8733C0]/20"
                           : "bg-secondary text-muted-foreground"
                         }`}
                     >

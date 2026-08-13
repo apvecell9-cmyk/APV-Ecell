@@ -280,7 +280,7 @@ export function MissionVisionSection() {
           <h2 className="font-serif text-3xl md:text-4xl tracking-tight text-foreground">
             Vision & Mission
           </h2>
-          <div className="mt-3 w-12 h-0.5 bg-accent/60 rounded-full" />
+          <div className="mt-3 w-12 h-0.5 bg-[#8733C0] rounded-full" />
         </motion.div>
 
         {/* ── Vision Section: Compass (left) + Text (right) ──────── */}
@@ -303,7 +303,7 @@ export function MissionVisionSection() {
             initial={reducedMotion ? { opacity: 1 } : undefined}
             className="flex-1 order-2 lg:order-2"
           >
-            <span className="inline-block text-xs font-mono uppercase tracking-widest text-primary mb-3">
+            <span className="inline-block text-xs text-[#8733C0] font-bold font-mono uppercase tracking-widest mb-3">
               Our Vision
             </span>
             <h3 className="font-serif text-2xl md:text-3xl lg:text-4xl font-medium text-foreground tracking-tight leading-tight mb-6">
@@ -312,13 +312,12 @@ export function MissionVisionSection() {
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-8 max-w-xl">
               We envision a future where entrepreneurship is not just a career path, but a mindset woven into every student&apos;s journey — empowering them to innovate, lead, and create lasting impact.
             </p>
-            <BulletList bullets={visionBullets} accentColor="text-primary" />
-            <div className="mt-8 flex gap-2">
+            <BulletList bullets={visionBullets} accentColor="text-[#8733C0]" />
+            <div className="mt-8 flex gap-2 ">
               {["ENTREPRENEURSHIP", "CREATIVITY", "IMPACT"].map((tag) => (
                 <span
                   key={tag}
-                  className="text-[10px] font-mono text-muted-foreground/60 uppercase tracking-wider px-2 py-1 rounded bg-secondary/50"
-                >
+                  className="text-[10px] font-mono text-[#6A1FAF] font-bold uppercase tracking-wider px-2 py-1 rounded bg-secondary/50"                >
                   {tag}
                 </span>
               ))}
@@ -346,7 +345,7 @@ export function MissionVisionSection() {
             initial={reducedMotion ? { opacity: 1 } : undefined}
             className="flex-1 order-2 lg:order-2"
           >
-            <span className="inline-block text-xs font-mono uppercase tracking-widest text-accent mb-3">
+            <span className="inline-block text-xs text-[#8733C0] font-bold font-mono uppercase tracking-widest mb-3">
               Our Mission
             </span>
             <h3 className="font-serif text-2xl md:text-3xl lg:text-4xl font-medium text-foreground tracking-tight leading-tight mb-6">
@@ -355,12 +354,12 @@ export function MissionVisionSection() {
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-8 max-w-xl">
               We exist to bridge the gap between ideation and execution — giving students the tools, mentorship, and environment to transform bold ideas into ventures that matter.
             </p>
-            <BulletList bullets={missionBullets} accentColor="text-accent" />
+            <BulletList bullets={missionBullets} accentColor="text-[#8733C0]" />
             <div className="mt-8 flex gap-2">
               {["ACTION", "EXPERIENCE", "INNOVATION"].map((tag) => (
                 <span
                   key={tag}
-                  className="text-[10px] font-mono text-muted-foreground/60 uppercase tracking-wider px-2 py-1 rounded bg-secondary/50"
+                  className="text-[10px] font-mono text-[#6A1FAF] font-bold uppercase tracking-wider px-2 py-1 rounded bg-secondary/50"
                 >
                   {tag}
                 </span>
