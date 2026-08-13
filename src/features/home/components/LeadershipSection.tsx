@@ -62,7 +62,7 @@ export function LeadershipSection() {
             </div>
           )}
 
-          <span className="eyebrow block text-muted-foreground/80">
+          <span className="eyebrow block text-[#8733C0] font-bold">
             Visionary Guidance & Strategy
           </span>
           <h2 className="mt-2 font-serif text-3xl md:text-4xl lg:text-5xl tracking-tight text-foreground">

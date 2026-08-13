@@ -128,7 +128,7 @@ export function LeadershipProfile({ leader, index, side }: LeadershipProfileProp
             <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-soft text-brand-purple border border-brand-lavender/30 text-[10px] font-mono uppercase tracking-wider font-medium">
               {leader.tag}
             </span>
-            <span className="font-mono text-[10px] text-muted-foreground/60 tabular-nums">
+            <span className="font-mono text-[10px] text-[#8733C0] font-bold tabular-nums">
               {num}
             </span>
           </div>
@@ -144,7 +144,7 @@ export function LeadershipProfile({ leader, index, side }: LeadershipProfileProp
           </div>
 
           {/* ── Quote ──────────────────────────────────────────────── */}
-          <blockquote className="relative z-10 mb-5 md:mb-6 pl-3 border-l-2 border-brand-lavender/40 hover:border-accent/50 transition-colors duration-500">
+          <blockquote className="relative z-10 mb-5 md:mb-6 pl-3 border-l-2 border-[#8733C0]">
             <p className="text-sm md:text-[0.8125rem] text-muted-foreground leading-relaxed italic line-clamp-3">
               &ldquo;{leader.quote}&rdquo;
             </p>
@@ -152,7 +152,7 @@ export function LeadershipProfile({ leader, index, side }: LeadershipProfileProp
 
           {/* ── Footer ─────────────────────────────────────────────── */}
           <div className="relative z-10 pt-3 border-t border-hairline flex items-center justify-between">
-            <span className="text-[9px] font-mono text-muted-foreground uppercase tracking-[0.15em]">
+            <span className="text-[9px] font-mono text-[#8733C0] font-bold uppercase tracking-[0.15em]">
               APV E-Cell
             </span>
             {leader.linkedin ? (
@@ -167,7 +167,7 @@ export function LeadershipProfile({ leader, index, side }: LeadershipProfileProp
                 <ArrowUpRight className="w-2.5 h-2.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
               </a>
             ) : (
-              <span className="text-[9px] font-mono text-muted-foreground/50 uppercase tracking-wider">
+              <span className="text-[9px] font-mono text-[#8733C0] font-bold uppercase tracking-wider">
                 Leadership
               </span>
             )}

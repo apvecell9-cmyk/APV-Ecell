@@ -109,12 +109,12 @@ export function DepartmentCard({
 
           <motion.h3
             variants={iVar}
-            className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-secondary/80 text-foreground text-[10px] font-mono uppercase tracking-widest"
+            className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[#8733C0]/10 text-[#8733C0] border border-[#8733C0]/15 text-[10px] font-mono uppercase tracking-widest"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-accent inline-block" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#8733C0] inline-block" />
             {subtitle}
           </motion.h3>
-
+          
           <motion.p
             variants={iVar}
             className="text-[0.8125rem] text-muted-foreground leading-relaxed line-clamp-2"
@@ -145,8 +145,8 @@ export function DepartmentCard({
           variants={iVar}
           className="relative z-10 mt-auto pt-4 border-t border-hairline flex items-center justify-between text-xs text-muted-foreground"
         >
-          <span className="font-mono uppercase tracking-wider">Department Head</span>
-          <span className="font-medium text-foreground">{headName}</span>
+          <span className="font-mono uppercase tracking-wider text-[#6A1FAF] font-medium">Department Head</span>
+          <span className="font-medium text-[#8733C0] font-bold">{headName}</span>
         </motion.div>
 
         {/* ── Hover Overlay — Head Photo ──────────────────────────── */}

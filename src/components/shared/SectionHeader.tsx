@@ -20,7 +20,7 @@ export function SectionHeader({
       className={`flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 ${className}`}
     >
       <div className="space-y-2">
-        <span className="eyebrow">{eyebrow}</span>
+        <span className="eyebrow text-[#8733C0] font-bold">{eyebrow}</span>
         <h2
           className={`font-serif tracking-tight text-foreground ${
             size === "lg" ? "text-3xl md:text-5xl" : "text-3xl md:text-4xl"
