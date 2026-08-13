@@ -26,19 +26,6 @@ export const departments: DeptCardProps[] = [
     ],
   },
   {
-    id: "finance",
-    department: "Finance & Operations",
-    subtitle: "Fiscal Strategy & Budgeting",
-    description:
-      "Managing financial strategies, budgets, sponsorships, and operational excellence across all E-Cell initiatives.",
-    headName: "Ritesh Jogdankar",
-    headRole: "Head of Finance",
-    members: [
-      { name: "Nitu Patil", role: "Team Member", image: "nitu_patil.jpg" },
-      { name: "Ashley Dsouza", role: "Team Member", image: "ashley_dsouza.jpg" },
-    ],
-  },
-  {
     id: "events-planning",
     department: "Events & Planning",
     subtitle: "Visual Brand Experience",
@@ -73,6 +60,19 @@ export const departments: DeptCardProps[] = [
     members: [
       { name: "Shreya Gupta", role: "Team Member", image: "shreya_gupta.jpg" },
       { name: "Mukadam Mohammed", role: "Team Member", image: "mukadam_mohammed.jpg" },
+    ],
+  },
+  {
+    id: "finance",
+    department: "Finance & Operations",
+    subtitle: "Fiscal Strategy & Budgeting",
+    description:
+      "Managing financial strategies, budgets, sponsorships, and operational excellence across all E-Cell initiatives.",
+    headName: "Ritesh Jogdankar",
+    headRole: "Head of Finance",
+    members: [
+      { name: "Nitu Patil", role: "Team Member", image: "nitu_patil.jpg" },
+      { name: "Ashley Dsouza", role: "Team Member", image: "ashley_dsouza.jpg" },
     ],
   },
   {

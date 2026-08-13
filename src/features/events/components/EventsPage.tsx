@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import type { EventData } from "@/types/events";
 import { getEventsForYear, getYears } from "@/services/eventLoader";
 import { HexagonBackground } from "@/features/gallery/components/HexagonBackground";
+import { AnimatedWaveBackground } from "@/components/shared/AnimatedWaveBackground";
 import { YearRoller } from "./YearRoller";
 import { Timeline } from "./Timeline";
 import { EventDetailPanel } from "./EventDetailPanel";
@@ -86,11 +87,11 @@ export function EventsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
           >
-            <span className="eyebrow">The Journey</span>
-            <h1 className="mt-1.5 font-serif text-2xl tracking-tight text-foreground md:text-4xl">
+            <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-black/70">The Journey</span>
+            <h1 className="mt-1.5 font-serif text-2xl tracking-tight text-black md:text-4xl">
               Events & Pitchnova
             </h1>
-            <p className="mt-2 max-w-xs text-xs leading-relaxed text-muted-foreground md:text-sm">
+            <p className="mt-2 max-w-xs text-xs leading-relaxed text-black/60 md:text-sm">
               Trace the story of APV E-Cell from campus inception to flagship national pitching
               championships.
             </p>

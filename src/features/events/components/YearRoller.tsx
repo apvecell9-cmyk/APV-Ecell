@@ -35,12 +35,12 @@ export function YearRoller({ years, selectedYear, onSelect }: YearRollerProps) {
 
   return (
     <div className="flex items-center gap-3">
-      <span className="eyebrow mr-1 hidden text-[10px] sm:inline">Year</span>
+      <span className="mr-1 hidden text-[10px] font-mono uppercase tracking-[0.2em] text-white/60 sm:inline">Year</span>
       <button
         type="button"
         onClick={handlePrev}
         disabled={selectedIndex <= 0}
-        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border text-foreground transition-colors hover:bg-surface disabled:opacity-25"
+        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/20 text-white transition-colors hover:bg-white/10 disabled:opacity-25"
         aria-label="Previous year"
       >
         <ChevronLeft className="h-3.5 w-3.5" />
@@ -65,7 +65,7 @@ export function YearRoller({ years, selectedYear, onSelect }: YearRollerProps) {
               style={{ opacity, transform: `scale(${scale})` }}
             >
               <span
-                className={`text-base ${isSelected ? "font-normal text-foreground" : "text-muted-foreground"}`}
+                className={`text-base ${isSelected ? "font-normal text-white" : "text-white/60"}`}
               >
                 {year}
               </span>
@@ -78,7 +78,7 @@ export function YearRoller({ years, selectedYear, onSelect }: YearRollerProps) {
         type="button"
         onClick={handleNext}
         disabled={selectedIndex >= years.length - 1}
-        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border text-foreground transition-colors hover:bg-surface disabled:opacity-25"
+        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/20 text-white transition-colors hover:bg-white/10 disabled:opacity-25"
         aria-label="Next year"
       >
         <ChevronRight className="h-3.5 w-3.5" />

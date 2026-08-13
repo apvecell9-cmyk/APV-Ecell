@@ -22,6 +22,14 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
  *      hover interaction and no pointer/click listener anywhere in this
  *      file, so nothing here can react to clicks elsewhere on the page.
  *
+ * Both the entry and ambient effects pick their hexagons using stratified
+ * spatial sampling (see `pickSpreadCells`) rather than plain random
+ * sampling, and stagger them with evenly-paced delays along a spatial
+ * sweep (see `assignTiming`) rather than index-based batches. This keeps
+ * every burst spread across the whole background instead of clumping into
+ * one corner, and keeps the pacing between hexagons even instead of firing
+ * in simultaneous clusters with big gaps between them.
+ *
  * All animations are CSS-only (no JS loops for the animation itself; a
  * single JS timer just decides *when* and *where* the ambient burst fires).
  * Respects
@@ -146,61 +154,125 @@ function buildHexLattice(cols: number, rows: number, size: number, seed: number,
 }
 
 /**
- * Assigns the same staggered delay/duration used by the page-entry
- * animation to an arbitrary list of cells. Shared by the mount-time entry
- * effect and the ambient effect so both play the identical animation.
+ * Picks `count` cells spread evenly across the lattice by dividing its
+ * bounding box into a grid of spatial buckets and drawing at most one cell
+ * per bucket (in a shuffled bucket order). This guarantees a burst covers
+ * the whole background instead of clumping into one area — which is what
+ * plain random sampling can do purely by chance with a small sample size,
+ * and what a *fixed* seed will then repeat in the same spot every time.
  */
-function assignEntryTiming(cells: Cell[], seed: number): EntryCell[] {
+function pickSpreadCells(cells: Cell[], count: number, seed: number): Cell[] {
+  if (cells.length === 0 || count <= 0) return [];
   const rng = makeRng(seed);
-  return cells.map((c, idx) => {
-    const batch = idx % 4;
-    const batchDelay = batch * 0.4;
-    const jitter = rng() * 0.35;
+
+  const xs = cells.map((c) => c.cx);
+  const ys = cells.map((c) => c.cy);
+  const minX = Math.min(...xs);
+  const maxX = Math.max(...xs);
+  const minY = Math.min(...ys);
+  const maxY = Math.max(...ys);
+  const width = Math.max(1, maxX - minX);
+  const height = Math.max(1, maxY - minY);
+
+  // Roughly-square grid of buckets sized so there are at least `count` of
+  // them, matched to the lattice's aspect ratio so buckets cover the full
+  // width and height evenly (not just a square in the middle).
+  const gridCols = Math.max(1, Math.round(Math.sqrt((count * width) / height)));
+  const gridRows = Math.max(1, Math.ceil(count / gridCols));
+  const bucketW = width / gridCols;
+  const bucketH = height / gridRows;
+
+  const buckets: Cell[][] = Array.from({ length: gridCols * gridRows }, () => []);
+  for (const c of cells) {
+    const bx = Math.min(gridCols - 1, Math.floor((c.cx - minX) / bucketW));
+    const by = Math.min(gridRows - 1, Math.floor((c.cy - minY) / bucketH));
+    buckets[by * gridCols + bx]!.push(c);
+  }
+
+  // Shuffle bucket visiting order (Fisher-Yates) so *which* bucket goes
+  // first isn't fixed, while still guaranteeing full spatial coverage.
+  const order = buckets.map((_, i) => i);
+  for (let i = order.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    const tmp = order[i]!;
+    order[i] = order[j]!;
+    order[j] = tmp;
+  }
+
+  const chosen: Cell[] = [];
+  const used = new Set<Cell>();
+  for (const bi of order) {
+    if (chosen.length >= count) break;
+    const bucket = buckets[bi]!;
+    if (bucket.length === 0) continue;
+    const pick = bucket[Math.floor(rng() * bucket.length)]!;
+    chosen.push(pick);
+    used.add(pick);
+  }
+
+  // Sparse buckets near the lattice edges can come up empty — top up from
+  // whatever's left so we still return `count` cells.
+  if (chosen.length < count) {
+    const remaining = cells.filter((c) => !used.has(c));
+    while (chosen.length < count && remaining.length > 0) {
+      const idx = Math.floor(rng() * remaining.length);
+      chosen.push(remaining.splice(idx, 1)[0]!);
+    }
+  }
+
+  return chosen;
+}
+
+/**
+ * Assigns staggered delay/duration to a list of cells so they animate as an
+ * evenly-paced sequence rather than firing in simultaneous clusters with
+ * big gaps between them. Cells are first ordered along a diagonal sweep
+ * (so hexagons that are near each other in time are also near each other
+ * in space, reading like a wave crossing the background) and then given
+ * delays spread evenly across `spreadSeconds`, with only a light jitter
+ * confined to each hexagon's own slot so it can't collide with its
+ * neighbors' timing.
+ */
+function assignTiming(
+  cells: Cell[],
+  seed: number,
+  spreadSeconds: number,
+  minDuration: number,
+  durationRange: number
+): EntryCell[] {
+  const rng = makeRng(seed);
+  const swept = [...cells].sort((a, b) => a.cx + a.cy * 0.6 - (b.cx + b.cy * 0.6));
+  const count = swept.length;
+  const step = count > 1 ? spreadSeconds / count : 0;
+  return swept.map((c, idx) => {
+    const jitter = (rng() - 0.5) * step * 0.6; // stays within this hex's own slot
     return {
       ...c,
-      delay: Math.round((batchDelay + jitter) * 100) / 100,
-      duration: 1.0 + Math.round(rng() * 30) / 100, // 1.0 - 1.3s
+      delay: Math.max(0, Math.round((idx * step + jitter) * 100) / 100),
+      duration: Math.round((minDuration + rng() * durationRange) * 100) / 100,
     };
   });
 }
 
-/**
- * Picks `count` random cells from the lattice using a seeded RNG. Shared by
- * the mount-time entry effect and the ambient effect so both draw from the
- * same kind of "small random group somewhere on the page" selection.
- */
-function pickRandomCells(cells: Cell[], count: number, seed: number): Cell[] {
-  if (cells.length === 0 || count <= 0) return [];
-  const rng = makeRng(seed);
-  const pool = cells.map((c) => ({ c, r: rng() }));
-  pool.sort((a, b) => a.r - b.r);
-  return pool.slice(0, Math.min(count, pool.length)).map(({ c }) => c);
+/** Entry effect: a gentle ~1.8s evenly-paced wave across the chosen hexagons. */
+function assignEntryTiming(cells: Cell[], seed: number): EntryCell[] {
+  return assignTiming(cells, seed, 1.8, 1.0, 0.3); // 1.0 - 1.3s per hex
+}
+
+/** Ambient burst: a tighter ~0.7s evenly-paced pop across a smaller group. */
+function assignAmbientTiming(cells: Cell[], seed: number): EntryCell[] {
+  return assignTiming(cells, seed, 0.7, 0.9, 0.4); // 0.9 - 1.3s per hex
 }
 
 /**
- * Picks a small, scattered subset of cells for the one-time entry
- * animation and assigns each a staggered delay/duration so the group
- * rises in an organic sequence rather than all at once. Purely additive —
- * does not touch the static lattice's geometry, color, or opacity.
+ * Picks a small, evenly-spread subset of cells for the one-time entry
+ * animation and assigns each a staggered delay/duration so the group rises
+ * in an organic sequence rather than all at once. Purely additive — does
+ * not touch the static lattice's geometry, color, or opacity.
  */
 function pickEntryCells(cells: Cell[], count: number, seed: number): EntryCell[] {
-  const chosen = pickRandomCells(cells, count, seed);
+  const chosen = pickSpreadCells(cells, count, seed);
   return assignEntryTiming(chosen, seed + 1);
-}
-
-/**
- * Tighter delay/duration for the ambient background burst — a smaller
- * group that pops in ~1–2s total, rather than the entry effect's longer
- * ~2.5–3s wave across more hexagons. Uses the exact same keyframe
- * (`hex-entry-rise`), just a shorter animation-duration.
- */
-function assignAmbientTiming(cells: Cell[], seed: number): EntryCell[] {
-  const rng = makeRng(seed);
-  return cells.map((c, idx) => ({
-    ...c,
-    delay: Math.round((idx * 0.06 + rng() * 0.15) * 100) / 100, // 0 - ~0.45s
-    duration: 0.9 + Math.round(rng() * 40) / 100, // 0.9 - 1.3s
-  }));
 }
 
 function LatticeSvg({
@@ -284,7 +356,7 @@ function LatticeSvg({
  * Overlay of a handful of hexagon outlines used for the one-time lift →
  * bolden → fall animation — reused both at mount (the page-entry effect)
  * and automatically (the ambient effect, a small random cluster every
- * 1-2 minutes). Sits exactly on top of the static lattice (same viewBox/scale) so each highlighted hexagon
+ * ~10 seconds). Sits exactly on top of the static lattice (same viewBox/scale) so each highlighted hexagon
  * aligns with the real one beneath it. Starts and ends at opacity 0 / no
  * transform, so once the animation finishes the background is
  * pixel-identical to the plain static lattice — nothing lingers, nothing
@@ -357,13 +429,14 @@ export function HexagonBackground({
   );
 
   // Ambient burst: reuses the exact same lift → bolden → fall animation as
-  // the page-entry effect, played automatically on a small random group of
-  // hexagons, then scheduled again after a random ~10 second wait.
-  // `ambientBurst` holds only the currently-playing group (cleared once its
-  // animation finishes) — never a persistent per-pixel state — so the base
-  // lattice/entry animation above stay completely unaffected. There is no
-  // pointer or click listener anywhere in this effect (or file), so nothing
-  // here can be triggered by clicking elsewhere on the page.
+  // the page-entry effect, played automatically on a small group of
+  // hexagons spread evenly across the lattice, then scheduled again after
+  // a random ~10 second wait. `ambientBurst` holds only the
+  // currently-playing group (cleared once its animation finishes) — never
+  // a persistent per-pixel state — so the base lattice/entry animation
+  // above stay completely unaffected. There is no pointer or click
+  // listener anywhere in this effect (or file), so nothing here can be
+  // triggered by clicking elsewhere on the page.
   const [ambientBurst, setAmbientBurst] = useState<EntryCell[]>([]);
   const ambientSeedRef = useRef(1000);
 
@@ -380,7 +453,7 @@ export function HexagonBackground({
         if (cancelled) return;
 
         ambientSeedRef.current += 1;
-        const group = pickRandomCells(lattice.cells, ambientHexCount, ambientSeedRef.current);
+        const group = pickSpreadCells(lattice.cells, ambientHexCount, ambientSeedRef.current);
         const timed = assignAmbientTiming(group, ambientSeedRef.current);
         setAmbientBurst(timed);
 
@@ -446,9 +519,10 @@ export function HexagonBackground({
 
       {/* Layer 5: ambient boost — reuses EntryHexOverlay (the exact same
           lift → bolden → fall animation as page-entry) automatically, on a
-          small random group, approximately every 10 seconds. `ambientBurst`
-          is empty whenever nothing is playing, so this renders nothing most
-          of the time. No pointer/click involvement whatsoever. */}
+          small group spread across the lattice, approximately every 10
+          seconds. `ambientBurst` is empty whenever nothing is playing, so
+          this renders nothing most of the time. No pointer/click
+          involvement whatsoever. */}
       {ambientAnimation && (
         <EntryHexOverlay entryCells={ambientBurst} width={lattice.width} height={lattice.height} lineColor={highlightColor} />
       )}
