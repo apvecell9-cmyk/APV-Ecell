@@ -31,8 +31,10 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 type HexagonBackgroundProps = {
   /** Base opacity of the hexagon strokes (0–1). Default 0.16. */
   opacity?: number;
-  /** Stroke color as an SVG-friendly value. Default #000. */
+  /** Stroke color for normal hexagon edges. Default #A855D4. */
   lineColor?: string;
+  /** Stroke color for highlighted/popped hexagons. Default #2F0553. */
+  highlightColor?: string;
   /** Enable ambient animations. Default true. */
   animated?: boolean;
   /** Animation pace. Default "normal". */
@@ -330,7 +332,8 @@ function EntryHexOverlay({
 
 export function HexagonBackground({
   opacity = 0.16,
-  lineColor = "#000000",
+  lineColor = "#A855D4",
+  highlightColor = "#4F0C8A",
   animated = true,
   animationSpeed = "normal",
   className = "",
@@ -420,7 +423,7 @@ export function HexagonBackground({
         className={`absolute -inset-[10%] ${animated ? `hex-anim-drift ${speed}` : ""}`}
       >
         <LatticeSvg {...lattice} lineColor={lineColor} strokeOpacity={opacity} />
-        <EntryHexOverlay entryCells={entryCells} width={lattice.width} height={lattice.height} lineColor={lineColor} />
+        <EntryHexOverlay entryCells={entryCells} width={lattice.width} height={lattice.height} lineColor={highlightColor} />
       </div>
 
       {/* Layer 2: Pulse — opacity breathes to create localized variation */}
@@ -447,7 +450,7 @@ export function HexagonBackground({
           is empty whenever nothing is playing, so this renders nothing most
           of the time. No pointer/click involvement whatsoever. */}
       {ambientAnimation && (
-        <EntryHexOverlay entryCells={ambientBurst} width={lattice.width} height={lattice.height} lineColor={lineColor} />
+        <EntryHexOverlay entryCells={ambientBurst} width={lattice.width} height={lattice.height} lineColor={highlightColor} />
       )}
 
       {/* Layer 4: one-time entry-animation keyframes. Scoped to this

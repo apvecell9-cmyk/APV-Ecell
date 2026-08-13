@@ -19,16 +19,21 @@ export function HeroSection() {
         </div>
 
         {/* Headline */}
-        <h1 className="text-5xl sm:text-7xl lg:text-8xl font-serif font-normal tracking-tight text-foreground leading-[1.05] mb-8 animate-fade-in">
-          Creating <br />
-          <span className="italic font-light text-foreground/90">Change Makers.</span>
+        <h1 className="text-5xl sm:text-7xl lg:text-8xl font-serif font-normal tracking-tight text-white leading-[1.05] mb-8 animate-fade-in text-center">
+          <span className="block w-fit mx-auto bg-black px-3 py-1">
+            Creating
+          </span>
+          <span className="block w-fit mx-auto bg-black px-3 py-1 italic font-light text-white">
+            Change Makers.
+          </span>
         </h1>
 
         {/* Subtitle */}
-        <p className="max-w-2xl mx-auto text-base sm:text-lg text-muted-foreground leading-relaxed mb-10 font-normal">
+        <p className="max-w-2xl mx-auto text-base sm:text-lg text-white font-bold leading-relaxed mb-10">
           Empowering visionaries to transform ideas into reality. Building the next generation of
           entrepreneurs, ethical changemakers, and innovators at Agnel Polytechnic, Vashi.
         </p>
+
 
         {/* Buttons */}
         <div className="flex flex-wrap items-center justify-center gap-4">

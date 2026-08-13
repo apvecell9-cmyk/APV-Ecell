@@ -27,11 +27,15 @@ export function Navbar() {
 
   const navLinks = NAV_LINKS;
 
+  const isHome = pathname === "/";
+
   const headerClass = scrolled
     ? "bg-background/90 backdrop-blur-md border-b border-border text-foreground shadow-xs"
     : isAboutPage
       ? "bg-transparent text-white"
-      : "bg-transparent text-foreground";
+      : isHome
+        ? "bg-transparent text-white"
+        : "bg-transparent text-foreground";
       
   return (
     <>
@@ -43,7 +47,7 @@ export function Navbar() {
             <img
               src="/logos/logo.png"
               alt="APV E-Cell"
-              className="h-10 w-auto md:h-12 transition-transform group-hover:scale-105"
+              className={`w-auto transition-transform group-hover:scale-105 ${isHome ? "h-14 md:h-16" : "h-10 md:h-12"}`}
             />
           </Link>
 
@@ -55,19 +59,25 @@ export function Navbar() {
                 <Link
                   key={link.to}
                   to={link.to}
-                  className={`transition-colors relative py-1 ${
-                  isActive
-                    ? `${isAboutPage && !scrolled ? "text-white" : "text-foreground"} font-medium`
-                    : isAboutPage && !scrolled
-                      ? "text-white/80 hover:text-white"
-                      : "text-muted-foreground hover:text-foreground"
-                }`}
+                  className={`transition-colors relative py-1 text-[16px] ${
+  isActive
+    ? isHome && !scrolled
+      ? "text-white font-medium"
+      : isAboutPage && !scrolled
+        ? "text-white font-medium"
+        : "text-foreground font-medium"
+    : isAboutPage && !scrolled
+      ? "text-white/80 hover:text-white"
+      : isHome && !scrolled
+        ? "text-white/80 hover:text-white"
+        : "text-muted-foreground hover:text-foreground"
+}`}
                 >
                   {link.label}
                   {isActive && (
                     <span
                     className={`absolute bottom-0 left-0 right-0 h-px ${
-                      isAboutPage && !scrolled ? "bg-white" : "bg-foreground"
+                      (isHome || isAboutPage) && !scrolled ? "bg-white" : "bg-foreground"
                     }`}
                   />
                   )}
@@ -77,14 +87,18 @@ export function Navbar() {
           </nav>
 
           {/* Action Button */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center ml-4 mr-6">
             <button
               type="button"
               onClick={() => setCommunityOpen(true)}
               className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium tracking-wide transition-all duration-300 ${
                 scrolled
-                  ? "bg-foreground text-background hover:bg-foreground/90"
-                  : "bg-background/80 backdrop-blur-sm text-foreground hover:bg-background border border-border/60 shadow-xs"
+                  ? isHome
+                    ? "bg-[#2F0553] text-white hover:bg-[#3D0A6E] hover:shadow-[0_0_16px_2px_rgba(47,5,83,0.5)]"
+                    : "bg-foreground text-background hover:bg-foreground/90"
+                  : isHome
+                    ? "bg-white/10 backdrop-blur-sm text-white hover:bg-[#2F0553] hover:shadow-[0_0_16px_2px_rgba(47,5,83,0.5)] border border-white/20"
+                    : "bg-background/80 backdrop-blur-sm text-foreground hover:bg-background border border-border/60 shadow-xs"
               }`}
             >
               Join Community
@@ -96,7 +110,7 @@ export function Navbar() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-foreground focus:outline-none"
+            className={`md:hidden p-2 focus:outline-none ${isHome && !scrolled ? "text-white" : "text-foreground"}`}
             aria-label="Toggle Navigation"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}

@@ -28,9 +28,9 @@ function CompassVisual({ progress }: { progress: ReturnType<typeof useScroll>["p
   const compassX = useTransform(progress, [0, 0.18], [-80, 0]);
   const compassScale = useTransform(progress, [0, 0.18], [0.85, 1]);
 
-  // Needle rotation — searches then locks
-  // 0→180° sweep, then settles to 0° (north)
-  const needleRotation = useTransform(progress, [0.12, 0.55, 0.72], [-180, 400, 0]);
+  // Needle rotation — smooth unidirectional rotation, smaller increments
+  // Rotates clockwise only, proportional to scroll, no reversal
+  const needleRotation = useTransform(progress, [0.12, 0.8], [0, 120]);
 
   // Subtle glow ring behind compass
   const glowOpacity = useTransform(progress, [0.15, 0.3, 0.7], [0, 0.5, 0.3]);
@@ -56,14 +56,14 @@ function CompassVisual({ progress }: { progress: ReturnType<typeof useScroll>["p
         />
       </motion.div>
 
-      {/* Needle PNG — overlaid, rotates independently */}
+      {/* Needle PNG — overlaid, rotates independently (slightly reduced size) */}
       <motion.div
         style={{
           opacity: compassOpacity,
           rotate: needleRotation,
           transformOrigin: "50% 50%",
         }}
-        className="absolute inset-0 w-full h-full pointer-events-none"
+        className="absolute inset-[8%] w-[84%] h-[84%] pointer-events-none"
       >
         <img
           src="/assets/compass_needle.png"
@@ -84,17 +84,17 @@ function TargetVisual({ progress }: { progress: ReturnType<typeof useScroll>["pr
   const targetScale = useTransform(progress, [0, 0.18], [0.88, 1]);
 
   // Arrow trajectory — approaches from lower-left toward bullseye center
-  // Trajectory keyed to scroll progress, completing by ~72%
-  const arrowOpacity = useTransform(progress, [0.12, 0.2, 0.62, 0.72], [0, 1, 1, 0]);
+  // Fades out after a brief pause at center, then stays invisible
+  const arrowOpacity = useTransform(progress, [0.12, 0.2, 0.62, 0.65, 0.78], [0, 1, 1, 1, 0]);
 
-  // Arrow position: starts off-screen lower-left, ends at container center (target bullseye)
-  // Using percentage-based values relative to container for responsiveness
-  const arrowLeft = useTransform(progress, [0.12, 0.28, 0.48, 0.62], ["-12%", "8%", "28%", "42%"]);
-  const arrowTop = useTransform(progress, [0.12, 0.28, 0.48, 0.62], ["88%", "62%", "38%", "42%"]);
+  // Arrow position: starts off-screen lower-left, ends at exact container center (50%, 50%)
+  // Locks in place at 0.62 and stays frozen
+  const arrowLeft = useTransform(progress, [0.12, 0.28, 0.48, 0.62], ["-12%", "8%", "28%", "50%"]);
+  const arrowTop = useTransform(progress, [0.12, 0.28, 0.48, 0.62], ["88%", "62%", "38%", "50%"]);
 
   // Arrow rotation follows the trajectory tangent
-  // Starts pointing upper-right, curves to point at target on impact
-  const arrowRotate = useTransform(progress, [0.12, 0.28, 0.48, 0.62], [-50, -35, -18, -8]);
+  // Starts pointing upper-right, locks at target on impact
+  const arrowRotate = useTransform(progress, [0.12, 0.28, 0.48, 0.62], [-50, -35, -18, 0]);
 
   // Impact ripple after arrow lands
   const rippleScale = useTransform(progress, [0.62, 0.76], [0, 2.2]);
@@ -175,7 +175,7 @@ function StaticCompass() {
           draggable={false}
         />
       </div>
-      <div className="absolute inset-0 w-full h-full pointer-events-none">
+      <div className="absolute inset-[8%] w-[84%] h-[84%] pointer-events-none">
         <img
           src="/assets/compass_needle.png"
           alt=""
@@ -198,8 +198,8 @@ function StaticTarget() {
           draggable={false}
         />
       </div>
-      {/* Arrow at final resting position — near bullseye center */}
-      <div className="absolute top-[42%] left-[42%] -translate-x-1/2 -translate-y-1/2 w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 pointer-events-none -rotate-[8deg]">
+      {/* Arrow at final resting position — bullseye center */}
+      <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 pointer-events-none">
         <img
           src="/assets/arrow.png"
           alt=""

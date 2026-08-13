@@ -92,7 +92,7 @@ const BANDS = [
       { mult: 1, amp: 42, phase: 0.4 },
       { mult: 2, amp: 16, phase: 1.6 },
     ]),
-    color: "#510C9A",
+    color: "#4f0c8a", //2nd wave
     dir: "left",
     dur: 62,
   },
@@ -102,7 +102,7 @@ const BANDS = [
       { mult: 1, amp: 52, phase: 2.1 },
       { mult: 2, amp: 20, phase: 0.3 },
     ]),
-    color: "#6A1FAF",
+    color: "#6A1FAF",//3rd wave
     dir: "right",
     dur: 50,
   },
@@ -136,16 +136,7 @@ const BANDS = [
     dir: "left",
     dur: 36,
   },
-  {
-    key: "b6",
-    wave: makeWave(560, [
-      { mult: 1, amp: 34, phase: 2.6 },
-      { mult: 2, amp: 11, phase: 0.7 },
-    ]),
-    color: "#E8E0F3",
-    dir: "right",
-    dur: 68,
-  },
+ 
 ];
 
 const PATHS = Object.fromEntries(BANDS.map((b) => [b.key, buildBand(b.wave)]));
@@ -154,7 +145,9 @@ export function AnimatedWaveBackground() {
   return (
     <div className="absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
       {/* Darkest tone as the base fill, visible above the first band's peaks */}
-      <div className="absolute inset-0" style={{ background: "#2F0553" }} />
+      <div className="absolute inset-0" style={{ background: "#2F0553" }} /> 
+
+      {/*Top Wave*/}
 
       <svg
         viewBox={`0 0 ${VB_W} ${VB_H}`}

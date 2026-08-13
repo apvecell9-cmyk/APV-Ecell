@@ -63,7 +63,7 @@ export function CombinedPartnersSection() {
   const cVar = reducedMotion ? rmCard : cardVariants;
 
   return (
-    <section className="py-24 px-6 lg:px-12 border-t border-border bg-background relative overflow-hidden">
+    <section className="py-24 px-6 lg:px-12 bg-background border-t border-border relative overflow-hidden">
       {/* Ambient background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-primary/5 rounded-full blur-3xl pointer-events-none -z-10" />
 
