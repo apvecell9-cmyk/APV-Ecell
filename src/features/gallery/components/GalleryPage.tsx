@@ -54,6 +54,10 @@ export function GalleryPage() {
   const handleCloseExpanded = useCallback(() => {
     setExpandedEvent(null);
     setLightboxOpen(false);
+    // Scroll to top after returning to carousel
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: "instant" });
+    });
   }, []);
 
   const handleOpenImage = useCallback((index: number) => {
@@ -75,16 +79,20 @@ export function GalleryPage() {
       <div className="relative min-h-screen" style={{ isolation: "isolate" }}>
         <HexagonBackground animated />
 
-        {/* Hero */}
-        <GalleryHero />
-
-        {/* Year roller — right-aligned */}
-        <div className="relative z-10 mx-auto flex max-w-7xl justify-end px-6 lg:px-12">
-          <YearRoller years={years} selectedYear={selectedYear} onSelect={handleYearChange} />
+        {/* Header row — Heading centered, year selector far right */}
+        <div className="relative z-10 mx-auto max-w-7xl px-6 pt-24 lg:px-12 lg:pt-28">
+          <div className="relative flex items-center justify-center">
+            {/* Centered heading */}
+            <GalleryHero />
+            {/* Year selector — absolutely pushed to far right */}
+            <div className="absolute right-0 top-1/2 -translate-y-1/2">
+              <YearRoller years={years} selectedYear={selectedYear} onSelect={handleYearChange} />
+            </div>
+          </div>
         </div>
 
-        {/* 3D Carousel — dimmed when expanded */}
-        <div className="relative z-10 mx-auto max-w-7xl px-6 pb-8 lg:px-12">
+        {/* 3D Carousel — dimmed when expanded, with floor shadow */}
+        <div className="relative z-10 mx-auto max-w-7xl px-6 pb-8 pt-16 lg:px-12 lg:pt-24">
           <motion.div
             animate={{
               scale: expandedEvent ? 0.88 : 1,
@@ -105,6 +113,11 @@ export function GalleryPage() {
               <EmptyGallery description="No gallery events have been added yet." />
             )}
           </motion.div>
+          {/* Subtle 3D floor shadow beneath carousel */}
+          <div
+            className="pointer-events-none mx-auto mt-4 h-6 w-3/4 rounded-full opacity-40 blur-xl"
+            style={{ background: "radial-gradient(ellipse at center, var(--foreground) 0%, transparent 70%)" }}
+          />
         </div>
 
         {/* Expanded event — card transforms into this hero */}
