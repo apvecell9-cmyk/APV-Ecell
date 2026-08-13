@@ -4,7 +4,7 @@ import { FounderVision } from "./FounderVision";
 
 export function AboutStory() {
   return (
-    <section className="relative z-10 px-6 pb-24 pt-16 lg:px-12">
+    <section className="relative z-10 px-6 pb-24 pt-6 lg:px-12">
       <div className="mx-auto max-w-7xl">
 
         {/* ================= TOP CARDS ================= */}

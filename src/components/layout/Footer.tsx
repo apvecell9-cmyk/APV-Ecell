@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 import { FOOTER_NAV_LINKS } from "@/constants/navigation";
 import { SOCIAL_LINKS } from "@/constants/social";
-import { BRAND_INITIALS, COPYRIGHT, INSTITUTION_LINE, TAGLINE } from "@/constants/branding";
+import { COPYRIGHT, INSTITUTION_LINE, TAGLINE } from "@/constants/branding";
 
 export function Footer() {
   return (
@@ -11,9 +11,11 @@ export function Footer() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
         <div className="md:col-span-2 space-y-4">
           <div className="flex items-center gap-2.5 text-foreground font-semibold">
-            <div className="w-6 h-6 rounded-full bg-foreground text-background flex items-center justify-center font-mono text-xs font-bold">
-              {BRAND_INITIALS}
-            </div>
+            <img
+              src="/logos/logo.png"
+              alt="APV E-Cell"
+               className="h-12 w-auto"
+            />
             <span>{INSTITUTION_LINE}</span>
           </div>
           <p className="max-w-md text-muted-foreground leading-relaxed">

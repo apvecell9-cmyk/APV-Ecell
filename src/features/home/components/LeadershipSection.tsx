@@ -44,8 +44,24 @@ export function LeadershipSection() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
-          className="mb-12 md:mb-16 lg:mb-20"
+          className="mb-12 md:mb-16 lg:mb-20 relative"
         >
+          {/* Continuous animated orbit outline around heading block */}
+          {!reducedMotion && (
+            <div className="absolute -inset-4 md:-inset-5 lg:-inset-6 pointer-events-none rounded-2xl leadership-orbit-container">
+              {/* Static subtle border with glow */}
+              <div
+                className="absolute inset-0 rounded-2xl"
+                style={{
+                  border: "1px solid rgba(47,5,83,0.4)",
+                  boxShadow: "0 0 20px 5px rgba(47,5,83,0.25), inset 0 0 12px 2px rgba(47,5,83,0.1)",
+                }}
+              />
+              {/* Traveling highlight orbiting along the perimeter */}
+              <div className="absolute inset-0 rounded-2xl overflow-hidden leadership-orbit-highlight" />
+            </div>
+          )}
+
           <span className="eyebrow block text-muted-foreground/80">
             Visionary Guidance & Strategy
           </span>
@@ -75,6 +91,49 @@ export function LeadershipSection() {
           </div>
         </div>
       </div>
+
+      {/* CSS-only orbit animation */}
+      <style>{`
+        .leadership-orbit-container {
+          opacity: 0;
+          animation: leadership-orbit-fade-in 1.2s ease 0.3s forwards;
+        }
+        .leadership-orbit-highlight {
+          background: linear-gradient(
+            var(--leadership-orbit-angle, 0deg),
+            transparent 0%,
+            transparent 35%,
+            rgba(124, 58, 237, 0.7) 48%,
+            rgba(124, 58, 237, 1) 50%,
+            rgba(124, 58, 237, 0.7) 52%,
+            transparent 65%,
+            transparent 100%
+          );
+          animation: leadership-orbit-rotate 6s linear infinite;
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask-composite: exclude;
+          -webkit-mask-composite: xor;
+          padding: 1px;
+        }
+        @keyframes leadership-orbit-rotate {
+          from { --leadership-orbit-angle: 0deg; }
+          to { --leadership-orbit-angle: 360deg; }
+        }
+        @keyframes leadership-orbit-fade-in {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @property --leadership-orbit-angle {
+          syntax: "<angle>";
+          inherits: false;
+          initial-value: 0deg;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .leadership-orbit-container { animation: none; opacity: 0; }
+          .leadership-orbit-highlight { animation: none; }
+        }
+      `}</style>
     </section>
   );
 }

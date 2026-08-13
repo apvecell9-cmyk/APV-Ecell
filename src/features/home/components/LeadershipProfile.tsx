@@ -114,7 +114,7 @@ export function LeadershipProfile({ leader, index, side }: LeadershipProfileProp
         variants={cObj}
         className={`relative flex-1 min-w-0 ${isLeft ? "" : ""}`}
       >
-        <div className="relative rounded-2xl border border-border bg-surface p-6 sm:p-7 md:p-8 lg:p-9 shadow-soft hover:border-primary/20 hover:shadow-lg transition-all duration-500">
+        <div className="relative rounded-2xl border border-border bg-surface p-6 sm:p-7 md:p-8 lg:p-9 shadow-soft hover:border-primary/20 hover:shadow-[0_0_20px_4px_rgba(47,5,83,0.25)] transition-all duration-500">
           {/* Background number watermark */}
           <span
             className="absolute -top-4 right-4 md:right-6 font-mono text-[4rem] md:text-[5.5rem] lg:text-[6.5rem] font-bold leading-none text-foreground/[0.03] select-none pointer-events-none"

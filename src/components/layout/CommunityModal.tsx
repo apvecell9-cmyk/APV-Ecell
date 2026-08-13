@@ -37,9 +37,9 @@ const COMMUNITY_LINKS = [
     name: "Threads",
     handle: "@apv.ecell",
     href: "https://www.threads.net/@apv.ecell",
-    color: "#ffffff",
-    bg: "rgba(255,255,255,0.06)",
-    border: "rgba(255,255,255,0.15)",
+    color: "#000000",
+    bg: "rgba(253,224,71,0.1)",
+    border: "rgba(253,224,71,0.25)",
     icon: (
       <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
         <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.5 12.068c0-3.51.85-6.356 2.495-8.451C5.845 1.31 8.598.124 12.18.1h.014c3.578.024 6.33 1.205 8.18 3.508C22.025 5.7 22.875 8.558 22.875 12.068c0 3.505-.85 6.355-2.501 8.45C18.523 22.822 15.772 24 12.186 24zm0-21.9h-.011c-2.822.02-4.988.887-6.438 2.578C4.3 6.382 3.6 8.854 3.6 12.068c0 3.21.7 5.68 2.137 7.348 1.45 1.694 3.616 2.562 6.44 2.584h.01c2.822-.02 4.987-.887 6.437-2.578C20.07 17.757 20.775 15.283 20.775 12.068c0-3.21-.705-5.68-2.151-7.347-1.45-1.694-3.616-2.562-6.438-2.581zM14.15 16.8c-1.254 1.012-2.684 1.2-3.55 1.2-.85 0-1.52-.178-2-.544-.48-.366-.72-.878-.72-1.522 0-1.458 1.293-2.496 3.157-2.496.476 0 .933.06 1.364.179-.09-.72-.584-1.143-1.551-1.143-.645 0-1.156.17-1.49.343l-.485-1.58c.487-.27 1.25-.485 2.215-.485 1.935 0 3.01.96 3.01 2.709v.018c0 .55-.082 1.04-.246 1.47.246.064.49.098.728.098.6 0 .974-.21 1.127-.63l1.476.544c-.36 1.002-1.27 1.62-2.603 1.62-.145 0-.287-.01-.432-.031l.001-.003zM12.59 13.52c-.278-.09-.575-.135-.878-.135-.857 0-1.357.378-1.357.958 0 .48.36.786 1.005.786.66 0 1.23-.33 1.23-.33v-1.279z"/>
@@ -135,23 +135,25 @@ export function CommunityModal({ onClose }: CommunityModalProps) {
         }
         .apv-comm-body {
           padding: 1.25rem 1.25rem 1.5rem;
-          display: flex;
-          flex-direction: column;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
           gap: 0.6rem;
         }
         .apv-comm-link {
           display: flex;
+          flex-direction: column;
           align-items: center;
-          gap: 1rem;
-          padding: 0.9rem 1.1rem;
+          gap: 0.5rem;
+          padding: 1.1rem 0.8rem;
           border-radius: 1rem;
           border: 1px solid transparent;
           text-decoration: none;
           transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
           animation: apv-item-in 0.4s ease both;
+          text-align: center;
         }
         .apv-comm-link:hover {
-          transform: translateX(4px);
+          transform: translateY(-2px);
         }
         .apv-comm-icon {
           width: 44px; height: 44px;
@@ -159,9 +161,6 @@ export function CommunityModal({ onClose }: CommunityModalProps) {
           display: flex; align-items: center; justify-content: center;
           flex-shrink: 0;
           transition: transform 0.2s;
-        }
-        .apv-comm-link:hover .apv-comm-icon {
-          transform: scale(1.08);
         }
         .apv-comm-text-name {
           font-size: 0.875rem;
@@ -177,15 +176,7 @@ export function CommunityModal({ onClose }: CommunityModalProps) {
           letter-spacing: 0.04em;
         }
         .apv-comm-arrow {
-          margin-left: auto;
-          color: var(--muted-foreground);
-          font-size: 1rem;
-          opacity: 0.4;
-          transition: opacity 0.2s, transform 0.2s;
-        }
-        .apv-comm-link:hover .apv-comm-arrow {
-          opacity: 0.9;
-          transform: translate(2px, -2px);
+          display: none;
         }
         .apv-comm-footer {
           padding: 0.75rem 1.5rem;
