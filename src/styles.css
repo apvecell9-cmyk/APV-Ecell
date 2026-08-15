@@ -377,6 +377,66 @@
   .wave-ribbon-h-1, .wave-ribbon-h-2, .wave-ribbon-h-3, .wave-ribbon-h-4, .wave-ribbon-h-5 { animation: none !important; }
   .wave-ribbon-v-1, .wave-ribbon-v-2, .wave-ribbon-v-3, .wave-ribbon-v-4, .wave-ribbon-v-5 { animation: none !important; }
   .wave-blob { animation: none !important; }
+  .jp-line { animation: none !important; stroke-dashoffset: 0 !important; }
+  .jp-mid, .jp-glow-soft { animation: none !important; opacity: 0.6 !important; }
+  .journey-node > span:first-child { animation: none !important; }
+  .journey-nav-btn { animation: none !important; }
+}
+
+/* ============================================================
+   Journey Timeline utilities
+   ============================================================ */
+
+.journey-scroll {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+.journey-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Path "draw-in" animation — uses per-instance --jp-len so it scales
+   with the actual SVG path length (which can be well over 1000px). */
+@keyframes jp-draw {
+  from { stroke-dashoffset: var(--jp-len, 1000); }
+  to   { stroke-dashoffset: 0; }
+}
+.jp-line {
+  animation: jp-draw 1.6s cubic-bezier(0.22, 0.61, 0.36, 1) 0.15s both;
+}
+.jp-mid {
+  opacity: 0;
+  animation: jp-fadein 1.2s ease-out 0.1s both;
+}
+.jp-glow-soft {
+  opacity: 0;
+  animation: jp-softfadein 1.6s ease-out 0.1s both;
+}
+@keyframes jp-fadein {
+  from { opacity: 0; }
+  to   { opacity: 0.85; }
+}
+@keyframes jp-softfadein {
+  from { opacity: 0; }
+  to   { opacity: 0.5; }
+}
+
+/* Node ambient glow — slow breathing. */
+@keyframes journey-node-breathe {
+  0%, 100% { transform: scale(1); opacity: 0.55; }
+  50%      { transform: scale(1.08); opacity: 0.85; }
+}
+.journey-node:hover > span:first-child {
+  animation-duration: 3s;
+}
+
+/* Smooth appearance for navigation arrows */
+@keyframes journey-nav-in {
+  from { opacity: 0; transform: translateY(-50%) scale(0.9); }
+  to   { opacity: 1; transform: translateY(-50%) scale(1); }
+}
+.journey-nav-btn {
+  animation: journey-nav-in 0.35s cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
 
 @utility hero-flow {
