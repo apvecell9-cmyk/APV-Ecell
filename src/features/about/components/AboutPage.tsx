@@ -4,7 +4,7 @@ import { AboutHero } from "./AboutHero";
 import { AboutStory } from "./AboutStory";
 
 const ABOUT_THEME = {
-  backgroundImage: "/AboutUs/AboutUsImg.jpg",
+  backgroundImage: "/AboutUs/AboutUsImg.png",
 
   // "light" = dark background → light content
   // "dark"  = light background → dark content

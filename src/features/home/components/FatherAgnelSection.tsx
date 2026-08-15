@@ -28,7 +28,7 @@ export function FatherAgnelSection() {
           >
             <div className="relative overflow-hidden rounded-[2rem_0.75rem_2rem_0.75rem] border border-border shadow-soft">
               <img
-                src="/AboutUs/AboutUsImg.jpg"
+                src="/AboutUs/AboutUsImg.png"
                 alt="Agnel Polytechnic, Vashi campus"
                 loading="lazy"
                 className="h-72 w-full object-cover md:h-96"
