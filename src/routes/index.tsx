@@ -2,10 +2,12 @@ import React from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { HeroSection } from "@/features/home/components/HeroSection";
-import { LeadershipSection } from "@/features/home/components/LeadershipSection";
+import { AboutECellSection } from "@/features/home/components/AboutECellSection";
 import { MissionVisionSection } from "@/features/home/components/MissionVisionSection";
+import { FatherAgnelSection } from "@/features/home/components/FatherAgnelSection";
+import { LeadershipSection } from "@/features/home/components/LeadershipSection";
+import { UpcomingEventsSection } from "@/features/home/components/UpcomingEventsSection";
 import { TeamSection } from "@/features/home/components/TeamSection";
-import { LandingGallerySection } from "@/features/home/components/LandingGallerySection";
 import { CombinedPartnersSection } from "@/features/home/components/CombinedPartnersSection";
 
 export const Route = createFileRoute("/")({
@@ -21,17 +23,23 @@ function Index() {
       {/* Landing page hero section with flowing background image */}
       <HeroSection />
 
-      {/* Our Leadership: minimalist aesthetic side-by-side cards */}
-      <LeadershipSection />
+      {/* About E-Cell: quick intro + three pillars */}
+      <AboutECellSection />
 
       {/* Our Mission & Vision: refined minimal editorial layout */}
       <MissionVisionSection />
 
+      {/* Father Agnel / Agnel Polytechnic origins + founder vision */}
+      <FatherAgnelSection />
+
+      {/* Our Leadership: minimalist aesthetic side-by-side cards */}
+      <LeadershipSection />
+
+      {/* Upcoming Events: real, scheduled events with animated hex background */}
+      <UpcomingEventsSection />
+
       {/* Our Teams: departmental cards with hover head photo + member reveal */}
       <TeamSection />
-
-      {/* Gallery preview: cinematic event cards with animated hex background
-      <LandingGallerySection /> */}
 
       {/* Combined References & Incubation Partner in one cohesive section */}
       <CombinedPartnersSection />

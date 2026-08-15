@@ -67,6 +67,8 @@ type HexagonBackgroundProps = {
   ambientMinDelayMs?: number;
   /** Maximum ms between ambient bursts. Default 11000 (~11s). */
   ambientMaxDelayMs?: number;
+  /** Optional flat wash color painted behind the lattice (e.g. a light purple tint). Off by default. */
+  washColor?: string;
 };
 
 type Edge = { x1: number; y1: number; x2: number; y2: number; bond: boolean };
@@ -387,7 +389,8 @@ function EntryHexOverlay({
           key={`${i}-${cell.delay}-${cell.duration}`}
           className="hex-entry-cell"
           points={cell.corners.map(([x, y]) => `${x},${y}`).join(" ")}
-          fill="none"
+          fill={lineColor}
+          fillOpacity={0}
           stroke={lineColor}
           strokeWidth={1.3}
           strokeLinecap="round"
@@ -395,6 +398,7 @@ function EntryHexOverlay({
             transformOrigin: `${cell.cx}px ${cell.cy}px`,
             animationDelay: `${cell.delay}s`,
             animationDuration: `${cell.duration}s`,
+            ["--hex-glow" as string]: lineColor,
           }}
         />
       ))}
@@ -418,6 +422,7 @@ export function HexagonBackground({
   ambientHexCount = 5,
   ambientMinDelayMs = 9000,
   ambientMaxDelayMs = 11000,
+  washColor,
 }: HexagonBackgroundProps) {
   const speed = speedClass(animationSpeed);
 
@@ -428,51 +433,60 @@ export function HexagonBackground({
     [hexSize, seed, bondRatio]
   );
 
-  // Ambient burst: reuses the exact same lift → bolden → fall animation as
-  // the page-entry effect, played automatically on a small group of
-  // hexagons spread evenly across the lattice, then scheduled again after
-  // a random ~10 second wait. `ambientBurst` holds only the
-  // currently-playing group (cleared once its animation finishes) — never
-  // a persistent per-pixel state — so the base lattice/entry animation
-  // above stay completely unaffected. There is no pointer or click
-  // listener anywhere in this effect (or file), so nothing here can be
-  // triggered by clicking elsewhere on the page.
-  const [ambientBurst, setAmbientBurst] = useState<EntryCell[]>([]);
+  // Ambient bursts: reuse the exact same lift → bolden → fall animation as
+  // the page-entry effect, played automatically and repeatedly for as long
+  // as the component is mounted — not just once on load. Each burst is a
+  // small group of hexagons spread evenly across the lattice; bursts are
+  // tracked as an array (keyed by id) rather than a single value so a new
+  // burst can start before the previous one has fully faded out, keeping
+  // the glow/grow effect continuous instead of pausing between cycles.
+  // Nothing here is tied to the cursor — there is no hover interaction and
+  // no pointer/click listener anywhere in this file.
+  const [ambientBursts, setAmbientBursts] = useState<{ id: number; cells: EntryCell[] }[]>([]);
   const ambientSeedRef = useRef(1000);
+  const burstIdRef = useRef(0);
 
   useEffect(() => {
     if (!ambientAnimation) return;
     let cancelled = false;
     let scheduleId: ReturnType<typeof setTimeout> | null = null;
-    let clearId: ReturnType<typeof setTimeout> | null = null;
+    const activeClearIds = new Set<ReturnType<typeof setTimeout>>();
 
-    const scheduleNext = () => {
-      const delay =
-        ambientMinDelayMs + Math.random() * Math.max(0, ambientMaxDelayMs - ambientMinDelayMs);
+    const scheduleNext = (isFirst: boolean) => {
+      const delay = isFirst
+        ? 400 + Math.random() * 600
+        : ambientMinDelayMs + Math.random() * Math.max(0, ambientMaxDelayMs - ambientMinDelayMs);
       scheduleId = setTimeout(() => {
         if (cancelled) return;
 
         ambientSeedRef.current += 1;
+        burstIdRef.current += 1;
+        const id = burstIdRef.current;
         const group = pickSpreadCells(lattice.cells, ambientHexCount, ambientSeedRef.current);
         const timed = assignAmbientTiming(group, ambientSeedRef.current);
-        setAmbientBurst(timed);
+
+        setAmbientBursts((prev) => [...prev, { id, cells: timed }]);
 
         const totalMs =
           timed.length > 0 ? Math.max(...timed.map((c) => (c.delay + c.duration) * 1000)) + 50 : 0;
-        clearId = setTimeout(() => {
-          if (!cancelled) setAmbientBurst([]);
+        const clearId = setTimeout(() => {
+          activeClearIds.delete(clearId);
+          if (!cancelled) {
+            setAmbientBursts((prev) => prev.filter((b) => b.id !== id));
+          }
         }, totalMs);
+        activeClearIds.add(clearId);
 
-        scheduleNext();
+        scheduleNext(false);
       }, delay);
     };
 
-    scheduleNext();
+    scheduleNext(true);
 
     return () => {
       cancelled = true;
       if (scheduleId != null) clearTimeout(scheduleId);
-      if (clearId != null) clearTimeout(clearId);
+      activeClearIds.forEach((id) => clearTimeout(id));
     };
   }, [ambientAnimation, lattice, ambientHexCount, ambientMinDelayMs, ambientMaxDelayMs]);
 
@@ -489,6 +503,11 @@ export function HexagonBackground({
       style={{ pointerEvents: "none", zIndex: 0 }}
       aria-hidden="true"
     >
+      {/* Layer 0: optional flat wash color behind the whole lattice */}
+      {washColor && (
+        <div className="absolute inset-0" style={{ backgroundColor: washColor }} />
+      )}
+
       {/* Layer 1: Base lattice — slow drift via transform translate.
           The entry-animation overlay lives inside this same layer so it
           drifts together with the base lattice and stays perfectly aligned. */}
@@ -518,14 +537,21 @@ export function HexagonBackground({
       )}
 
       {/* Layer 5: ambient boost — reuses EntryHexOverlay (the exact same
-          lift → bolden → fall animation as page-entry) automatically, on a
-          small group spread across the lattice, approximately every 10
-          seconds. `ambientBurst` is empty whenever nothing is playing, so
-          this renders nothing most of the time. No pointer/click
-          involvement whatsoever. */}
-      {ambientAnimation && (
-        <EntryHexOverlay entryCells={ambientBurst} width={lattice.width} height={lattice.height} lineColor={highlightColor} />
-      )}
+          lift → bolden → fall animation as page-entry) automatically and
+          continuously, on small groups spread across the lattice. Multiple
+          bursts can overlap in time so the glow/grow effect never fully
+          stops. Each burst is empty/gone once it finishes, so this renders
+          nothing extra once done. No pointer/click involvement whatsoever. */}
+      {ambientAnimation &&
+        ambientBursts.map((burst) => (
+          <EntryHexOverlay
+            key={burst.id}
+            entryCells={burst.cells}
+            width={lattice.width}
+            height={lattice.height}
+            lineColor={highlightColor}
+          />
+        ))}
 
       {/* Layer 4: one-time entry-animation keyframes. Scoped to this
           component via the .hex-entry-cell class name; safe to move into a
@@ -533,7 +559,8 @@ export function HexagonBackground({
       <style>{`
         .hex-entry-cell {
           opacity: 0;
-          transform: translateY(0);
+          fill-opacity: 0;
+          transform: scale(1);
           animation-name: hex-entry-rise;
           animation-timing-function: ease-in-out;
           animation-iteration-count: 1;
@@ -542,18 +569,21 @@ export function HexagonBackground({
         @keyframes hex-entry-rise {
           0% {
             opacity: 0;
-            transform: translateY(0);
-            filter: drop-shadow(0 0px 0px rgba(0, 0, 0, 0));
+            fill-opacity: 0;
+            transform: scale(1);
+            filter: drop-shadow(0 0 0px var(--hex-glow, rgba(0, 0, 0, 0)));
           }
           45% {
-            opacity: 0.9;
-            transform: translateY(-4px);
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.16));
+            opacity: 1;
+            fill-opacity: 0.22;
+            transform: scale(1.55);
+            filter: drop-shadow(0 0 14px var(--hex-glow, rgba(0, 0, 0, 0)));
           }
           100% {
             opacity: 0;
-            transform: translateY(0);
-            filter: drop-shadow(0 0px 0px rgba(0, 0, 0, 0));
+            fill-opacity: 0;
+            transform: scale(1);
+            filter: drop-shadow(0 0 0px var(--hex-glow, rgba(0, 0, 0, 0)));
           }
         }
         @media (prefers-reduced-motion: reduce) {

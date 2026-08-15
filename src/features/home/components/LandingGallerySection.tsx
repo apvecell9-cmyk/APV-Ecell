@@ -16,7 +16,7 @@ export function LandingGallerySection() {
 
   return (
     <section className="relative overflow-hidden border-b border-border bg-background px-6 py-20 lg:px-12 lg:py-28">
-      <HexagonBackground animated />
+      <HexagonBackground animated washColor="#F1E6FA" />
 
       <div className="relative mx-auto max-w-7xl">
         <div className="mb-12 flex items-end justify-between">
