@@ -1,0 +1,511 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system definition.
+ *
+ * The @theme inline block maps CSS custom properties to Tailwind utility
+ * classes (e.g. --color-primary -> bg-primary, text-primary).
+ *
+ * The :root and .dark blocks define the actual color values using oklch.
+ * All colors MUST use oklch format.
+ *
+ * To add a new semantic color:
+ * 1. Add the variable to :root (light value) and .dark (dark value)
+ * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-info: var(--info);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* ── Brand Colors ────────────────────────────────────────────── */
+  --color-brand-deep: var(--brand-deep);
+  --color-brand-purple: var(--brand-purple);
+  --color-brand-violet: var(--brand-violet);
+  --color-brand-bright: var(--brand-bright);
+  --color-brand-lavender: var(--brand-lavender);
+  --color-brand-soft: var(--brand-soft);
+
+  /* ── Surface & Text ──────────────────────────────────────────── */
+  --color-surface: var(--surface);
+  --color-surface-soft: var(--surface-soft);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-ink-soft: var(--ink-soft);
+  --color-hairline: var(--hairline);
+
+  /* ── Typography ──────────────────────────────────────────────── */
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+}
+
+:root {
+  --radius: 0.25rem;
+
+  /* ── Brand Colors (APV E-Cell Purple/White) ─────────────────────── */
+  --brand-deep: oklch(0.22 0.16 300);
+  --brand-purple: oklch(0.30 0.19 300);
+  --brand-violet: oklch(0.38 0.20 300);
+  --brand-bright: oklch(0.47 0.21 300);
+  --brand-lavender: oklch(0.82 0.08 300);
+  --brand-soft: oklch(0.96 0.02 300);
+
+  /* ── Background & Surface ─────────────────────────────────────── */
+  --background: oklch(0.99 0.005 285);
+  --surface: oklch(1 0 0);
+  --surface-soft: oklch(0.97 0.015 300);
+
+  /* ── Text ─────────────────────────────────────────────────────── */
+  --foreground: oklch(0.12 0.02 300);
+  --text-primary: oklch(0.12 0.02 300);
+  --text-secondary: oklch(0.42 0.03 300);
+  --muted-foreground: oklch(0.42 0.03 300);
+
+  /* ── Cards & Popovers ────────────────────────────────────────── */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.12 0.02 300);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.12 0.02 300);
+
+  /* ── Primary (Deep Purple) ───────────────────────────────────── */
+  --primary: oklch(0.30 0.19 300);
+  --primary-foreground: oklch(1 0 0);
+  --primary-hover: oklch(0.38 0.20 300);
+
+  /* ── Secondary ───────────────────────────────────────────────── */
+  --secondary: oklch(0.96 0.02 300);
+  --secondary-foreground: oklch(0.30 0.19 300);
+
+  /* ── Muted ───────────────────────────────────────────────────── */
+  --muted: oklch(0.96 0.02 300);
+
+  /* ── Accent (Bright Violet) ──────────────────────────────────── */
+  --accent: oklch(0.47 0.21 300);
+  --accent-foreground: oklch(1 0 0);
+
+  /* ── Status Colors ───────────────────────────────────────────── */
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(1 0 0);
+  --success: oklch(0.63 0.18 145);
+  --warning: oklch(0.75 0.18 75);
+  --error: oklch(0.58 0.22 25);
+  --info: oklch(0.55 0.18 260);
+
+  /* ── Borders & Inputs ────────────────────────────────────────── */
+  --border: oklch(0.91 0.02 300);
+  --input: oklch(0.91 0.02 300);
+  --ring: oklch(0.47 0.21 300);
+
+  /* ── Charts ──────────────────────────────────────────────────── */
+  --chart-1: oklch(0.30 0.19 300);
+  --chart-2: oklch(0.47 0.21 300);
+  --chart-3: oklch(0.63 0.18 145);
+  --chart-4: oklch(0.75 0.18 75);
+  --chart-5: oklch(0.82 0.08 300);
+
+  /* ── Sidebar ─────────────────────────────────────────────────── */
+  --sidebar: oklch(0.99 0.005 285);
+  --sidebar-foreground: oklch(0.12 0.02 300);
+  --sidebar-primary: oklch(0.30 0.19 300);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.96 0.02 300);
+  --sidebar-accent-foreground: oklch(0.30 0.19 300);
+  --sidebar-border: oklch(0.91 0.02 300);
+  --sidebar-ring: oklch(0.47 0.21 300);
+
+  /* ── Custom Tokens ───────────────────────────────────────────── */
+  --ink-soft: oklch(0.42 0.03 300);
+  --hairline: oklch(0.91 0.02 300);
+  --font-display: "Fraunces", Georgia, serif;
+  --font-sans: "Inter Tight", system-ui, sans-serif;
+  --shadow-soft: 0 1px 2px oklch(0.30 0.19 300 / 0.06), 0 12px 40px -24px oklch(0.30 0.19 300 / 0.3);
+
+  /* ── Wave Colors (Purple Gradient) ───────────────────────────── */
+  --wave-color-1: oklch(0.30 0.19 300);
+  --wave-color-2: oklch(0.38 0.20 300);
+  --wave-color-3: oklch(0.47 0.21 300);
+  --wave-color-4: oklch(0.58 0.18 310);
+
+  /* ── Modal & Overlay Tokens ──────────────────────────────────── */
+  --backdrop: oklch(0.12 0.02 300);
+  --modal-shadow: oklch(0.12 0.02 300 / 0.5);
+  --modal-ring: oklch(0.47 0.21 300 / 0.15);
+}
+
+.dark {
+  /* ── Brand Colors (Dark Mode) ─────────────────────────────────── */
+  --brand-deep: oklch(0.82 0.08 300);
+  --brand-purple: oklch(0.72 0.14 300);
+  --brand-violet: oklch(0.62 0.17 300);
+  --brand-bright: oklch(0.52 0.20 300);
+  --brand-lavender: oklch(0.30 0.19 300);
+  --brand-soft: oklch(0.18 0.04 300);
+
+  /* ── Background & Surface ─────────────────────────────────────── */
+  --background: oklch(0.14 0.02 300);
+  --surface: oklch(0.18 0.03 300);
+  --surface-soft: oklch(0.22 0.04 300);
+
+  /* ── Text ─────────────────────────────────────────────────────── */
+  --foreground: oklch(0.96 0.01 300);
+  --text-primary: oklch(0.96 0.01 300);
+  --text-secondary: oklch(0.72 0.03 300);
+  --muted-foreground: oklch(0.72 0.03 300);
+
+  /* ── Cards & Popovers ────────────────────────────────────────── */
+  --card: oklch(0.18 0.03 300);
+  --card-foreground: oklch(0.96 0.01 300);
+  --popover: oklch(0.18 0.03 300);
+  --popover-foreground: oklch(0.96 0.01 300);
+
+  /* ── Primary (Light Purple for dark mode) ────────────────────── */
+  --primary: oklch(0.72 0.14 300);
+  --primary-foreground: oklch(0.14 0.02 300);
+  --primary-hover: oklch(0.82 0.08 300);
+
+  /* ── Secondary ───────────────────────────────────────────────── */
+  --secondary: oklch(0.22 0.04 300);
+  --secondary-foreground: oklch(0.96 0.01 300);
+
+  /* ── Muted ───────────────────────────────────────────────────── */
+  --muted: oklch(0.22 0.04 300);
+
+  /* ── Accent (Brighter Violet for dark mode) ──────────────────── */
+  --accent: oklch(0.58 0.19 300);
+  --accent-foreground: oklch(0.14 0.02 300);
+
+  /* ── Status Colors ───────────────────────────────────────────── */
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(1 0 0);
+  --success: oklch(0.72 0.19 145);
+  --warning: oklch(0.82 0.18 75);
+  --error: oklch(0.65 0.22 25);
+  --info: oklch(0.65 0.18 260);
+
+  /* ── Borders & Inputs ────────────────────────────────────────── */
+  --border: oklch(1 0 0 / 14%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.58 0.19 300);
+
+  /* ── Charts ──────────────────────────────────────────────────── */
+  --chart-1: oklch(0.58 0.19 300);
+  --chart-2: oklch(0.62 0.17 300);
+  --chart-3: oklch(0.72 0.19 145);
+  --chart-4: oklch(0.82 0.18 75);
+  --chart-5: oklch(0.52 0.20 300);
+
+  /* ── Sidebar ─────────────────────────────────────────────────── */
+  --sidebar: oklch(0.18 0.03 300);
+  --sidebar-foreground: oklch(0.96 0.01 300);
+  --sidebar-primary: oklch(0.72 0.14 300);
+  --sidebar-primary-foreground: oklch(0.14 0.02 300);
+  --sidebar-accent: oklch(0.22 0.04 300);
+  --sidebar-accent-foreground: oklch(0.96 0.01 300);
+  --sidebar-border: oklch(1 0 0 / 14%);
+  --sidebar-ring: oklch(0.58 0.19 300);
+
+  /* ── Custom Tokens ───────────────────────────────────────────── */
+  --ink-soft: oklch(0.72 0.03 300);
+  --hairline: oklch(1 0 0 / 14%);
+  --shadow-soft: 0 1px 2px oklch(0.14 0.02 300 / 0.2), 0 12px 40px -24px oklch(0.14 0.02 300 / 0.5);
+
+  /* ── Wave Colors (Dark Mode Purple Gradient) ─────────────────── */
+  --wave-color-1: oklch(0.72 0.14 300);
+  --wave-color-2: oklch(0.62 0.17 300);
+  --wave-color-3: oklch(0.52 0.20 300);
+  --wave-color-4: oklch(0.42 0.18 300);
+
+  /* ── Modal & Overlay Tokens ──────────────────────────────────── */
+  --backdrop: oklch(0.08 0.02 300);
+  --modal-shadow: oklch(0.08 0.02 300 / 0.6);
+  --modal-ring: oklch(0.58 0.19 300 / 0.2);
+}
+
+@theme inline {
+  --color-surface: var(--surface);
+  --color-ink-soft: var(--ink-soft);
+  --color-hairline: var(--hairline);
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+}
+
+@utility eyebrow {
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+@utility hex-grid {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='69.28' viewBox='0 0 40 69.28'%3E%3Cpath d='M20 1 37.32 11v20L20 41 2.68 31V11z' fill='none' stroke='%23510C9A' stroke-opacity='0.08' stroke-width='0.75'/%3E%3Cpath d='M40 35.64l17.32 10v20L40 75.64 22.68 65.64v-20z' fill='none' stroke='%23510C9A' stroke-opacity='0.08' stroke-width='0.75'/%3E%3C/svg%3E");
+  background-size: 40px 69.28px;
+}
+
+@utility hex-bg-animated {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='69.28' viewBox='0 0 40 69.28'%3E%3Cpath d='M20 1 37.32 11v20L20 41 2.68 31V11z' fill='none' stroke='%23510C9A' stroke-opacity='0.08' stroke-width='0.75'/%3E%3Cpath d='M40 35.64l17.32 10v20L40 75.64 22.68 65.64v-20z' fill='none' stroke='%23510C9A' stroke-opacity='0.08' stroke-width='0.75'/%3E%3C/svg%3E");
+  background-size: 40px 69.28px;
+  animation: hex-drift 40s ease-in-out infinite alternate;
+}
+
+@keyframes hex-drift {
+  0% { background-position: 0 0; }
+  50% { background-position: 8px 6px; }
+  100% { background-position: -4px 12px; }
+}
+
+@keyframes hex-pulse {
+  0% { opacity: 0; }
+  50% { opacity: 0.04; }
+  100% { opacity: 0; }
+}
+
+@keyframes hex-wave {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+/* Hex animation classes — applied by HexagonBackground component */
+.hex-anim-drift {
+  animation: hex-drift 30s ease-in-out infinite alternate;
+}
+.hex-anim-pulse {
+  animation: hex-pulse 8s ease-in-out infinite alternate;
+}
+.hex-anim-wave {
+  animation: hex-wave 45s ease-in-out infinite alternate;
+}
+/* Speed modifiers — .hex-speed-* is on the parent wrapper div */
+.hex-speed-slow .hex-anim-drift { animation-duration: 45s; }
+.hex-speed-slow .hex-anim-pulse { animation-duration: 12s; }
+.hex-speed-slow .hex-anim-wave { animation-duration: 67s; }
+.hex-speed-fast .hex-anim-drift { animation-duration: 18s; }
+.hex-speed-fast .hex-anim-pulse { animation-duration: 5s; }
+.hex-speed-fast .hex-anim-wave { animation-duration: 27s; }
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@utility animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out both;
+}
+
+@utility stagger-1 { animation-delay: 0ms; }
+@utility stagger-2 { animation-delay: 120ms; }
+@utility stagger-3 { animation-delay: 240ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hex-bg-animated { animation: none !important; }
+  .hex-anim-drift, .hex-anim-pulse, .hex-anim-wave { animation: none !important; }
+  .animate-fade-in-up { animation: none !important; opacity: 1 !important; transform: none !important; }
+  .hero-flow { animation: none !important; }
+  .wave-ribbon-h-1, .wave-ribbon-h-2, .wave-ribbon-h-3, .wave-ribbon-h-4, .wave-ribbon-h-5 { animation: none !important; }
+  .wave-ribbon-v-1, .wave-ribbon-v-2, .wave-ribbon-v-3, .wave-ribbon-v-4, .wave-ribbon-v-5 { animation: none !important; }
+  .wave-blob { animation: none !important; }
+}
+
+@utility hero-flow {
+  animation: hero-drift 26s ease-in-out infinite alternate;
+}
+
+@keyframes hero-drift {
+  from {
+    transform: scale(1.08) translate3d(-1.5%, -1%, 0);
+  }
+  to {
+    transform: scale(1.16) translate3d(1.5%, 1.5%, 0);
+  }
+}
+
+/* ============================================================
+   Animated Wave Ribbon Background — PS3-style flowing ribbons
+   ============================================================ */
+
+/* Horizontal drift — each layer drifts at a different speed/direction.
+   translateX(-1440px) or translateX(1440px) = exactly one PERIOD
+   in the SVG coordinate system → mathematically seamless loop. */
+
+@keyframes wave-ribbon-drift-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-1440px); }
+}
+@keyframes wave-ribbon-drift-right {
+  from { transform: translateX(0); }
+  to   { transform: translateX(1440px); }
+}
+
+/* Vertical breathing — subtle, organic undulation per layer.
+   Each has a unique pattern so layers don't synchronize. */
+
+@keyframes wave-ribbon-bob-1 {
+  0%, 100% { transform: translateY(0); }
+  30%      { transform: translateY(-5px); }
+  60%      { transform: translateY(3px); }
+  85%      { transform: translateY(-2px); }
+}
+@keyframes wave-ribbon-bob-2 {
+  0%, 100% { transform: translateY(0); }
+  25%      { transform: translateY(4px); }
+  55%      { transform: translateY(-3px); }
+  80%      { transform: translateY(2px); }
+}
+@keyframes wave-ribbon-bob-3 {
+  0%, 100% { transform: translateY(0); }
+  35%      { transform: translateY(-4px); }
+  65%      { transform: translateY(5px); }
+  90%      { transform: translateY(-1px); }
+}
+@keyframes wave-ribbon-bob-4 {
+  0%, 100% { transform: translateY(0); }
+  20%      { transform: translateY(3px); }
+  50%      { transform: translateY(-5px); }
+  75%      { transform: translateY(2px); }
+}
+@keyframes wave-ribbon-bob-5 {
+  0%, 100% { transform: translateY(0); }
+  40%      { transform: translateY(-3px); }
+  70%      { transform: translateY(4px); }
+  95%      { transform: translateY(-2px); }
+}
+
+/* Horizontal drift classes — different speeds + alternating directions for parallax */
+.wave-ribbon-h-1 { animation: wave-ribbon-drift-left  42s linear infinite; }
+.wave-ribbon-h-2 { animation: wave-ribbon-drift-right 34s linear infinite; }
+.wave-ribbon-h-3 { animation: wave-ribbon-drift-left  28s linear infinite; }
+.wave-ribbon-h-4 { animation: wave-ribbon-drift-right 22s linear infinite; }
+.wave-ribbon-h-5 { animation: wave-ribbon-drift-left  36s linear infinite; }
+
+/* Vertical breathing classes — different durations + ease-in-out for organic feel */
+.wave-ribbon-v-1 { animation: wave-ribbon-bob-1 18s ease-in-out infinite; }
+.wave-ribbon-v-2 { animation: wave-ribbon-bob-2 14s ease-in-out infinite; }
+.wave-ribbon-v-3 { animation: wave-ribbon-bob-3 12s ease-in-out infinite; }
+.wave-ribbon-v-4 { animation: wave-ribbon-bob-4 16s ease-in-out infinite; }
+.wave-ribbon-v-5 { animation: wave-ribbon-bob-5 20s ease-in-out infinite; }
+
+/* Gradient blob drift */
+@keyframes wave-blob-drift-a {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(30px, -20px) scale(1.05); }
+  66%  { transform: translate(-20px, 15px) scale(0.95); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+@keyframes wave-blob-drift-b {
+  0%   { transform: translate(0, 0) scale(1); }
+  40%  { transform: translate(-25px, 20px) scale(1.08); }
+  70%  { transform: translate(15px, -10px) scale(0.92); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+@keyframes wave-blob-drift-c {
+  0%   { transform: translate(0, 0) scale(1); }
+  35%  { transform: translate(20px, 15px) scale(0.96); }
+  65%  { transform: translate(-30px, -20px) scale(1.04); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+/* Floating gradient blobs */
+.wave-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.25;
+  pointer-events: none;
+}
+.wave-blob-a {
+  width: 500px;
+  height: 500px;
+  top: 10%;
+  left: 15%;
+  background: var(--wave-color-1, oklch(0.30 0.19 300));
+  animation: wave-blob-drift-a 28s ease-in-out infinite;
+}
+.wave-blob-b {
+  width: 400px;
+  height: 400px;
+  top: 30%;
+  right: 10%;
+  background: var(--wave-color-2, oklch(0.38 0.20 300));
+  animation: wave-blob-drift-b 22s ease-in-out infinite;
+}
+.wave-blob-c {
+  width: 350px;
+  height: 350px;
+  bottom: 15%;
+  left: 40%;
+  background: var(--wave-color-3, oklch(0.47 0.21 300));
+  animation: wave-blob-drift-c 26s ease-in-out infinite;
+}
