@@ -7,7 +7,10 @@ import { COPYRIGHT, INSTITUTION_LINE, TAGLINE } from "@/constants/branding";
 
 export function Footer() {
   return (
-    <footer className="bg-surface border-t border-border py-16 px-6 lg:px-12 text-sm text-muted-foreground">
+    <footer
+      className="py-16 px-6 lg:px-12 text-sm"
+      style={{ backgroundColor: "var(--homepage-lavender)" }}
+    >
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
         <div className="md:col-span-2 space-y-4">
           <div className="flex items-center gap-2.5 text-foreground font-semibold">
@@ -18,7 +21,7 @@ export function Footer() {
             />
             <span>{INSTITUTION_LINE}</span>
           </div>
-          <p className="max-w-md text-muted-foreground leading-relaxed">
+          <p className="max-w-md text-foreground/70 leading-relaxed">
             Empowering visionaries to transform ideas into reality. Building the next generation of
             entrepreneurs and ethical changemakers with discipline, innovation, and resilience.
           </p>
@@ -31,7 +34,7 @@ export function Footer() {
           <ul className="space-y-2.5">
             {FOOTER_NAV_LINKS.map((link) => (
               <li key={link.to}>
-                <Link to={link.to} className="hover:text-foreground transition-colors">
+                <Link to={link.to} className="text-foreground/70 hover:text-foreground transition-colors">
                   {link.label}
                 </Link>
               </li>
@@ -50,14 +53,14 @@ export function Footer() {
                   href={link.url}
                   target="_blank"
                   rel="noreferrer"
-                  className="hover:text-foreground transition-colors inline-flex items-center gap-1"
+                  className="text-foreground/70 hover:text-foreground transition-colors inline-flex items-center gap-1"
                 >
                   {link.name} <ArrowUpRight className="w-3 h-3" />
                 </a>
               </li>
             ))}
             <li>
-              <Link to="/contact" className="hover:text-foreground transition-colors">
+              <Link to="/contact" className="text-foreground/70 hover:text-foreground transition-colors">
                 Partner with us
               </Link>
             </li>
@@ -65,14 +68,14 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto pt-8 border-t border-border/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
+      <div className="max-w-7xl mx-auto pt-8 border-t border-foreground/15 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-foreground/60">
         <p>
           © {new Date().getFullYear()} {COPYRIGHT}
         </p>
         <div className="flex items-center gap-6">
           <span>{TAGLINE}</span>
           <span>•</span>
-          <Link to="/contact" className="hover:underline">
+          <Link to="/contact" className="hover:text-foreground transition-colors hover:underline">
             Get in touch
           </Link>
         </div>

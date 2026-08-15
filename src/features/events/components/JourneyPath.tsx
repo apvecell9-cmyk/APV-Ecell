@@ -1,51 +1,65 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 interface JourneyPathProps {
   width: number;
   height: number;
   points: Array<{ x: number; y: number }>;
+  /** Optional starting point the path begins from (before first event node). */
+  startPoint?: { x: number; y: number };
+  /** Duration of the draw-in animation in seconds. */
+  drawDuration?: number;
 }
 
 /**
- * Smooth SVG path drawn through an array of (x, y) anchor points.
+ * Smooth SVG path drawn through anchor points.
  *
- * The path is rendered as three stacked layers to create a 2.5D feel:
- *   1. Wide soft glow (blurred, low opacity) — atmospheric depth
- *   2. Mid stroke with stronger gradient — the visible "spine"
- *   3. Crisp bright stroke (1.5px) — the "highlight" running along the top
+ * Rendered as three layers for a refined 2.5D feel:
+ *   1. Wide soft glow — atmospheric depth
+ *   2. Mid stroke — visible "spine"
+ *   3. Crisp highlight — thin bright stroke on top
  *
- * Path endpoints fade to transparent so the line visually emerges from
- * the first node and dissolves into the last node, instead of looking
- * like a hard line that runs off the canvas.
- *
- * The path is drawn between the *node centers* only — never extended
- * past them — so the journey has a clearly defined start and end.
+ * The path draws in from left → right using stroke-dashoffset animation.
+ * Endpoints fade to transparent so the line emerges from the first node
+ * and dissolves into the last.
  */
-export function JourneyPath({ width, height, points }: JourneyPathProps) {
-  if (points.length < 2) return null;
+export function JourneyPath({
+  width,
+  height,
+  points,
+  startPoint,
+  drawDuration = 2,
+}: JourneyPathProps) {
+  const { d, dashLen } = useMemo(() => {
+    // Build the full point list: optional start point + event nodes
+    const allPoints = startPoint ? [startPoint, ...points] : points;
+    if (allPoints.length < 2) return { d: "", dashLen: 0 };
 
-  // Build a smooth Catmull-Rom-style cubic bezier path.
-  let d = `M${points[0]!.x.toFixed(2)},${points[0]!.y.toFixed(2)} `;
-  for (let i = 0; i < points.length - 1; i++) {
-    const p0 = points[i - 1] ?? points[i]!;
-    const p1 = points[i]!;
-    const p2 = points[i + 1]!;
-    const p3 = points[i + 2] ?? p2;
-    const c1x = p1.x + (p2.x - p0.x) / 6;
-    const c1y = p1.y + (p2.y - p0.y) / 6;
-    const c2x = p2.x - (p3.x - p1.x) / 6;
-    const c2y = p2.y - (p3.y - p1.y) / 6;
-    d += `C${c1x.toFixed(2)},${c1y.toFixed(2)} ${c2x.toFixed(2)},${c2y.toFixed(2)} ${p2.x.toFixed(2)},${p2.y.toFixed(2)} `;
-  }
+    // Catmull-Rom to cubic bezier
+    let path = `M${allPoints[0]!.x.toFixed(2)},${allPoints[0]!.y.toFixed(2)} `;
+    for (let i = 0; i < allPoints.length - 1; i++) {
+      const p0 = allPoints[i - 1] ?? allPoints[i]!;
+      const p1 = allPoints[i]!;
+      const p2 = allPoints[i + 1]!;
+      const p3 = allPoints[i + 2] ?? p2;
+      const c1x = p1.x + (p2.x - p0.x) / 6;
+      const c1y = p1.y + (p2.y - p0.y) / 6;
+      const c2x = p2.x - (p3.x - p1.x) / 6;
+      const c2y = p2.y - (p3.y - p1.y) / 6;
+      path += `C${c1x.toFixed(2)},${c1y.toFixed(2)} ${c2x.toFixed(2)},${c2y.toFixed(2)} ${p2.x.toFixed(2)},${p2.y.toFixed(2)} `;
+    }
 
-  // Approximate path length for the draw-in dasharray.
-  let approxLen = 0;
-  for (let i = 0; i < points.length - 1; i++) {
-    const dx = points[i + 1]!.x - points[i]!.x;
-    const dy = points[i + 1]!.y - points[i]!.y;
-    approxLen += Math.sqrt(dx * dx + dy * dy) * 1.05;
-  }
-  const dashLen = Math.ceil(approxLen) + 40;
+    // Approximate path length
+    let len = 0;
+    for (let i = 0; i < allPoints.length - 1; i++) {
+      const dx = allPoints[i + 1]!.x - allPoints[i]!.x;
+      const dy = allPoints[i + 1]!.y - allPoints[i]!.y;
+      len += Math.sqrt(dx * dx + dy * dy) * 1.05;
+    }
+
+    return { d: path, dashLen: Math.ceil(len) + 40 };
+  }, [points, startPoint]);
+
+  if (points.length < 1 || !d) return null;
 
   return (
     <svg
@@ -55,54 +69,59 @@ export function JourneyPath({ width, height, points }: JourneyPathProps) {
       aria-hidden="true"
     >
       <defs>
-        <linearGradient id="jp-stroke" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="oklch(0.58 0.19 292)" stopOpacity="0.0" />
-          <stop offset="6%" stopColor="oklch(0.58 0.19 292)" stopOpacity="0.55" />
-          <stop offset="50%" stopColor="oklch(0.47 0.21 300)" stopOpacity="0.9" />
-          <stop offset="94%" stopColor="oklch(0.58 0.19 292)" stopOpacity="0.55" />
-          <stop offset="100%" stopColor="oklch(0.58 0.19 292)" stopOpacity="0.0" />
+        {/* Gradient: fades at endpoints, strong in middle */}
+        <linearGradient id="jp-grad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="oklch(0.58 0.19 292)" stopOpacity="0" />
+          <stop offset="5%" stopColor="oklch(0.58 0.19 292)" stopOpacity="0.6" />
+          <stop offset="50%" stopColor="oklch(0.47 0.21 300)" stopOpacity="0.95" />
+          <stop offset="95%" stopColor="oklch(0.58 0.19 292)" stopOpacity="0.6" />
+          <stop offset="100%" stopColor="oklch(0.58 0.19 292)" stopOpacity="0" />
         </linearGradient>
-        <filter id="jp-glow" x="-10%" y="-50%" width="120%" height="200%">
+        {/* Soft glow filter */}
+        <filter id="jp-glow" x="-10%" y="-60%" width="120%" height="220%">
           <feGaussianBlur stdDeviation="6" />
         </filter>
-        <filter id="jp-glow-soft" x="-10%" y="-50%" width="120%" height="200%">
+        <filter id="jp-glow-wide" x="-10%" y="-60%" width="120%" height="220%">
           <feGaussianBlur stdDeviation="14" />
         </filter>
       </defs>
 
-      {/* Wide ambient glow (very soft) */}
+      {/* Layer 1: Wide ambient glow */}
       <path
         d={d}
         fill="none"
-        stroke="url(#jp-stroke)"
-        strokeWidth={20}
+        stroke="url(#jp-grad)"
+        strokeWidth={22}
         strokeLinecap="round"
-        filter="url(#jp-glow-soft)"
+        filter="url(#jp-glow-wide)"
         className="jp-glow-soft"
       />
 
-      {/* Mid stroke (with glow) */}
+      {/* Layer 2: Mid stroke (visible spine) */}
       <path
         d={d}
         fill="none"
-        stroke="url(#jp-stroke)"
+        stroke="url(#jp-grad)"
         strokeWidth={6}
         strokeLinecap="round"
         filter="url(#jp-glow)"
         className="jp-mid"
       />
 
-      {/* Crisp top highlight stroke */}
+      {/* Layer 3: Crisp highlight stroke — animated draw-in */}
       <path
         d={d}
         fill="none"
-        stroke="oklch(0.86 0.06 300 / 0.85)"
+        stroke="oklch(0.88 0.08 300 / 0.85)"
         strokeWidth={1.5}
         strokeLinecap="round"
         strokeDasharray={dashLen}
         strokeDashoffset={dashLen}
         className="jp-line"
-        style={{ ["--jp-len" as string]: String(dashLen) }}
+        style={{
+          ["--jp-len" as string]: String(dashLen),
+          ["--jp-dur" as string]: `${drawDuration}s`,
+        }}
       />
     </svg>
   );

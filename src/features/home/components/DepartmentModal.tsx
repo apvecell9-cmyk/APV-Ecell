@@ -66,12 +66,16 @@ export function DepartmentModal({
     <>
       <style>{`
         @keyframes apv-modal-in {
-          from { opacity: 0; transform: scale(0.92) translateY(24px); }
+          from { opacity: 0; transform: scale(0.96) translateY(15px); }
           to   { opacity: 1; transform: scale(1)    translateY(0); }
         }
         @keyframes apv-fade-in {
           from { opacity: 0; }
           to   { opacity: 1; }
+        }
+        @keyframes apv-member-in {
+          from { opacity: 0; transform: translateY(10px); }
+          to   { opacity: 1; transform: translateY(0); }
         }
         .apv-modal-backdrop {
           position: fixed; inset: 0; z-index: 99998;
@@ -87,8 +91,8 @@ export function DepartmentModal({
         }
         .apv-modal-panel {
           pointer-events: all;
-          width: 100%; max-width: 750px;
-          max-height: 85vh;
+          width: 100%; max-width: 950px;
+          max-height: 80vh;
           background: var(--surface);
           border: 1px solid var(--hairline);
           border-radius: 1.25rem;
@@ -98,11 +102,11 @@ export function DepartmentModal({
             0 0 0 1px var(--modal-ring, oklch(0.47 0.21 300 / 0.08)),
             0 8px 32px -4px var(--modal-shadow, oklch(0.12 0.02 300 / 0.5)),
             0 32px 80px -8px var(--modal-shadow, oklch(0.12 0.02 300 / 0.4));
-          animation: apv-modal-in 0.35s cubic-bezier(0.34, 1.46, 0.64, 1) both;
+          animation: apv-modal-in 0.35s cubic-bezier(0.22, 0.61, 0.36, 1) both;
         }
         .apv-modal-header {
           display: flex; align-items: center; justify-content: space-between;
-          padding: 1rem 1.5rem;
+          padding: 1.1rem 1.75rem;
           border-bottom: 1px solid var(--hairline);
           background: var(--background);
           flex-shrink: 0;
@@ -123,7 +127,7 @@ export function DepartmentModal({
           border-color: var(--accent);
         }
         .apv-modal-body {
-          padding: 2rem 1.5rem 1.5rem;
+          padding: 2rem 1.75rem 1.5rem;
           background: var(--surface);
           overflow-y: auto;
           flex: 1;
@@ -131,10 +135,10 @@ export function DepartmentModal({
         }
         .apv-modal-layout {
           display: flex;
-          gap: 2rem;
+          gap: 2.5rem;
         }
         .apv-head-column {
-          flex: 0 0 38%;
+          flex: 0 0 40%;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -142,44 +146,46 @@ export function DepartmentModal({
         }
         .apv-head-avatar-wrap {
           position: relative;
-          margin-bottom: 1rem;
+          margin-bottom: 1.25rem;
         }
         .apv-head-avatar {
-          width: 140px; height: 140px;
+          width: 200px; height: 200px;
           border-radius: 50%;
           object-fit: cover;
+          object-position: center top;
           border: 2px solid var(--hairline);
           display: block;
-          box-shadow: 0 4px 24px var(--modal-shadow, oklch(0.12 0.02 300 / 0.25));
+          box-shadow: 0 6px 32px var(--modal-shadow, oklch(0.12 0.02 300 / 0.25));
         }
         .apv-head-ring {
-          position: absolute; inset: -5px;
+          position: absolute; inset: -6px;
           border-radius: 50%;
           border: 2px solid var(--accent);
-          opacity: 0.5;
+          opacity: 0.45;
         }
         .apv-head-badge {
-          position: absolute; bottom: 0; right: 0;
+          position: absolute; bottom: 4px; right: 4px;
           background: var(--accent);
           color: var(--accent-foreground);
-          font-size: 0.55rem;
+          font-size: 0.6rem;
           font-family: monospace;
           font-weight: 700;
           text-transform: uppercase;
           letter-spacing: 0.1em;
-          padding: 3px 8px;
+          padding: 4px 10px;
           border-radius: 999px;
           white-space: nowrap;
           box-shadow: 0 2px 8px var(--modal-shadow, oklch(0.12 0.02 300 / 0.3));
         }
         .apv-head-name {
           font-family: var(--font-display);
-          font-size: 1.3rem;
+          font-size: 1.5rem;
           font-weight: 400;
           color: var(--foreground);
           text-align: center;
           letter-spacing: -0.02em;
           margin: 0;
+          line-height: 1.3;
         }
         .apv-head-role {
           font-family: monospace;
@@ -188,13 +194,15 @@ export function DepartmentModal({
           text-transform: uppercase;
           letter-spacing: 0.1em;
           text-align: center;
-          margin-top: 0.25rem;
+          margin-top: 0.35rem;
+          line-height: 1.4;
+          max-width: 220px;
         }
         .apv-head-divider {
           width: 1px;
           background: var(--hairline);
           align-self: stretch;
-          margin: 0.5rem 0;
+          margin: 0.75rem 0;
         }
         .apv-team-column {
           flex: 1;
@@ -203,15 +211,15 @@ export function DepartmentModal({
           min-width: 0;
         }
         .apv-members-label {
-          display: flex; align-items: center; gap: 0.5rem;
-          margin-bottom: 1rem;
+          display: flex; align-items: center; gap: 0.6rem;
+          margin-bottom: 1.25rem;
         }
         .apv-members-label-line {
           flex: 1; height: 1px; background: var(--hairline);
         }
         .apv-members-label-text {
           font-family: monospace;
-          font-size: 0.6rem;
+          font-size: 0.65rem;
           text-transform: uppercase;
           letter-spacing: 0.18em;
           color: var(--muted-foreground);
@@ -219,14 +227,15 @@ export function DepartmentModal({
         }
         .apv-members-grid {
           display: grid;
-          gap: 0.75rem;
+          grid-template-columns: 1fr 1fr;
+          gap: 1rem;
         }
         .apv-member-card {
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 0.6rem;
-          padding: 1rem 0.75rem;
+          gap: 0.75rem;
+          padding: 1rem 0.75rem 0.9rem;
           border-radius: 0.75rem;
           background: var(--background);
           border: 1px solid var(--hairline);
@@ -238,14 +247,15 @@ export function DepartmentModal({
           box-shadow: 0 0 0 2px var(--modal-ring, oklch(0.47 0.21 300 / 0.1));
         }
         .apv-member-avatar {
-          width: 64px; height: 64px;
+          width: 110px; height: 110px;
           border-radius: 50%;
           object-fit: cover;
+          object-position: center top;
           border: 1px solid var(--hairline);
           flex-shrink: 0;
         }
         .apv-member-name {
-          font-size: 0.8rem;
+          font-size: 0.85rem;
           font-weight: 500;
           color: var(--foreground);
           margin: 0;
@@ -260,19 +270,30 @@ export function DepartmentModal({
         }
         .apv-modal-footer {
           display: flex; align-items: center; justify-content: space-between;
-          padding: 0.9rem 1.5rem;
+          padding: 0.9rem 1.75rem;
           border-top: 1px solid var(--hairline);
           background: var(--background);
           flex-shrink: 0;
         }
-        @media (max-width: 640px) {
-          .apv-modal-panel { max-width: 100%; max-height: 90vh; }
-          .apv-modal-layout { flex-direction: column; align-items: center; }
+        @media (max-width: 768px) {
+          .apv-modal-panel { max-width: 100%; max-height: 90vh; border-radius: 1rem; }
+          .apv-modal-body { padding: 1.5rem 1.25rem 1.25rem; }
+          .apv-modal-header { padding: 0.9rem 1.25rem; }
+          .apv-modal-footer { padding: 0.75rem 1.25rem; }
+          .apv-modal-layout { flex-direction: column; align-items: center; gap: 1.5rem; }
           .apv-head-column { flex: none; width: 100%; }
           .apv-head-divider { width: 100%; height: 1px; margin: 0.5rem 0; }
           .apv-team-column { width: 100%; }
-          .apv-head-avatar { width: 120px; height: 120px; }
-          .apv-member-avatar { width: 56px; height: 56px; }
+          .apv-head-avatar { width: 150px; height: 150px; }
+          .apv-head-name { font-size: 1.3rem; }
+          .apv-members-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+          .apv-member-avatar { width: 80px; height: 80px; }
+          .apv-member-card { padding: 0.75rem 0.5rem 0.7rem; gap: 0.5rem; }
+          .apv-member-name { font-size: 0.8rem; }
+        }
+        @media (max-width: 400px) {
+          .apv-members-grid { grid-template-columns: 1fr; }
+          .apv-member-avatar { width: 90px; height: 90px; }
         }
       `}</style>
 
@@ -335,16 +356,19 @@ export function DepartmentModal({
                     <div className="apv-members-label-line" />
                   </div>
 
-                  <div
-                    className="apv-members-grid"
-                    style={{ gridTemplateColumns: members.length <= 2 ? "1fr 1fr" : "1fr 1fr 1fr" }}
-                  >
+                  <div className="apv-members-grid">
                     {members.map((member, i) => {
                       const memberImgSrc = member.image
                         ? `/team/${id}/${member.image}`
                         : placeholderAvatar(member.name + i);
                       return (
-                        <div key={i} className="apv-member-card">
+                        <div
+                          key={i}
+                          className="apv-member-card"
+                          style={{
+                            animation: `apv-member-in 0.35s cubic-bezier(0.22, 0.61, 0.36, 1) ${0.15 + i * 0.08}s both`,
+                          }}
+                        >
                           <MemberAvatar
                             src={memberImgSrc}
                             alt={member.name}

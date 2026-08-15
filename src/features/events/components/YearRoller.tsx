@@ -34,22 +34,22 @@ export function YearRoller({ years, selectedYear, onSelect }: YearRollerProps) {
   if (years.length === 0) return null;
 
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-2 sm:gap-3">
       <span className="mr-1 hidden text-[10px] font-mono uppercase tracking-[0.2em] text-black/60 sm:inline">Year</span>
       <button
         type="button"
         onClick={handlePrev}
         disabled={selectedIndex <= 0}
-        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-black text-black transition-colors hover:bg-white disabled:opacity-25"
+        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-black text-black transition-colors hover:bg-white disabled:opacity-25 sm:h-8 sm:w-8"
         aria-label="Previous year"
       >
-        <ChevronLeft className="h-3.5 w-3.5" />
+        <ChevronLeft className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
       </button>
 
       <div
         ref={scrollRef}
         onWheel={handleWheel}
-        className="flex items-center gap-1 overflow-hidden"
+        className="flex items-center gap-0.5 overflow-hidden sm:gap-1"
       >
         {years.map((year) => {
           const isSelected = year === selectedYear;
@@ -61,11 +61,11 @@ export function YearRoller({ years, selectedYear, onSelect }: YearRollerProps) {
               key={year}
               type="button"
               onClick={() => onSelect(year)}
-              className="flex h-10 items-center px-2.5 font-serif transition-all duration-300"
+              className="flex h-8 items-center px-1.5 font-serif transition-all duration-300 sm:h-10 sm:px-2.5"
               style={{ opacity, transform: `scale(${scale})` }}
             >
               <span
-                className={`text-base ${isSelected ? "font-normal text-black" : "text-black/60"}`}
+                className={`text-sm sm:text-base ${isSelected ? "font-normal text-black" : "text-black/60"}`}
               >
                 {year}
               </span>
@@ -78,10 +78,10 @@ export function YearRoller({ years, selectedYear, onSelect }: YearRollerProps) {
         type="button"
         onClick={handleNext}
         disabled={selectedIndex >= years.length - 1}
-        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-black text-black transition-colors hover:bg-white disabled:opacity-25"
+        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-black text-black transition-colors hover:bg-white disabled:opacity-25 sm:h-8 sm:w-8"
         aria-label="Next year"
       >
-        <ChevronRight className="h-3.5 w-3.5" />
+        <ChevronRight className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
       </button>
     </div>
   );

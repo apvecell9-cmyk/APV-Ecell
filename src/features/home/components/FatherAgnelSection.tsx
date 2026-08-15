@@ -15,7 +15,7 @@ export function FatherAgnelSection() {
   const reducedMotion = useReducedMotion();
 
   return (
-    <section className="relative overflow-hidden border-t border-border bg-background px-6 py-20 lg:px-12 lg:py-28">
+    <section className="relative overflow-hidden px-6 py-20 lg:px-12 lg:py-28" style={{ backgroundColor: 'var(--homepage-lavender)' }}>
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
           {/* Image */}
@@ -26,7 +26,7 @@ export function FatherAgnelSection() {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, ease }}
           >
-            <div className="relative overflow-hidden rounded-[2rem_0.75rem_2rem_0.75rem] border border-border shadow-soft">
+            <div className="relative overflow-hidden rounded-[2rem_0.75rem_2rem_0.75rem] border border-white/30 hp-glass">
               <img
                 src="/AboutUs/AboutUsImg.png"
                 alt="Agnel Polytechnic, Vashi campus"

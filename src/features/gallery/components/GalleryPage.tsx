@@ -92,7 +92,7 @@ export function GalleryPage() {
         </div>
 
         {/* 3D Carousel — dimmed when expanded, with floor shadow */}
-        <div className="relative z-10 mx-auto max-w-7xl px-6 pb-8 pt-16 lg:px-12 lg:pt-24">
+        <div className="relative z-10 mx-auto max-w-7xl px-6 pb-8 pt-10 lg:px-12 lg:pt-16">
           <motion.div
             animate={{
               scale: expandedEvent ? 0.88 : 1,

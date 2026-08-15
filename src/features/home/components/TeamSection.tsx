@@ -38,7 +38,7 @@ export function TeamSection() {
   const cVar = reducedMotion ? rmCard : cardVariants;
 
   return (
-    <section className="py-24 px-6 lg:px-12 bg-background border-t border-border" id="team">
+    <section className="py-24 px-6 lg:px-12 relative" style={{ backgroundColor: 'var(--homepage-lavender)' }} id="team">
       <div className="max-w-7xl mx-auto">
         <SectionHeader
           eyebrow="Our Departments"

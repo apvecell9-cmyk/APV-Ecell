@@ -9,6 +9,19 @@ interface EventCarousel3DProps {
   frozen: boolean;
 }
 
+/** Simple mobile detection — matches Tailwind's md breakpoint (768px). */
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mql = window.matchMedia("(max-width: 767px)");
+    setIsMobile(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
+  return isMobile;
+}
+
 export function EventCarousel3D({
   events,
   activeIndex,
@@ -17,6 +30,7 @@ export function EventCarousel3D({
   frozen,
 }: EventCarousel3DProps) {
   const total = events.length;
+  const isMobile = useIsMobile();
   const [dragDelta, setDragDelta] = useState(0);
   const dragRef = useRef<{ startX: number; startTime: number } | null>(null);
 
@@ -81,11 +95,16 @@ export function EventCarousel3D({
 
   if (total === 0) return null;
 
-  // Drag ratio: how much drag offset affects position (0-1 range mapped to ~15% of card width)
-  const dragRatio = dragDelta / 180;
+  // ── Responsive values ───────────────────────────────────────────────
+  const perspective = isMobile ? "800px" : "1100px";
+  const stageHeight = isMobile ? "clamp(280px, 70vw, 360px)" : "clamp(340px, 50vw, 520px)";
+  const cardWidth = isMobile ? "clamp(150px, 40vw, 200px)" : "clamp(200px, 22vw, 300px)";
+
+  // Drag ratio: how much drag offset affects position
+  const dragRatio = dragDelta / (isMobile ? 120 : 180);
 
   return (
-    <div className="relative w-full" style={{ perspective: "1100px" }}>
+    <div className="relative w-full" style={{ perspective }}>
       {/* Arrow buttons */}
       {total > 1 && (
         <>
@@ -94,7 +113,11 @@ export function EventCarousel3D({
             onClick={goPrev}
             disabled={frozen}
             aria-label="Previous event"
-            className="absolute left-2 top-1/2 z-30 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-border/60 bg-background/80 text-foreground backdrop-blur-sm transition-all hover:bg-background disabled:opacity-0 md:left-4 md:h-12 md:w-12"
+            className={`absolute top-1/2 z-30 flex -translate-y-1/2 items-center justify-center rounded-full border border-border/60 bg-background/80 text-foreground backdrop-blur-sm transition-all hover:bg-background disabled:opacity-0 ${
+              isMobile
+                ? "left-1 h-9 w-9"
+                : "left-4 h-12 w-12"
+            }`}
           >
             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -105,7 +128,11 @@ export function EventCarousel3D({
             onClick={goNext}
             disabled={frozen}
             aria-label="Next event"
-            className="absolute right-2 top-1/2 z-30 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-border/60 bg-background/80 text-foreground backdrop-blur-sm transition-all hover:bg-background disabled:opacity-0 md:right-4 md:h-12 md:w-12"
+            className={`absolute top-1/2 z-30 flex -translate-y-1/2 items-center justify-center rounded-full border border-border/60 bg-background/80 text-foreground backdrop-blur-sm transition-all hover:bg-background disabled:opacity-0 ${
+              isMobile
+                ? "right-1 h-9 w-9"
+                : "right-4 h-12 w-12"
+            }`}
           >
             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
@@ -118,7 +145,7 @@ export function EventCarousel3D({
       <div
         className="relative mx-auto touch-none select-none"
         style={{
-          height: "clamp(340px, 50vw, 520px)",
+          height: stageHeight,
           transformStyle: "preserve-3d",
         }}
         onPointerDown={handlePointerDown}
@@ -143,7 +170,7 @@ export function EventCarousel3D({
 
           const isActive = offset === 0;
 
-          // 5-position layout with drag offset
+          // ── 5-position layout with responsive values ──────────────
           let tx = 0;
           let tz = 0;
           let ry = 0;
@@ -152,21 +179,21 @@ export function EventCarousel3D({
 
           if (abs === 0) {
             tx = 0;
-            tz = 80;
+            tz = isMobile ? 50 : 80;
             ry = 0;
             s = 1;
             op = 1;
           } else if (abs === 1) {
-            tx = offset < 0 ? -280 : 280;
-            tz = 10;
-            ry = offset < 0 ? 8 : -8;
-            s = 0.72;
+            tx = offset < 0 ? (isMobile ? -140 : -280) : (isMobile ? 140 : 280);
+            tz = isMobile ? 0 : 10;
+            ry = offset < 0 ? (isMobile ? 5 : 8) : (isMobile ? -5 : -8);
+            s = isMobile ? 0.65 : 0.72;
             op = 0.85;
           } else {
-            tx = offset < 0 ? -450 : 450;
-            tz = -80;
-            ry = offset < 0 ? 14 : -14;
-            s = 0.55;
+            tx = offset < 0 ? (isMobile ? -220 : -450) : (isMobile ? 220 : 450);
+            tz = isMobile ? -40 : -80;
+            ry = offset < 0 ? (isMobile ? 10 : 14) : (isMobile ? -10 : -14);
+            s = isMobile ? 0.45 : 0.55;
             op = 0.5;
           }
 
@@ -191,7 +218,7 @@ export function EventCarousel3D({
                 transition: dragRef.current
                   ? "none"
                   : "transform 0.55s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.45s ease",
-                width: "clamp(200px, 22vw, 300px)",
+                width: cardWidth,
               }}
             >
               <div
@@ -215,16 +242,18 @@ export function EventCarousel3D({
 
                 {/* Floating title plate — in front of image */}
                 <div
-                  className="absolute inset-x-0 bottom-0 p-5"
+                  className="absolute inset-x-0 bottom-0 p-4 md:p-5"
                   style={{ transform: "translateZ(20px)" }}
                 >
                   <h3
                     className="font-serif tracking-tight text-white drop-shadow-lg"
-                    style={{ fontSize: "clamp(1rem, 1.5vw, 1.5rem)" }}
+                    style={{ fontSize: isMobile ? "clamp(0.85rem, 3.5vw, 1.1rem)" : "clamp(1rem, 1.5vw, 1.5rem)" }}
                   >
                     {event.event}
                   </h3>
-                  <p className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/70 drop-shadow-sm">
+                  <p className="mt-1 font-mono uppercase tracking-[0.2em] text-white/70 drop-shadow-sm"
+                    style={{ fontSize: isMobile ? "8px" : "10px" }}
+                  >
                     {event.year} &bull; {event.imageCount}{" "}
                     {event.imageCount === 1 ? "Photo" : "Photos"}
                   </p>
@@ -233,13 +262,15 @@ export function EventCarousel3D({
 
               {/* Floating 3D title below card — outside image bounds */}
               <div
-                className="mt-3 text-center"
+                className="mt-2 text-center md:mt-3"
                 style={{ transform: "translateZ(1px)" }}
               >
-                <p className="font-serif text-sm tracking-tight text-foreground/80 drop-shadow-sm">
+                <p className="font-serif text-xs tracking-tight text-foreground/80 drop-shadow-sm md:text-sm">
                   {event.event}
                 </p>
-                <p className="mt-0.5 font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground/60">
+                <p className="mt-0.5 font-mono uppercase tracking-[0.18em] text-muted-foreground/60"
+                  style={{ fontSize: isMobile ? "8px" : "9px" }}
+                >
                   {event.year}
                 </p>
               </div>
@@ -250,7 +281,7 @@ export function EventCarousel3D({
 
       {/* Indicator dots */}
       {total > 1 && (
-        <div className="flex justify-center gap-2 pt-6">
+        <div className="flex justify-center gap-2 pt-4 md:pt-6">
           {events.map((_, i) => (
             <button
               key={i}
@@ -258,7 +289,7 @@ export function EventCarousel3D({
               onClick={() => onSelect(i)}
               className={`h-1.5 rounded-full transition-all duration-300 ${
                 i === activeIndex
-                  ? "w-6 bg-foreground"
+                  ? "w-5 md:w-6 bg-foreground"
                   : "w-1.5 bg-muted-foreground/30 hover:bg-muted-foreground/50"
               }`}
               aria-label={`Go to event ${i + 1}`}

@@ -80,7 +80,7 @@ export function DepartmentCard({
   return (
     <>
       <div
-        className="group relative rounded-xl border border-border bg-surface hover:bg-background transition-all duration-500 overflow-hidden p-6 md:p-7 flex flex-col min-h-[360px] lg:min-h-[380px] shadow-soft hover:shadow-lg hover:border-primary/30 cursor-pointer"
+        className="group relative rounded-xl hp-glass hover:bg-white/30 transition-all duration-500 overflow-hidden p-6 md:p-7 flex flex-col min-h-[360px] lg:min-h-[380px] hover:border-white/50 cursor-pointer"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onFocus={() => setIsHovered(true)}

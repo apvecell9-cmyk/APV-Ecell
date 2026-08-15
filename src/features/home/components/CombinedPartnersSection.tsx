@@ -63,9 +63,9 @@ export function CombinedPartnersSection() {
   const cVar = reducedMotion ? rmCard : cardVariants;
 
   return (
-    <section className="py-24 px-6 lg:px-12 bg-background border-t border-border relative overflow-hidden">
+    <section className="py-24 px-6 lg:px-12 relative overflow-hidden" style={{ backgroundColor: 'var(--homepage-lavender)' }}>
       {/* Ambient background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-primary/5 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-white/15 rounded-full blur-3xl pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto space-y-12">
         <motion.div
@@ -94,9 +94,9 @@ export function CombinedPartnersSection() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
-                className={`group relative rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 shadow-soft hover:shadow-xl overflow-visible ${isHighlight
-                    ? "bg-gradient-to-b from-surface via-surface to-accent/5 border-2 border-accent/60 ring-2 ring-accent/10"
-                    : "bg-surface border border-border hover:border-primary/40"
+                className={`group relative rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 overflow-visible ${isHighlight
+                    ? "hp-glass border-2 border-white/50 ring-2 ring-white/20"
+                    : "hp-glass hover:border-white/50"
                   }`}
               >
                 {/* Metallic diagonal shine — one-time sweep */}

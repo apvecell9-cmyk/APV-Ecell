@@ -381,6 +381,7 @@
   .jp-mid, .jp-glow-soft { animation: none !important; opacity: 0.6 !important; }
   .journey-node > span:first-child { animation: none !important; }
   .journey-nav-btn { animation: none !important; }
+  [style*="origin-ring-pulse"] { animation: none !important; }
 }
 
 /* ============================================================
@@ -395,22 +396,22 @@
   display: none;
 }
 
-/* Path "draw-in" animation — uses per-instance --jp-len so it scales
-   with the actual SVG path length (which can be well over 1000px). */
+/* Path "draw-in" animation — uses per-instance --jp-len and --jp-dur
+   so it scales with the actual SVG path length and draw duration. */
 @keyframes jp-draw {
   from { stroke-dashoffset: var(--jp-len, 1000); }
   to   { stroke-dashoffset: 0; }
 }
 .jp-line {
-  animation: jp-draw 1.6s cubic-bezier(0.22, 0.61, 0.36, 1) 0.15s both;
+  animation: jp-draw var(--jp-dur, 2s) cubic-bezier(0.22, 0.61, 0.36, 1) 0.2s both;
 }
 .jp-mid {
   opacity: 0;
-  animation: jp-fadein 1.2s ease-out 0.1s both;
+  animation: jp-fadein 0.8s ease-out 0.05s both;
 }
 .jp-glow-soft {
   opacity: 0;
-  animation: jp-softfadein 1.6s ease-out 0.1s both;
+  animation: jp-softfadein 1.2s ease-out 0s both;
 }
 @keyframes jp-fadein {
   from { opacity: 0; }
@@ -428,6 +429,12 @@
 }
 .journey-node:hover > span:first-child {
   animation-duration: 3s;
+}
+
+/* Origin bubble ring pulse — expands outward. */
+@keyframes origin-ring-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.25; }
+  50%      { transform: scale(1.15); opacity: 0.45; }
 }
 
 /* Smooth appearance for navigation arrows */
@@ -568,4 +575,158 @@
   left: 40%;
   background: var(--wave-color-3, oklch(0.47 0.21 300));
   animation: wave-blob-drift-c 26s ease-in-out infinite;
+}
+
+/* ============================================================
+   Homepage Aero-Glass Design System
+   ============================================================ */
+
+/* Homepage lavender background color */
+:root {
+  --homepage-lavender: #C9B5E5;
+  --homepage-lavender-rgb: 201, 181, 229;
+}
+
+/* ── Frosted Glass Card ───────────────────────────────────────────────
+   Genuine aero-glass: translucent white surface, strong backdrop blur,
+   visible lavender background through frosted surface, white edge
+   highlights, layered shadows for depth.
+   ----------------------------------------------------------------- */
+.hp-glass {
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(18px) saturate(120%);
+  -webkit-backdrop-filter: blur(18px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow:
+    0 8px 32px -4px rgba(47, 5, 83, 0.10),
+    0 2px 6px rgba(47, 5, 83, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.40),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+  transition: box-shadow 0.35s ease, border-color 0.35s ease, transform 0.35s ease, background 0.35s ease;
+}
+
+.hp-glass:hover {
+  background: rgba(255, 255, 255, 0.24);
+  border-color: rgba(255, 255, 255, 0.50);
+  box-shadow:
+    0 12px 40px -6px rgba(47, 5, 83, 0.14),
+    0 4px 8px rgba(47, 5, 83, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.10);
+}
+
+/* ── Floating Glass Navbar ──────────────────────────────────────────── */
+.glass-navbar {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(20px) saturate(130%);
+  -webkit-backdrop-filter: blur(20px) saturate(130%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow:
+    0 10px 35px -6px rgba(47, 5, 83, 0.10),
+    0 2px 6px rgba(47, 5, 83, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+/* ── Upcoming Events Section ────────────────────────────────────────── */
+.hp-events-bg {
+  position: relative;
+  background-color: var(--homepage-lavender);
+  background-image:
+    radial-gradient(circle at 20% 40%, rgba(255,255,255,0.22) 0%, transparent 40%),
+    radial-gradient(circle at 80% 60%, rgba(110,50,180,0.10) 0%, transparent 45%),
+    radial-gradient(circle at 50% 90%, rgba(255,255,255,0.12) 0%, transparent 35%);
+}
+
+/* Ambient light blobs — slow animated soft forms */
+.hp-events-bg::before,
+.hp-events-bg::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(80px);
+}
+
+.hp-events-bg::before {
+  width: 500px;
+  height: 500px;
+  top: -10%;
+  left: 10%;
+  background: rgba(255, 255, 255, 0.15);
+  animation: hp-events-drift-1 22s ease-in-out infinite alternate;
+}
+
+.hp-events-bg::after {
+  width: 400px;
+  height: 400px;
+  bottom: -15%;
+  right: 5%;
+  background: rgba(139, 92, 246, 0.10);
+  animation: hp-events-drift-2 28s ease-in-out infinite alternate;
+}
+
+@keyframes hp-events-drift-1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(40px, 20px) scale(1.08); }
+  100% { transform: translate(-20px, -10px) scale(0.95); }
+}
+
+@keyframes hp-events-drift-2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-30px, -25px) scale(1.05); }
+  100% { transform: translate(25px, 15px) scale(0.92); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hp-events-bg::before,
+  .hp-events-bg::after {
+    animation: none;
+  }
+}
+
+/* Floating animation for event card */
+@keyframes hp-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.hp-float {
+  animation: hp-float 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hp-float {
+    animation: none;
+  }
+}
+
+/* ── Featured Event Glass Card ──────────────────────────────────────── */
+.hp-event-card-glass {
+  background: rgba(255, 255, 255, 0.20);
+  backdrop-filter: blur(22px) saturate(125%);
+  -webkit-backdrop-filter: blur(22px) saturate(125%);
+  border: 1px solid rgba(255, 255, 255, 0.40);
+  box-shadow:
+    0 12px 48px -8px rgba(47, 5, 83, 0.15),
+    0 2px 6px rgba(47, 5, 83, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.40),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hp-event-card-glass:hover {
+  background: rgba(255, 255, 255, 0.28);
+  border-color: rgba(255, 255, 255, 0.55);
+  box-shadow:
+    0 16px 56px -8px rgba(47, 5, 83, 0.20),
+    0 4px 10px rgba(47, 5, 83, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.10);
+  transform: translateY(-4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hp-event-card-glass:hover {
+    transform: none;
+  }
 }

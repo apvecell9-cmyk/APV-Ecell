@@ -28,37 +28,38 @@ export function Navbar() {
   const isDarkBg = DARK_BG_PATHS.has(pathname);
   const isScrolled = scrolled;
 
-  // ── Header wrapper ──────────────────────────────────────────────────
-  const headerClass = isScrolled
-    ? "bg-background/90 backdrop-blur-md border-b border-border text-foreground shadow-xs"
-    : isDarkBg
-      ? "bg-transparent text-white"
-      : "bg-transparent text-foreground";
-
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${headerClass}`}
+        className={`fixed z-50 transition-all duration-500 ${
+          isScrolled
+            ? "top-3 left-3 right-3 md:top-4 md:left-4 md:right-4 lg:top-5 lg:left-[max(1rem,calc((100vw-80rem)/2+1rem))] lg:right-[max(1rem,calc((100vw-80rem)/2+1rem))] glass-navbar rounded-2xl"
+            : isDarkBg
+              ? "top-0 left-0 right-0 bg-transparent text-white"
+              : "top-0 left-0 right-0 bg-transparent text-foreground"
+        }`}
       >
-        <div className="max-w-6xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+        <div className={`mx-auto px-6 lg:px-12 h-16 flex items-center justify-between ${
+          isScrolled ? "" : "max-w-6xl"
+        }`}>
           {/* ── Logo ──────────────────────────────────────────────── */}
           <Link to="/" className="flex items-center group">
             <img
               src="/logos/logo.png"
               alt="APV E-Cell"
-              className="h-12 md:h-14 w-auto transition-transform group-hover:scale-105"
+              className="h-11 md:h-12 w-auto transition-transform group-hover:scale-105"
             />
           </Link>
 
           {/* ── Desktop navigation ────────────────────────────────── */}
-          <nav className="hidden md:flex items-center gap-8 text-sm">
+          <nav className="hidden md:flex items-center gap-7 text-sm">
             {NAV_LINKS.map((link) => {
               const isActive = pathname === link.to;
               return (
                 <Link
                   key={link.to}
                   to={link.to}
-                  className={`transition-colors relative py-1 text-[16px] ${
+                  className={`transition-colors relative py-1 text-[15px] ${
                     isActive
                       ? isDarkBg && !isScrolled
                         ? "text-white font-medium"
@@ -82,7 +83,7 @@ export function Navbar() {
           </nav>
 
           {/* ── Join Community button ─────────────────────────────── */}
-          <div className="hidden md:flex items-center ml-4 mr-6">
+          <div className="hidden md:flex items-center ml-4 mr-2">
             <button
               type="button"
               onClick={() => setCommunityOpen(true)}
@@ -114,14 +115,14 @@ export function Navbar() {
 
         {/* ── Mobile menu drawer ──────────────────────────────────── */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border px-6 py-6 animate-fade-in">
+          <div className="md:hidden glass-navbar mx-3 mb-3 rounded-2xl px-6 py-6 animate-fade-in border-t-0">
             <nav className="flex flex-col gap-4">
               {NAV_LINKS.map((link) => (
                 <Link
                   key={link.to}
                   to={link.to}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`text-base font-medium py-2 border-b border-border/40 ${
+                  className={`text-base font-medium py-2 border-b border-white/15 ${
                     pathname === link.to
                       ? "text-foreground font-semibold"
                       : "text-foreground"

@@ -85,7 +85,7 @@ export function LeadershipProfile({ leader, index, side }: LeadershipProfileProp
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.25 }}
-      className={`relative flex items-center gap-0 ${isLeft ? "flex-row" : "flex-row-reverse"} py-8 md:py-12`}
+      className={`relative flex items-center gap-0 ${isLeft ? "flex-row" : "flex-row-reverse"} py-4 md:py-6`}
     >
       {/* ── Circular Portrait ──────────────────────────────────────── */}
       <motion.div
@@ -93,10 +93,10 @@ export function LeadershipProfile({ leader, index, side }: LeadershipProfileProp
         className="relative z-10 shrink-0"
       >
         {/* Outer ring decoration */}
-        <div className={`absolute inset-0 -m-3 rounded-full border border-brand-lavender/40 ${isLeft ? "-ml-4 md:-ml-6" : "-mr-4 md:-mr-6"}`} />
+        <div className={`absolute inset-0 -m-2 rounded-full border border-brand-lavender/40 ${isLeft ? "-ml-3 md:-ml-5" : "-mr-3 md:-mr-5"}`} />
 
         {/* Main portrait circle */}
-        <div className={`relative w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 rounded-full overflow-hidden border-2 border-border bg-secondary shadow-lg ${isLeft ? "" : ""}`}>
+        <div className={`relative w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 lg:w-44 lg:h-44 rounded-full overflow-hidden border-2 border-border bg-secondary shadow-lg ${isLeft ? "" : ""}`}>
           <img
             src={leader.image}
             alt={leader.name}
@@ -114,17 +114,17 @@ export function LeadershipProfile({ leader, index, side }: LeadershipProfileProp
         variants={cObj}
         className={`relative flex-1 min-w-0 ${isLeft ? "" : ""}`}
       >
-        <div className="relative rounded-2xl border border-border bg-surface p-6 sm:p-7 md:p-8 lg:p-9 shadow-soft hover:border-primary/20 hover:shadow-[0_0_20px_4px_rgba(47,5,83,0.25)] transition-all duration-500">
+        <div className="relative rounded-2xl hp-glass p-5 sm:p-6 md:p-7 hover:border-white/50 transition-all duration-500">
           {/* Background number watermark */}
           <span
-            className="absolute -top-4 right-4 md:right-6 font-mono text-[4rem] md:text-[5.5rem] lg:text-[6.5rem] font-bold leading-none text-foreground/[0.03] select-none pointer-events-none"
+            className="absolute -top-3 right-3 md:right-5 font-mono text-[3rem] md:text-[4rem] lg:text-[5rem] font-bold leading-none text-foreground/[0.03] select-none pointer-events-none"
             aria-hidden="true"
           >
             {num}
           </span>
 
           {/* ── Top Row: Tag + Index ───────────────────────────────── */}
-          <div className="flex items-center justify-between mb-4 md:mb-5 relative z-10">
+          <div className="flex items-center justify-between mb-3 md:mb-4 relative z-10">
             <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-soft text-brand-purple border border-brand-lavender/30 text-[10px] font-mono uppercase tracking-wider font-medium">
               {leader.tag}
             </span>
@@ -134,8 +134,8 @@ export function LeadershipProfile({ leader, index, side }: LeadershipProfileProp
           </div>
 
           {/* ── Name + Role ────────────────────────────────────────── */}
-          <div className="relative z-10 mb-3 md:mb-4">
-            <h3 className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-[2rem] font-medium text-foreground tracking-tight leading-tight">
+          <div className="relative z-10 mb-2 md:mb-3">
+            <h3 className="font-serif text-lg sm:text-xl md:text-2xl lg:text-[1.65rem] font-medium text-foreground tracking-tight leading-tight">
               {leader.name}
             </h3>
             <p className="mt-1.5 text-[11px] md:text-xs font-mono text-muted-foreground uppercase tracking-wider">
@@ -144,14 +144,14 @@ export function LeadershipProfile({ leader, index, side }: LeadershipProfileProp
           </div>
 
           {/* ── Quote ──────────────────────────────────────────────── */}
-          <blockquote className="relative z-10 mb-5 md:mb-6 pl-3 border-l-2 border-[#8733C0]">
+          <blockquote className="relative z-10 mb-3 md:mb-4 pl-3 border-l-2 border-[#8733C0]">
             <p className="text-sm md:text-[0.8125rem] text-muted-foreground leading-relaxed italic line-clamp-3">
               &ldquo;{leader.quote}&rdquo;
             </p>
           </blockquote>
 
           {/* ── Footer ─────────────────────────────────────────────── */}
-          <div className="relative z-10 pt-3 border-t border-hairline flex items-center justify-between">
+          <div className="relative z-10 pt-2 border-t border-hairline flex items-center justify-between">
             <span className="text-[9px] font-mono text-[#8733C0] font-bold uppercase tracking-[0.15em]">
               APV E-Cell
             </span>
