@@ -11,42 +11,6 @@ export interface GalleryEvent {
 
 export const galleryEvents: GalleryEvent[] = [
   {
-    "year": 2026,
-    "event": "hackathon",
-    "cover": "/gallery/2026/hackathon/RobloxScreenShot20260515_170041038.png",
-    "imageCount": 1,
-    "images": [
-      "/gallery/2026/hackathon/RobloxScreenShot20260515_170041038.png"
-    ]
-  },
-  {
-    "year": 2026,
-    "event": "ignite",
-    "cover": "/gallery/2026/ignite/RobloxScreenShot20260515_170041038.png",
-    "imageCount": 1,
-    "images": [
-      "/gallery/2026/ignite/RobloxScreenShot20260515_170041038.png"
-    ]
-  },
-  {
-    "year": 2026,
-    "event": "illuminate",
-    "cover": "/gallery/2026/illuminate/RobloxScreenShot20260515_170041038.png",
-    "imageCount": 1,
-    "images": [
-      "/gallery/2026/illuminate/RobloxScreenShot20260515_170041038.png"
-    ]
-  },
-  {
-    "year": 2026,
-    "event": "sparkathon",
-    "cover": "/gallery/2026/sparkathon/RobloxScreenShot20260515_170041038.png",
-    "imageCount": 1,
-    "images": [
-      "/gallery/2026/sparkathon/RobloxScreenShot20260515_170041038.png"
-    ]
-  },
-  {
     "year": 2025,
     "event": "Group discussion",
     "cover": "/gallery/2025/Group discussion/grpdis1.jpg",

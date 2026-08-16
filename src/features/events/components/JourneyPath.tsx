@@ -8,6 +8,10 @@ interface JourneyPathProps {
   startPoint?: { x: number; y: number };
   /** Duration of the draw-in animation in seconds. */
   drawDuration?: number;
+  /** Optional unique ID prefix for gradient/filter defs (avoids collisions when multiple paths exist). */
+  idPrefix?: string;
+  /** If true, gradient flows top→bottom instead of left→right. */
+  vertical?: boolean;
 }
 
 /**
@@ -28,6 +32,8 @@ export function JourneyPath({
   points,
   startPoint,
   drawDuration = 2,
+  idPrefix = "jp",
+  vertical = false,
 }: JourneyPathProps) {
   const { d, dashLen } = useMemo(() => {
     // Build the full point list: optional start point + event nodes
@@ -70,7 +76,7 @@ export function JourneyPath({
     >
       <defs>
         {/* Gradient: fades at endpoints, strong in middle */}
-        <linearGradient id="jp-grad" x1="0" y1="0" x2="1" y2="0">
+        <linearGradient id={`${idPrefix}-grad`} x1="0" y1="0" x2={vertical ? "0" : "1"} y2={vertical ? "1" : "0"}>
           <stop offset="0%" stopColor="oklch(0.58 0.19 292)" stopOpacity="0" />
           <stop offset="5%" stopColor="oklch(0.58 0.19 292)" stopOpacity="0.6" />
           <stop offset="50%" stopColor="oklch(0.47 0.21 300)" stopOpacity="0.95" />
@@ -78,10 +84,10 @@ export function JourneyPath({
           <stop offset="100%" stopColor="oklch(0.58 0.19 292)" stopOpacity="0" />
         </linearGradient>
         {/* Soft glow filter */}
-        <filter id="jp-glow" x="-10%" y="-60%" width="120%" height="220%">
+        <filter id={`${idPrefix}-glow`} x="-10%" y="-60%" width="120%" height="220%">
           <feGaussianBlur stdDeviation="6" />
         </filter>
-        <filter id="jp-glow-wide" x="-10%" y="-60%" width="120%" height="220%">
+        <filter id={`${idPrefix}-glow-wide`} x="-10%" y="-60%" width="120%" height="220%">
           <feGaussianBlur stdDeviation="14" />
         </filter>
       </defs>
@@ -90,10 +96,10 @@ export function JourneyPath({
       <path
         d={d}
         fill="none"
-        stroke="url(#jp-grad)"
-        strokeWidth={22}
+        stroke={`url(#${idPrefix}-grad)`}
+        strokeWidth={28}
         strokeLinecap="round"
-        filter="url(#jp-glow-wide)"
+        filter={`url(#${idPrefix}-glow-wide)`}
         className="jp-glow-soft"
       />
 
@@ -101,10 +107,10 @@ export function JourneyPath({
       <path
         d={d}
         fill="none"
-        stroke="url(#jp-grad)"
-        strokeWidth={6}
+        stroke={`url(#${idPrefix}-grad)`}
+        strokeWidth={8}
         strokeLinecap="round"
-        filter="url(#jp-glow)"
+        filter={`url(#${idPrefix}-glow)`}
         className="jp-mid"
       />
 
@@ -113,7 +119,7 @@ export function JourneyPath({
         d={d}
         fill="none"
         stroke="oklch(0.88 0.08 300 / 0.85)"
-        strokeWidth={1.5}
+        strokeWidth={2.5}
         strokeLinecap="round"
         strokeDasharray={dashLen}
         strokeDashoffset={dashLen}

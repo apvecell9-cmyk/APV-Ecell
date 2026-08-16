@@ -50,12 +50,11 @@ export function GalleryLightbox({ images, index, onIndexChange, onClose }: Galle
       aria-label={`${current.event} image viewer`}
     >
       <div
-        className="relative flex h-full w-full flex-col items-center justify-center p-4"
-        onClick={(e) => e.stopPropagation()}
+        className="relative flex min-h-full flex-col items-center justify-center p-4"
       >
         <button
           type="button"
-          onClick={onClose}
+          onClick={(e) => { e.stopPropagation(); onClose(); }}
           aria-label="Close gallery"
           className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-white transition-colors hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white md:right-8 md:top-8"
         >
@@ -66,7 +65,7 @@ export function GalleryLightbox({ images, index, onIndexChange, onClose }: Galle
           {index + 1} / {total}
         </p>
 
-        <div className="flex max-h-full w-full max-w-5xl items-center justify-center">
+        <div className="flex max-h-full w-full max-w-5xl items-center justify-center" onClick={(e) => e.stopPropagation()}>
           <img
             key={current.src}
             src={current.src}
@@ -84,7 +83,7 @@ export function GalleryLightbox({ images, index, onIndexChange, onClose }: Galle
 
         <button
           type="button"
-          onClick={() => hasPrev && onIndexChange(index - 1)}
+          onClick={(e) => { e.stopPropagation(); hasPrev && onIndexChange(index - 1); }}
           disabled={!hasPrev}
           aria-label="Previous image"
           className="absolute left-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 text-white transition-colors hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white disabled:opacity-20 disabled:hover:bg-transparent md:left-8"
@@ -93,7 +92,7 @@ export function GalleryLightbox({ images, index, onIndexChange, onClose }: Galle
         </button>
         <button
           type="button"
-          onClick={() => hasNext && onIndexChange(index + 1)}
+          onClick={(e) => { e.stopPropagation(); hasNext && onIndexChange(index + 1); }}
           disabled={!hasNext}
           aria-label="Next image"
           className="absolute right-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 text-white transition-colors hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white disabled:opacity-20 disabled:hover:bg-transparent md:right-8"

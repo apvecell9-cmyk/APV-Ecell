@@ -381,6 +381,8 @@
   .jp-mid, .jp-glow-soft { animation: none !important; opacity: 0.6 !important; }
   .journey-node > span:first-child { animation: none !important; }
   .journey-nav-btn { animation: none !important; }
+  .journey-mobile-node { animation: none !important; }
+  .journey-mobile-card-wrap { animation: none !important; opacity: 1 !important; transform: none !important; }
   [style*="origin-ring-pulse"] { animation: none !important; }
 }
 
@@ -444,6 +446,37 @@
 }
 .journey-nav-btn {
   animation: journey-nav-in 0.35s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+/* ============================================================
+   Mobile Vertical Timeline
+   ============================================================ */
+
+.journey-stage-mobile .journey-mobile-card-wrap {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.journey-stage-mobile .journey-mobile-connector {
+  transition: background-color 300ms ease;
+}
+
+/* Smooth appearance for mobile nodes */
+@keyframes journey-mobile-node-in {
+  from { opacity: 0; transform: scale(0.3); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Smooth appearance for mobile cards */
+@keyframes journey-mobile-card-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Drawer drag handle on mobile */
+.journey-detail-panel {
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 @utility hero-flow {

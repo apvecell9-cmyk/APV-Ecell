@@ -21,8 +21,10 @@ const STAGE_HEIGHT = 520;
 const ORIGIN_X = 80;
 
 /**
- * Designed trajectory: rise → fall → rise → small dip.
- * Weighted sine harmonics with endpoint taper.
+ * Desktop horizontal curved journey timeline.
+ *
+ * On mobile, the vertical JourneyTimelineMobile is rendered instead.
+ * This component handles the horizontal layout only.
  */
 function buildAmplitudes(count: number): number[] {
   if (count === 0) return [];
@@ -150,6 +152,7 @@ export function JourneyTimeline({
               points={pathPoints}
               startPoint={originPoint}
               drawDuration={DRAW_DURATION}
+              idPrefix="jp-desktop"
             />
 
             {/* Origin bubble — large decorative starting node */}

@@ -79,13 +79,19 @@ export function GalleryPage() {
       <div className="relative min-h-screen" style={{ isolation: "isolate" }}>
         <HexagonBackground animated />
 
-        {/* Header row — Heading centered, year selector far right */}
+        {/* Header row — Heading centered, year selector far right (desktop); stacked on mobile */}
         <div className="relative z-10 mx-auto max-w-7xl px-6 pt-24 lg:px-12 lg:pt-28">
-          <div className="relative flex items-center justify-center">
-            {/* Centered heading */}
+          {/* Desktop: single row, year selector absolutely right */}
+          <div className="hidden items-center justify-center md:flex">
             <GalleryHero />
-            {/* Year selector — absolutely pushed to far right */}
             <div className="absolute right-0 top-1/2 -translate-y-1/2">
+              <YearRoller years={years} selectedYear={selectedYear} onSelect={handleYearChange} />
+            </div>
+          </div>
+          {/* Mobile: stacked — title centered, year selector right-aligned below */}
+          <div className="flex flex-col items-center gap-4 md:hidden">
+            <GalleryHero />
+            <div className="self-end">
               <YearRoller years={years} selectedYear={selectedYear} onSelect={handleYearChange} />
             </div>
           </div>

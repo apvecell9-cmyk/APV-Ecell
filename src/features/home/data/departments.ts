@@ -59,7 +59,7 @@ export const departments: DeptCardProps[] = [
     headRole: "Head of Liaison",
     members: [
       { name: "Shreya Gupta", role: "Team Member", image: "shreya.jpg" },
-      { name: "Mukadam Mohammed", role: "Team Member", image: "muhammed.jpg" },
+      { name: "Mukadam Mohammed", role: "Team Member", image: "muhammad.jpg" },
     ],
   },
   {

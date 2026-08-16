@@ -5,18 +5,33 @@ import { getEventsForYear, getYears } from "@/services/eventLoader";
 import { HexagonBackground } from "@/features/gallery/components/HexagonBackground";
 import { YearRoller } from "./YearRoller";
 import { JourneyTimeline } from "./JourneyTimeline";
+import { JourneyTimelineMobile } from "./JourneyTimelineMobile";
 import { JourneyDetailOverlay } from "./JourneyDetailOverlay";
 
+/** Tailwind `md` breakpoint = 768px. */
+const MOBILE_BP = 768;
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== "undefined" && window.innerWidth < MOBILE_BP,
+  );
+  useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${MOBILE_BP - 1}px)`);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", handler);
+    setIsMobile(mq.matches);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+  return isMobile;
+}
+
 /**
- * EventsPage — horizontal journey timeline over honeycomb background.
+ * EventsPage — journey timeline over honeycomb background.
  *
- * Layout:
- *   1. Honeycomb fills the entire page (z-0)
- *   2. Content sits in z-10: hero text + year selector + timeline
- *   3. Detail panel overlays from the right at z-50 (does NOT push timeline)
+ * Desktop: horizontal curved timeline.
+ * Mobile: genuine vertical timeline flowing top → bottom.
  *
- * The timeline is the primary visual element. Cards alternate above/below.
- * The detail panel slides in as a full-height drawer on the right.
+ * Detail panel is portaled to document.body (above navbar).
  */
 export function EventsPage() {
   const [years, setYears] = useState<number[]>([]);
@@ -24,6 +39,7 @@ export function EventsPage() {
   const [events, setEvents] = useState<EventData[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     let cancelled = false;
@@ -72,7 +88,7 @@ export function EventsPage() {
       <HexagonBackground animated />
 
       {/* ── Content: sits above honeycomb ─────────────────────────── */}
-      <div className="relative z-10 mx-auto max-w-[1400px] px-6 lg:px-12">
+      <div className="relative z-10 mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-12">
         {/* ── Hero: eyebrow + heading + description + year selector ── */}
         <section className="pt-28 pb-4 lg:pt-32 lg:pb-6">
           <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
@@ -109,11 +125,8 @@ export function EventsPage() {
           </div>
         </section>
 
-        {/* ── Timeline section ───────────────────────────────────────
-            The timeline sits in a relative container. The detail panel
-            overlays from the right WITHOUT affecting this container's
-            width or position. */}
-        <section className="relative pb-24 lg:pb-28">
+        {/* ── Timeline section ─────────────────────────────────────── */}
+        <section className="relative pb-16 lg:pb-28">
           {loading ? (
             <div className="flex h-[420px] items-center justify-center">
               <span className="text-sm text-[oklch(0.42_0.03_300)]">Loading events…</span>
@@ -124,7 +137,23 @@ export function EventsPage() {
                 No events found for this year.
               </span>
             </div>
+          ) : isMobile ? (
+            /* ── Mobile: genuine vertical timeline ────────────── */
+            <motion.div
+              key={`journey-mobile-${selectedYear}`}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, ease: "easeOut" }}
+            >
+              <JourneyTimelineMobile
+                events={events}
+                selectedIndex={selectedIndex}
+                onSelect={handleSelectEvent}
+                animKey={selectedYear ?? 0}
+              />
+            </motion.div>
           ) : (
+            /* ── Desktop: horizontal curved timeline ──────────── */
             <motion.div
               key={`journey-${selectedYear}`}
               initial={{ opacity: 0, y: 16 }}
@@ -142,7 +171,7 @@ export function EventsPage() {
         </section>
       </div>
 
-      {/* ── Detail panel: overlays from right, z-50, does NOT affect layout ── */}
+      {/* ── Detail panel: portaled to document.body (above navbar) ── */}
       <JourneyDetailOverlay
         event={selectedEvent}
         onClose={handleCloseDetails}
