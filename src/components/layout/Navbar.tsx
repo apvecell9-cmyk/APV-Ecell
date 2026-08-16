@@ -47,7 +47,12 @@ export function Navbar() {
             <img
               src="/logos/logo.png"
               alt="APV E-Cell"
-              className="h-11 md:h-12 w-auto transition-transform group-hover:scale-105"
+              className="h-14 md:h-[60px] w-auto transition-transform group-hover:scale-105"
+            />
+            <img
+              src="/logos/agenl.png"
+              alt="Agnel Polytechnic"
+              className="h-12 md:h-[50px] w-auto ml-2.5 transition-transform group-hover:scale-105"
             />
           </Link>
 

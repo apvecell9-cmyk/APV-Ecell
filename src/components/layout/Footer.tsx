@@ -17,7 +17,12 @@ export function Footer() {
             <img
               src="/logos/logo.png"
               alt="APV E-Cell"
-               className="h-12 w-auto"
+               className="h-[60px] w-auto"
+            />
+            <img
+              src="/logos/agenl.png"
+              alt="Agnel Polytechnic"
+              className="h-[50px] w-auto"
             />
             <span>{INSTITUTION_LINE}</span>
           </div>

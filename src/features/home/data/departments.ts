@@ -36,7 +36,7 @@ export const departments: DeptCardProps[] = [
     members: [
       { name: "Tarun Bodal", role: "Team Member", image: "tarun_bodal.jpg" },
       { name: "Ananya", role: "Team Member", image: "ananya.jpg" },
-      { name: "Someone", role: "Team Member", image: "remember.jpg" },
+      { name: "Adwika", role: "Team Member", image: "remember.jpg" },
     ],
   },
   {
