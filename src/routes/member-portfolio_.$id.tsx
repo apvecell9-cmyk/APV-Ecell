@@ -1,26 +1,26 @@
 import React from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { PageLayout } from "@/components/layout/PageLayout";
 import { MemberPortfolioPage } from "@/features/member-portfolio/components/MemberPortfolioPage";
 
 export const Route = createFileRoute("/member-portfolio_/$id")({
   head: () => ({
     meta: [
-      { title: "Member Portfolio — APV E-Cell Vashi" },
+      { title: "Member Profile — APV E-Cell Vashi" },
       {
         name: "description",
-        content: "Member portfolio of APV E-Cell.",
+        content: "Individual member portfolio page for APV E-Cell Vashi team members.",
+      },
+      { property: "og:title", content: "Member Profile — APV E-Cell Vashi" },
+      {
+        property: "og:description",
+        content: "Individual member portfolio page for APV E-Cell Vashi team members.",
       },
     ],
   }),
-  component: MemberPortfolioPage,
+  component: MemberPortfolioRoute,
 });
 
 function MemberPortfolioRoute() {
   const { id } = Route.useParams();
-  return (
-    <PageLayout>
-      <MemberPortfolioPage id={id} />
-    </PageLayout>
-  );
+  return <MemberPortfolioPage id={id} />;
 }
