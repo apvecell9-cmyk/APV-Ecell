@@ -276,7 +276,7 @@ export function MemberPortfolioPage({ id }: { id: string }) {
         </div>
       </div>
 
-      {/* ── Portrait / Fallback ───────────────────────────────── */}
+      {/* ── Portrait ───────────────────────────────── */}
       <div className="pointer-events-none absolute inset-0 z-20 flex items-end justify-center md:justify-end">
         <AnimatePresence mode="wait">
           {hasImage ? (
