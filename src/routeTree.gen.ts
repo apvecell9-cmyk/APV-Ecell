@@ -18,6 +18,7 @@ import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as MemberPortfolioRouteImport } from './routes/member-portfolio'
 import { Route as BlogSlugRouteImport } from './routes/blog_.$slug'
 import { Route as EventsSlugRouteImport } from './routes/events_.$slug'
+import { Route as MemberPortfolioIdRouteImport } from './routes/member-portfolio_.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -64,6 +65,11 @@ const EventsSlugRoute = EventsSlugRouteImport.update({
   path: '/events/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MemberPortfolioIdRoute = MemberPortfolioIdRouteImport.update({
+  id: '/member-portfolio_/$id',
+  path: '/member-portfolio/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -75,6 +81,7 @@ export interface FileRoutesByFullPath {
   '/member-portfolio': typeof MemberPortfolioRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/events/$slug': typeof EventsSlugRoute
+  '/member-portfolio/$id': typeof MemberPortfolioIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -86,6 +93,7 @@ export interface FileRoutesByTo {
   '/member-portfolio': typeof MemberPortfolioRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/events/$slug': typeof EventsSlugRoute
+  '/member-portfolio/$id': typeof MemberPortfolioIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -98,6 +106,7 @@ export interface FileRoutesById {
   '/member-portfolio': typeof MemberPortfolioRoute
   '/blog_/$slug': typeof BlogSlugRoute
   '/events_/$slug': typeof EventsSlugRoute
+  '/member-portfolio_/$id': typeof MemberPortfolioIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -111,6 +120,7 @@ export interface FileRouteTypes {
     | '/member-portfolio'
     | '/blog/$slug'
     | '/events/$slug'
+    | '/member-portfolio/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -122,6 +132,7 @@ export interface FileRouteTypes {
     | '/member-portfolio'
     | '/blog/$slug'
     | '/events/$slug'
+    | '/member-portfolio/$id'
   id:
     | '__root__'
     | '/'
@@ -133,6 +144,7 @@ export interface FileRouteTypes {
     | '/member-portfolio'
     | '/blog_/$slug'
     | '/events_/$slug'
+    | '/member-portfolio_/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -145,6 +157,7 @@ export interface RootRouteChildren {
   MemberPortfolioRoute: typeof MemberPortfolioRoute
   BlogSlugRoute: typeof BlogSlugRoute
   EventsSlugRoute: typeof EventsSlugRoute
+  MemberPortfolioIdRoute: typeof MemberPortfolioIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -212,6 +225,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/member-portfolio_/$id': {
+      id: '/member-portfolio_/$id'
+      path: '/member-portfolio/$id'
+      fullPath: '/member-portfolio/$id'
+      preLoaderRoute: typeof MemberPortfolioIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -225,6 +245,7 @@ const rootRouteChildren: RootRouteChildren = {
   MemberPortfolioRoute: MemberPortfolioRoute,
   BlogSlugRoute: BlogSlugRoute,
   EventsSlugRoute: EventsSlugRoute,
+  MemberPortfolioIdRoute: MemberPortfolioIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
