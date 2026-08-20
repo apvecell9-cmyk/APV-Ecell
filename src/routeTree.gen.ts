@@ -15,6 +15,7 @@ import { Route as BlogRouteImport } from './routes/blog'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as MemberPortfolioRouteImport } from './routes/member-portfolio'
 import { Route as BlogSlugRouteImport } from './routes/blog_.$slug'
 import { Route as EventsSlugRouteImport } from './routes/events_.$slug'
 
@@ -48,6 +49,11 @@ const GalleryRoute = GalleryRouteImport.update({
   path: '/gallery',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MemberPortfolioRoute = MemberPortfolioRouteImport.update({
+  id: '/member-portfolio',
+  path: '/member-portfolio',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/blog_/$slug',
   path: '/blog/$slug',
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
   '/gallery': typeof GalleryRoute
+  '/member-portfolio': typeof MemberPortfolioRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/events/$slug': typeof EventsSlugRoute
 }
@@ -76,6 +83,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
   '/gallery': typeof GalleryRoute
+  '/member-portfolio': typeof MemberPortfolioRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/events/$slug': typeof EventsSlugRoute
 }
@@ -87,6 +95,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/events': typeof EventsRoute
   '/gallery': typeof GalleryRoute
+  '/member-portfolio': typeof MemberPortfolioRoute
   '/blog_/$slug': typeof BlogSlugRoute
   '/events_/$slug': typeof EventsSlugRoute
 }
@@ -99,6 +108,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/events'
     | '/gallery'
+    | '/member-portfolio'
     | '/blog/$slug'
     | '/events/$slug'
   fileRoutesByTo: FileRoutesByTo
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/events'
     | '/gallery'
+    | '/member-portfolio'
     | '/blog/$slug'
     | '/events/$slug'
   id:
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/events'
     | '/gallery'
+    | '/member-portfolio'
     | '/blog_/$slug'
     | '/events_/$slug'
   fileRoutesById: FileRoutesById
@@ -130,6 +142,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   EventsRoute: typeof EventsRoute
   GalleryRoute: typeof GalleryRoute
+  MemberPortfolioRoute: typeof MemberPortfolioRoute
   BlogSlugRoute: typeof BlogSlugRoute
   EventsSlugRoute: typeof EventsSlugRoute
 }
@@ -178,6 +191,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GalleryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/member-portfolio': {
+      id: '/member-portfolio'
+      path: '/member-portfolio'
+      fullPath: '/member-portfolio'
+      preLoaderRoute: typeof MemberPortfolioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog_/$slug': {
       id: '/blog_/$slug'
       path: '/blog/$slug'
@@ -202,6 +222,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   EventsRoute: EventsRoute,
   GalleryRoute: GalleryRoute,
+  MemberPortfolioRoute: MemberPortfolioRoute,
   BlogSlugRoute: BlogSlugRoute,
   EventsSlugRoute: EventsSlugRoute,
 }
