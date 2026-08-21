@@ -37,7 +37,9 @@ function splitName(fullName: string): { first: string; last: string } {
   return { first: parts[0]!, last: parts.slice(1).join(" ") };
 }
 
-const RED = "#A50000";
+const DARK_PURPLE = "#3B176B";
+const LAVENDER = "#C9B8E8";
+const MUTED_TEXT = "#D8D0E5";
 
 /** Delay multiplier per stagger index. */
 const stagger = (i: number, base = 0.08) => ({ transition: { delay: 0.3 + i * base } });
@@ -128,35 +130,47 @@ export function MemberPortfolioPage({ id }: { id: string }) {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, ease: [0.22, 0.61, 0.36, 1] }}
         className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden"
-        style={{ transform: "translateY(-125px)" }}
+        style={{ transform: "translateY(-80px) translateX(5%)" }}
         aria-hidden="true"
       >
-        <span
-  className="select-none whitespace-nowrap font-display uppercase leading-none"
-  style={{
-    fontFamily: '"Agency FB", sans-serif',
-    fontSize: "clamp(14rem, 29vw, 34rem)",
-    fontWeight: 400,
-    color: RED,
-    letterSpacing: "-0.045em",
-    transform: "scaleX(1.18)",
+        <div
+          className="relative select-none flex items-center justify-center"
+          style={{
+            background: LAVENDER,
+            borderRadius: "28px",
+            padding: "0.4em 0.7em",
+            opacity: 0.92,
+            maxWidth: "85vw",
+          }}
+        >
+          <span
+            className="select-none whitespace-nowrap font-display uppercase leading-none"
+            style={{
+              fontFamily: '"Agency FB", sans-serif',
+              fontSize: "clamp(8rem, 22vw, 28rem)",
+              fontWeight: 400,
+              color: DARK_PURPLE,
+              letterSpacing: "-0.045em",
+              transform: "scaleX(1.18)",
+              opacity: 0.88,
 
-    WebkitMaskImage:
-  "linear-gradient(to bottom, #000 50%, rgba(0,0,0,0.8) 68%, rgba(0,0,0,0.35) 82%, transparent 100%)",
-maskImage:
-  "linear-gradient(to bottom, #000 50%, rgba(0,0,0,0.8) 68%, rgba(0,0,0,0.35) 82%, transparent 100%)",
-  }}
->
-  PORTFOLIO
-</span>
+              WebkitMaskImage:
+                "linear-gradient(to bottom, #000 50%, rgba(0,0,0,0.8) 68%, rgba(0,0,0,0.35) 82%, transparent 100%)",
+              maskImage:
+                "linear-gradient(to bottom, #000 50%, rgba(0,0,0,0.8) 68%, rgba(0,0,0,0.35) 82%, transparent 100%)",
+            }}
+          >
+            PORTFOLIO
+          </span>
+        </div>
       </motion.div>
 
       {/* ── Left-side content ─────────────────────────────────── */}
-      <div className="absolute inset-y-0 left-0 z-10 flex w-full flex-col justify-center md:w-1/2 lg:w-[40%]">
-        <div className="px-8 md:px-16 lg:px-20">
+      <div className="absolute inset-y-0 left-0 z-30 flex w-full flex-col justify-center md:w-1/2 lg:w-[42%]">
+        <div className="px-6 sm:px-8 md:px-14 lg:px-18">
           <p
-            className="font-display italic font-light text-white"
-            style={{ fontSize: "clamp(1rem, 2vw, 1.75rem)" }}
+            className="font-display italic font-light"
+            style={{ fontSize: "clamp(0.9rem, 1.8vw, 1.5rem)", color: MUTED_TEXT }}
           >
             Hello, I am
           </p>
@@ -167,7 +181,7 @@ maskImage:
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.22, 0.61, 0.36, 1], delay: 0.35 }}
             className="font-display mt-3 font-bold leading-[0.95] tracking-tight text-white"
-            style={{ fontSize: "clamp(3rem, 7vw, 6rem)" }}
+            style={{ fontSize: "clamp(2.5rem, 6.5vw, 5.5rem)" }}
           >
             {first}
             {last && (
@@ -183,10 +197,11 @@ maskImage:
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut", delay: 0.5 }}
-            className="mt-6 font-display uppercase text-[#D00000]"
+            className="mt-6 font-display uppercase"
             style={{
-              fontSize: "clamp(0.75rem, 1.1vw, 1rem)",
+              fontSize: "clamp(0.7rem, 1vw, 0.9rem)",
               letterSpacing: "0.35em",
+              color: LAVENDER,
             }}
           >
             {member.role}
@@ -197,12 +212,13 @@ maskImage:
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut", delay: 0.6 }}
-            className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-[11px] font-mono uppercase tracking-[0.15em] text-white/40"
+            className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-[11px] font-mono uppercase tracking-[0.15em]"
+            style={{ color: MUTED_TEXT }}
           >
             <span>{member.department}</span>
-            <span className="text-white/20">·</span>
+            <span className="opacity-40">·</span>
             <span>{member.year}</span>
-            <span className="text-white/20">·</span>
+            <span className="opacity-40">·</span>
             <span>{member.course}</span>
           </motion.div>
 
@@ -211,13 +227,16 @@ maskImage:
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut", delay: 0.7 }}
-            className="mt-6 max-w-md space-y-3"
+            className="mt-6 max-w-lg space-y-3"
           >
             {member.introduction.split(/\n\n+/).map((para, i) => (
               <p
                 key={i}
-                className="leading-relaxed text-white/70"
-                style={{ fontSize: "clamp(0.8rem, 1vw, 0.95rem)" }}
+                className="leading-[1.7]"
+                style={{
+                  fontSize: "clamp(0.8rem, 1vw, 0.95rem)",
+                  color: "#F5F2FA",
+                }}
               >
                 {para}
               </p>
@@ -234,7 +253,7 @@ maskImage:
             {member.email && (
               <a
                 href={`mailto:${member.email}`}
-                className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2.5 text-xs font-medium text-white/80 transition-all hover:border-[#D00000]/50 hover:bg-[#D00000]/10 hover:text-white"
+                className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2.5 text-xs font-medium text-white/80 transition-all hover:border-[#C9B8E8]/50 hover:bg-[#C9B8E8]/10 hover:text-white"
                 aria-label="Send email"
               >
                 <Mail className="h-3.5 w-3.5" />
@@ -244,7 +263,7 @@ maskImage:
             {member.phone && (
               <a
                 href={`tel:${member.phone}`}
-                className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2.5 text-xs font-medium text-white/80 transition-all hover:border-[#D00000]/50 hover:bg-[#D00000]/10 hover:text-white"
+                className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2.5 text-xs font-medium text-white/80 transition-all hover:border-[#C9B8E8]/50 hover:bg-[#C9B8E8]/10 hover:text-white"
                 aria-label="Call phone"
               >
                 <Phone className="h-3.5 w-3.5" />
@@ -256,7 +275,7 @@ maskImage:
                 href={member.linkedin}
                 target="_blank"
                 rel="noreferrer"
-                className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2.5 text-xs font-medium text-white/80 transition-all hover:border-[#D00000]/50 hover:bg-[#D00000]/10 hover:text-white"
+                className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2.5 text-xs font-medium text-white/80 transition-all hover:border-[#C9B8E8]/50 hover:bg-[#C9B8E8]/10 hover:text-white"
                 aria-label="LinkedIn profile"
               >
                 <Linkedin className="h-3.5 w-3.5" />
@@ -268,7 +287,7 @@ maskImage:
                 href={member.instagram}
                 target="_blank"
                 rel="noreferrer"
-                className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2.5 text-xs font-medium text-white/80 transition-all hover:border-[#D00000]/50 hover:bg-[#D00000]/10 hover:text-white"
+                className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2.5 text-xs font-medium text-white/80 transition-all hover:border-[#C9B8E8]/50 hover:bg-[#C9B8E8]/10 hover:text-white"
                 aria-label="Instagram profile"
               >
                 <Instagram className="h-3.5 w-3.5" />
@@ -281,15 +300,31 @@ maskImage:
 
       {/* ── Portrait ───────────────────────────────── */}
       <div className="pointer-events-none absolute inset-0 z-20 flex items-end justify-center md:justify-end">
-        <img
-          src="/MemberPortfolio/president.png"
-          alt="Pranav Ingulkar"
-          className="block h-[85vh] w-auto object-contain md:h-[100vh]"
-          style={{
-            objectPosition: "bottom center",
-            marginRight: "5%",
-          }}
-        />
+        {hasImage ? (
+          <img
+            src={member.image!}
+            alt={member.name}
+            className="block h-[75vh] w-auto object-contain md:h-[92vh] md:mr-[-2%]"
+            style={{
+              objectPosition: "bottom center",
+              marginRight: "clamp(2%, 5vw, 8%)",
+            }}
+          />
+        ) : (
+          <div
+            className="flex items-center justify-center rounded-full bg-white/10 text-white/30"
+            style={{
+              width: "clamp(120px, 20vw, 200px)",
+              height: "clamp(120px, 20vw, 200px)",
+              fontSize: "clamp(3rem, 6vw, 5rem)",
+              fontFamily: '"Agency FB", sans-serif',
+              fontWeight: 700,
+              marginBottom: "8vh",
+            }}
+          >
+            {getInitials(member.name)}
+          </div>
+        )}
       </div>
 
       {/* ── Back button (top-left, subtle) ────────────────────── */}
@@ -297,7 +332,7 @@ maskImage:
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 0.4 }}
-        className="absolute left-6 top-6 z-30"
+        className="absolute left-6 top-6 z-40"
       >
         <Link
           to="/"
