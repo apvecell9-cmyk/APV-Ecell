@@ -51,8 +51,8 @@ export const departments: DeptCardProps[] = [
   },
   {
     id: "liaison",
-    department: "Liaison & Documentation",
-    subtitle: "Institutional & External Relations",
+    department: "Liaison",
+    subtitle: "Documentation and Its Preparation",
     description:
       "Building strong partnerships, industry connections, and coordinating external collaborations for APV E-Cell.",
     headName: "Harsh Vaidya",
@@ -91,7 +91,7 @@ export const departments: DeptCardProps[] = [
   },
   {
     id: "hospitality",
-    department: "Hospitality & Logistics",
+    department: "Hospitality",
     subtitle: "Guest Relations & Operations",
     description:
       "Ensuring exceptional experience for guests, judges, speakers, and seamless event management.",

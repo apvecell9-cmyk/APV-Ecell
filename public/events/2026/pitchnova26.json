@@ -1,17 +1,279 @@
 {
-  "title": "Pitchnova 2026",
-  "subtitle": "Launchpad for Aspiring Student Founders",
+  "id": "pitchnova26",
+  "title": "Pitchnova 2.0",
+  "subtitle": "Pitching Competition",
   "year": 2026,
-  "status": "Upcoming",
-  "date": "August 24, 2026",
-  "time": "9:00 AM – 5:00 PM IST",
-  "venue": "APV Seminar Hall, Vashi",
-  "description": "Pitchnova is the flagship ideation sprint organised by APV E-Cell to help polytechnic students turn raw ideas into validated venture concepts. Over a single day, participants attend mentor-led clinics, customer interview workshops, and pitch rehearsals designed to compress months of learning into hours of focused work.",
+  "status": "upcoming",
+  "date": "24th August 2026",
+  "time": "",
+  "venue": "",
+  "description": "Agnel Polytechnic Vashi's E-Cell proudly unveils Pitchnova, a dynamic pitching competition designed to ignite innovation and entrepreneurial spirit among aspiring changemakers. Pitchnova 2.0 welcomes students, startups, and innovators from across all educational backgrounds to present their groundbreaking ideas.",
   "highlights": [
-    "Hands-on Customer Discovery Clinics",
-    "Idea-to-Business-Model Sprint",
-    "Mentor Hours with CIBA Founders",
-    "Top 10 Teams to E-Summit Showcase"
+    "Top 3 teams get a chance to compete in Eureka!",
+    "Anyone can participate in Pitchnova",
+    "Enables relationship-building with contestants",
+    "Every team member gets a certificate",
+    "Showcase your pitching skills"
   ],
-  "dedicatedPage": false
+  "dedicatedPage": true,
+  "pageUrl": "/events/pitchnova26",
+
+  "hero": {
+    "eyebrow": "APV E-CELL, VASHI PRESENTS",
+    "title": "PITCHNOVA 2.0",
+    "subtitle": "Pitching Competition",
+    "description": "Creating change makers through innovation, entrepreneurship and powerful ideas.",
+    "date": "24th August 2026",
+    "image": null,
+    "backgroundImage": null,
+    "logo": null,
+    "badges": [
+      "National Entrepreneurship Challenge 2026",
+      "APV E-CELL"
+    ],
+    "actions": [
+      {
+        "label": "Register Now",
+        "type": "external",
+        "url": "https://forms.gle/gR9p4sttCjiXUG9j9",
+        "variant": "primary"
+      },
+      {
+        "label": "View Rules",
+        "type": "scroll",
+        "target": "rules",
+        "variant": "secondary"
+      }
+    ]
+  },
+
+  "about": {
+    "title": "About The Event",
+    "paragraphs": [
+      "Agnel Polytechnic Vashi's E-Cell proudly unveils Pitchnova, a dynamic pitching competition designed to ignite innovation and entrepreneurial spirit among aspiring changemakers.",
+      "Scheduled for 24th August 2026, Pitchnova 2.0 welcomes students, startups, and innovators from across all educational backgrounds, be it Polytechnic, Degree, MBA, or any other field, to present their groundbreaking ideas.",
+      "Participants will form teams of 1 to 4 members and submit their unique presentations using the prescribed template.",
+      "Each team will take the stage to deliver a concise, powerful 2 minute pitch, showcasing their creativity, problem solving abilities, and communication skills. This will be followed by a 3 minute Q&A session with a panel of judges to probe deeper into their concepts."
+    ],
+    "image": null
+  },
+
+  "rules": {
+    "title": "Rules & Guidelines",
+    "items": [
+      {
+        "title": "Registration Deadline",
+        "description": "All teams must complete their registration by 22nd August 2026."
+      },
+      {
+        "title": "Team Composition",
+        "description": "Teams may consist of 1 to 4 members. All team members must be from the same college or institution."
+      },
+      {
+        "title": "Pitch Deck Submission",
+        "description": "Every participating team must prepare their pitch deck in PPT format, adhering to the template provided by APV E-CELL."
+      },
+      {
+        "title": "Registration Fee",
+        "description": "₹100 per person."
+      },
+      {
+        "title": "Registration Requirement",
+        "description": "Teams that fail to complete the Eureka! registration with the proper referral by the deadline will be automatically disqualified from the competition."
+      },
+      {
+        "title": "No Refund Policy",
+        "description": "Registration fees are non-refundable under any circumstances."
+      }
+    ]
+  },
+
+  "structure": {
+    "title": "Competition Structure",
+    "items": [
+      {
+        "title": "Pitching Session",
+        "description": "Each team will have 2 minutes to present their startup idea, followed by a 3-minute Q&A session with the jury."
+      },
+      {
+        "title": "Number of Finalists",
+        "description": "Top 3 teams will be selected based on their pitches and get a chance to participate directly in the Zonal rounds of the Eureka! Pitching Competition."
+      },
+      {
+        "title": "Judging Criteria",
+        "description": "Startups will be evaluated according to parameters such as innovation, market potential, business viability, team capability, and overall presentation quality. Detailed judging criteria will be shared during orientation."
+      },
+      {
+        "title": "Pitch Deck Requirements",
+        "description": "The pitch deck should cover, but is not limited to, the problem statement, solution or product overview, target market, business model, competitive advantage, team, and financial projections."
+      },
+      {
+        "title": "Team Representation",
+        "description": "Only one team per startup idea will be allowed. Each member can participate in only one team."
+      },
+      {
+        "title": "Attendance",
+        "description": "All registered participants are required to attend the event in its entirety."
+      }
+    ]
+  },
+
+  "benefits": {
+    "title": "Benefits",
+    "items": [
+      {
+        "title": "Incubation Opportunities",
+        "description": "Opportunities to take your ideas further through incubation support.",
+        "icon": null,
+        "image": null
+      },
+      {
+        "title": "Networking Opportunities",
+        "description": "Build relationships and connect with fellow contestants and aspiring changemakers.",
+        "icon": null,
+        "image": null
+      },
+      {
+        "title": "Chance to Compete in Eureka!",
+        "description": "Top-performing teams get a chance to compete in the Eureka! Pitching Competition.",
+        "icon": null,
+        "image": null
+      },
+      {
+        "title": "Trophies & Certificates",
+        "description": "Every team member receives a certificate, with trophies for top performers.",
+        "icon": null,
+        "image": null
+      }
+    ]
+  },
+
+  "timeline": {
+    "title": "Roadmap Of The Event",
+    "items": [
+      {
+        "date": "16th August 2026",
+        "title": "Website Launch",
+        "description": "Launch of the E-Cell website with event details, schedules and participant information.",
+        "status": "completed"
+      },
+      {
+        "date": "22nd August 2026",
+        "title": "Registration Deadline",
+        "description": "All students who wish to participate in Pitchnova must register and fill the form by the deadline to be eligible.",
+        "status": "upcoming"
+      },
+      {
+        "date": "23rd August 2026",
+        "title": "Online Orientation",
+        "description": "Teams will be guided through the Pitchnova process, including registration on the Eureka! website using APV E-Cell's NEC ID.",
+        "status": "upcoming"
+      },
+      {
+        "date": "24th August 2026",
+        "title": "Pitchnova 2.0",
+        "description": "The show day where startups, students and graduates compete by pitching their ideas to a panel of judges.",
+        "status": "upcoming"
+      }
+    ]
+  },
+
+  "registration": {
+    "enabled": true,
+    "label": "Register for Pitchnova 2.0",
+    "deadline": "22nd August 2026",
+    "fee": "₹100 per person",
+    "note": "Registration fees are non-refundable. Eureka! registration with the proper APV E-Cell referral is mandatory.",
+    "actions": [
+      {
+        "label": "Register Now",
+        "type": "external",
+        "url": "https://forms.gle/gR9p4sttCjiXUG9j9",
+        "variant": "primary"
+      }
+    ]
+  },
+
+  "location": {
+    "venue": "",
+    "address": "",
+    "city": "Vashi, Navi Mumbai",
+    "mapUrl": null,
+    "directionsUrl": null
+  },
+
+  "contacts": {
+    "title": "Contact Us",
+    "people": [
+      {
+        "name": "Mr. Pranavkumar Bhadane",
+        "role": "Faculty Advisor",
+        "phone": "+91 78210 96591",
+        "email": null,
+        "image": null
+      },
+      {
+        "name": "Ms. Rosemia James",
+        "role": "President",
+        "phone": "+91 94961 56934",
+        "email": null,
+        "image": null
+      },
+      {
+        "name": "Mr. Ritesh Jogdankar",
+        "role": "Finance & Operations Head",
+        "phone": "+91 88286 71410",
+        "email": null,
+        "image": null
+      }
+    ],
+    "links": [
+      {
+        "label": "Agnel Polytechnic Vashi | E-Cell",
+        "type": "website",
+        "url": "apvecell.com"
+      },
+      {
+        "label": "APV E-Cell",
+        "type": "instagram",
+        "handle": "apv_ecell",
+        "url": null
+      },
+      {
+        "label": "APV E-Cell",
+        "type": "linkedin",
+        "url": null
+      },
+      {
+        "label": "Email",
+        "type": "email",
+        "url": "mailto:apvecell9@gmail.com"
+      }
+    ]
+  },
+
+  "partners": [
+    {
+      "name": "National Entrepreneurship Challenge 2026",
+      "logo": null,
+      "url": null,
+      "role": "Associated Initiative"
+    },
+    {
+      "name": "Eureka!",
+      "logo": null,
+      "url": "ecell.in/eureka",
+      "role": "Pitching Competition Pathway"
+    }
+  ],
+
+  "gallery": [],
+
+  "documents": [
+    {
+      "title": "Pitchnova 2.0 Brochure",
+      "type": "brochure",
+      "url": null
+    }
+  ]
 }

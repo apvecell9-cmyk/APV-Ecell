@@ -2,11 +2,11 @@
   "years": [
     {
       "year": 2026,
-      "events": [""]
+      "events": ["pitchnova26"]
     },
     {
       "year": 2025,
-      "events": ["illuminate", "pitchnova"]
+      "events": ["illuminate", "pitchnova25"]
     }
   ]
 }
