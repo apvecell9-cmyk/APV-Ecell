@@ -12,7 +12,7 @@
       "role": "Head",
       "year": "Second Year",
       "course": "Computer and Electronics",
-      "image": null
+      "image": "/team/icard/neil.png"
     },
     {
       "id": "apv-f2ee0c13",
@@ -26,7 +26,7 @@
       "role": "Head",
       "year": "Third Year",
       "course": "Artificial Intelligence",
-      "image": null
+      "image": "/team/icard/trisha.png"
     },
     {
       "id": "apv-955b8982",
@@ -40,7 +40,7 @@
       "role": "Member",
       "year": "Second Year",
       "course": "Civil",
-      "image": null
+      "image": "/team/icard/tarun.png"
     },
     {
       "id": "apv-4769f4ae",
@@ -54,7 +54,7 @@
       "role": "Member",
       "year": "Third Year",
       "course": "Mechanical",
-      "image": null
+      "image": "/team/icard/mohammad.png"
     },
     {
       "id": "apv-0c413411",
@@ -68,7 +68,7 @@
       "role": "Member",
       "year": "Third Year",
       "course": "Mechanical",
-      "image": null
+      "image": "/team/icard/arnav.png"
     },
     {
       "id": "apv-9bbe5f79",
@@ -82,7 +82,7 @@
       "role": "Head",
       "year": "Second Year",
       "course": "Artificial Intelligence",
-      "image": null
+      "image": "/team/icard/shifa.png"
     },
     {
       "id": "apv-a531a38d",
@@ -96,7 +96,7 @@
       "role": "Member",
       "year": "Second Year",
       "course": "Computer and Electronics",
-      "image": null
+      "image": "/team/icard/adwika.png"
     },
     {
       "id": "apv-b997b600",
@@ -110,7 +110,7 @@
       "role": "Member",
       "year": "Third Year",
       "course": "Artificial Intelligence",
-      "image": null
+      "image": "/team/icard/nandan.png"
     },
     {
       "id": "apv-8f0c44a1",
@@ -124,7 +124,7 @@
       "role": "Head",
       "year": "Second Year",
       "course": "Artificial Intelligence",
-      "image": null
+      "image": "/team/icard/harsh.png"
     },
     {
       "id": "apv-5c9d54f6",
@@ -138,7 +138,7 @@
       "role": "Head",
       "year": "Third Year",
       "course": "Computer and Electronics",
-      "image": null
+      "image": "/team/icard/rosmia.png"
     },
     {
       "id": "apv-b6a7b981",
@@ -152,7 +152,7 @@
       "role": "Head",
       "year": "Third Year",
       "course": "Mechanical",
-      "image": null
+      "image": "/team/icard/ritesh.png"
     },
     {
       "id": "apv-71ac787b",
@@ -166,7 +166,7 @@
       "role": "Member",
       "year": "Second Year",
       "course": "Artificial Intelligence",
-      "image": null
+      "image": "/team/icard/namira.png"
     },
     {
       "id": "apv-d7358721",
@@ -180,7 +180,7 @@
       "role": "Member",
       "year": "Second Year",
       "course": "Artificial Intelligence",
-      "image": null
+      "image": "/team/icard/raechel.png"
     },
     {
       "id": "apv-661414e6",
@@ -194,7 +194,7 @@
       "role": "Member",
       "year": "Second Year",
       "course": "Computer and Electronics",
-      "image": null
+      "image": "/team/icard/tanvi.png"
     },
     {
       "id": "apv-17a75792",
@@ -208,7 +208,7 @@
       "role": "Member",
       "year": "Second Year",
       "course": "Artificial Intelligence",
-      "image": null
+      "image": "/team/icard/shreya.png"
     },
     {
       "id": "apv-7a068109",
@@ -222,7 +222,7 @@
       "role": "Member",
       "year": "Second Year",
       "course": "Civil",
-      "image": null
+      "image": "/team/icard/om.png"
     },
     {
       "id": "apv-fb347f5e",
@@ -236,7 +236,7 @@
       "role": "Member",
       "year": "Third Year",
       "course": "Artificial Intelligence",
-      "image": null
+      "image": "/team/icard/mayuresh.png"
     },
     {
       "id": "apv-8c592e10",
@@ -250,7 +250,7 @@
       "role": "Member",
       "year": "Second Year",
       "course": "Computer and Electronics",
-      "image": null
+      "image": "/team/icard/nitu.png"
     },
     {
       "id": "apv-ca94861f",
@@ -264,7 +264,7 @@
       "role": "Member",
       "year": "Second Year",
       "course": "Artificial Intelligence",
-      "image": null
+      "image": "/team/icard/ashley.png"
     },
     {
       "id": "apv-26b9294d",
@@ -278,7 +278,7 @@
       "role": "Member",
       "year": "Second Year",
       "course": "Artificial Intelligence",
-      "image": null
+      "image": "/team/icard/tanvi_b.png"
     },
     {
       "id": "apv-3a4c2273",
@@ -292,7 +292,7 @@
       "role": "Member",
       "year": "Second Year",
       "course": "Artificial Intelligence",
-      "image": null
+      "image": "/team/icard/pranav_mem.png"
     },
     {
       "id": "apv-01a6e47e",
@@ -306,7 +306,7 @@
       "role": "Member",
       "year": "Second Year",
       "course": "Civil",
-      "image": null
+      "image": "/team/icard/ananya.png"
     },
     {
       "id": "apv-d411c486",
@@ -320,7 +320,7 @@
       "role": "Head",
       "year": "Third Year",
       "course": "Artificial Intelligence",
-      "image": null
+      "image": "/team/icard/rehan.png"
     },
     {
       "id": "apv-d97f9451",
@@ -334,7 +334,20 @@
       "role": "Head",
       "year": "Third Year",
       "course": "Artificial Intelligence",
-      "image": null
+      "image": "/team/icard/palak.png"
+    },{
+      "id": "apv-7b3e91f4",
+      "name": "Prof. Pranavkumar Bhadane",
+      "email": "bhadane.4@gmail.com",
+      "phone": "+91 7821096591",
+      "linkedin": "https://www.linkedin.com/in/pranavkumarbhadane?utm_source=share_via&utm_content=profile&utm_medium=member_ios",
+      "instagram": "https://www.instagram.com/bhadane.4?igsi=MWcybjFpMm4zMzN4aw==",
+      "introduction": "My vision is to foster a culture of innovation and entrepreneurship at Agnel Polytechnic, Vashi, empowering students to transform creative ideas into impactful real-world ventures. My mission is to mentor students, nurture an entrepreneurial mindset, and provide the guidance needed to identify opportunities, build sustainable solutions, and become future-ready innovators and leaders.",
+      "department": "Technical and Web Development",
+      "role": "Head",
+      "year": "Third Year",
+      "course": "Artificial Intelligence",
+      "image": "/team/icard/pranav.png"
     }
   ]
 }
