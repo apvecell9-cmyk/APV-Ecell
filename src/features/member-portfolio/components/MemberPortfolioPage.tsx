@@ -13,27 +13,41 @@ export function MemberPortfolioPage() {
         aria-hidden="true"
       >
         <span
-          className="select-none whitespace-nowrap font-display font-bold uppercase leading-none"
-          style={{
-            fontSize: "clamp(10rem, 22vw, 25rem)",
-            color: "#A50000",
-            letterSpacing: "-0.02em",
-            transform: "scaleX(0.71)",
-          }}
-        >
-          PORTFOLIO
-        </span>
+  className="select-none whitespace-nowrap font-display uppercase leading-none"
+  style={{
+    fontFamily: '"Agency FB", sans-serif',
+    fontSize: "clamp(14rem, 29vw, 34rem)",
+    fontWeight: 400,
+    color: "#A50000",
+    letterSpacing: "-0.045em",
+    transform: "scaleX(1.18)",
+
+    WebkitMaskImage:
+  "linear-gradient(to bottom, #000 50%, rgba(0,0,0,0.8) 68%, rgba(0,0,0,0.35) 82%, transparent 100%)",
+maskImage:
+  "linear-gradient(to bottom, #000 50%, rgba(0,0,0,0.8) 68%, rgba(0,0,0,0.35) 82%, transparent 100%)",
+  }}
+>
+  PORTFOLIO
+</span>
       </div>
 
       {/* Left-side content */}
       <div className="absolute inset-y-0 left-0 z-10 flex w-full flex-col justify-center md:w-1/2 lg:w-[40%]">
         <div className="px-8 md:px-16 lg:px-20">
           <p
-            className="font-display italic font-light text-white"
-            style={{ fontSize: "clamp(1rem, 2vw, 1.75rem)" }}
-          >
+            className="text-white"
+            style={{
+                fontFamily: "'Freestyle Script', 'Brush Script MT', cursive",
+                fontSize: "clamp(1.8rem, 3vw, 2.8rem)",
+                fontWeight: 300,
+                letterSpacing: "0.04em",
+                transform: "scaleY(1.1)",
+                transformOrigin: "left center",
+            }}
+            >
             Hello, I am
-          </p>
+            </p>
 
           <h1
             className="font-display mt-3 font-bold leading-[0.95] tracking-tight text-white"
@@ -80,7 +94,7 @@ export function MemberPortfolioPage() {
           className="block h-[85vh] w-auto object-contain md:h-[100vh]"
           style={{
             objectPosition: "bottom center",
-            marginRight: "5%",
+            marginRight: "15%",
           }}
         />
       </div>
