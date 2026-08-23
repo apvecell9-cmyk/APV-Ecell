@@ -30,7 +30,7 @@ export function UpcomingEventsSection() {
         if (cancelled) return;
         const all = perYear.flat();
         const filtered = all
-          .filter((e) => e.status === "Upcoming")
+          .filter((e) => e.status === "upcoming")
           .sort((a, b) => b.year - a.year);
         setUpcoming(filtered);
       } catch (err) {
