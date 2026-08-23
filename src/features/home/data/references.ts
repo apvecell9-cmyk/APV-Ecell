@@ -32,7 +32,7 @@ export const references: Reference[] = [
     name: "E-Cell NEC 2025",
     subtitle: "National Entrepreneurship Challenge",
     tag: "Reference Track",
-    logo: "/logos/nec.jpg",
+    logo: "/logos/nec.png",
     description:
       "Benchmarking institutional innovation through high-impact national challenges and structured E-Cell growth tracks.",
     perks: ["National Benchmark", "Leadership Track"],
@@ -41,7 +41,7 @@ export const references: Reference[] = [
     name: "Eureka!",
     subtitle: "Asia's Largest B-Model Competition",
     tag: "Flagship Track",
-    logo: "/logos/eureka.jpg",
+    logo: "/logos/eureka.png",
     description:
       "Paving the way for high-impact student startup pitches, jury evaluation, and venture incubation opportunities.",
     perks: ["Pitch Training", "Venture Incubation"],

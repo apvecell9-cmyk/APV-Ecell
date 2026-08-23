@@ -20,9 +20,9 @@ export const departments: DeptCardProps[] = [
     headName: "Rehan Khan",
     headRole: "Head of Technology & Web Development",
     members: [
-      { name: "Pranav Ingulkar", role: "Team Member", image: "pranav.jpg" },
       { name: "Raechel", role: "Team Member", image: "rachael.jpg" },
       { name: "Sheikh Namira", role: "Team Member", image: "namira.jpg" },
+      // { name: "Pranav Ingulkar", role: "Team Member", image: "pranav.png" },
     ],
   },
   {
@@ -84,9 +84,9 @@ export const departments: DeptCardProps[] = [
     headName: "Shifa Khan",
     headRole: "Head of Social Media",
     members: [
-      { name: "Tanvi Patil", role: "Team Member", image: "tanvi.jpg" },
+      { name: "Tanvi Patil", role: "Team Member", image: "tanvi.png" },
       { name: "Nandan Temkar", role: "Team Member", image: "nandan.jpg" },
-      { name: "Mayuresh", role: "Team Member", image: "mayuresh.jpg" },
+      { name: "Mayuresh", role: "Team Member", image: "mayuresh.png" },
     ],
   },
   {
@@ -98,7 +98,7 @@ export const departments: DeptCardProps[] = [
     headName: "Neil Kulkarni",
     headRole: "Head of Hospitality",
     members: [
-      { name: "Tanvi Gawande", role: "Team Member", image: "tanvi.jpg" },
+      { name: "Tanvi Gawande", role: "Team Member", image: "tanvi.png" },
       { name: "Arnav Gatkal", role: "Team Member", image: "arnav.jpg" },
     ],
   },

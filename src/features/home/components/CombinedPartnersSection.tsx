@@ -76,7 +76,7 @@ export function CombinedPartnersSection() {
         >
           <SectionHeader
             eyebrow="Ecosystem & Trust"
-            title="References & Incubation Partners"
+            title="References & Partners"
             description="Collaborating with premier national entrepreneurship bodies, top tech institutions, and our official incubation partner."
             size="md"
           />
