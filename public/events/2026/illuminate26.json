@@ -1,0 +1,319 @@
+{
+  "id": "illuminate26",
+  "title": "Illuminate 2.0",
+  "subtitle": "6 Hours Workshop on Entrepreneurship",
+  "year": 2026,
+  "status": "ongoing",
+  "date": "28th September 2026",
+  "time": "10:00 AM – 4:00 PM",
+  "venue": "Agnel Polytechnic, Vashi",
+  "description": "Illuminate is a six-hour entrepreneurship workshop by APV E-Cell designed to help students explore entrepreneurship through idea generation, problem-solving, business modelling, finance, startup development and pitching.",
+  "highlights": [
+    "Interactive entrepreneurship and startup-building sessions",
+    "Business Model Canvas workshop with expert guidance",
+    "Finance for Entrepreneurs",
+    "MVP, POC and prototyping insights",
+    "Pitching workshop with Q&A and feedback",
+    "Open to students from any college"
+  ],
+  "dedicatedPage": true,
+  "pageUrl": "/events/illuminate26",
+
+  "hero": {
+    "eyebrow": "APV E-CELL PRESENTS",
+    "title": "ILLUMINATE 2.0",
+    "subtitle": "6 Hours Workshop on Entrepreneurship",
+    "description": "Empowering the next generation of changemakers through entrepreneurship, innovation and hands-on startup learning.",
+    "date": "28th September 2026",
+    "image": null,
+    "backgroundImage": null,
+    "logo": null,
+    "badges": [
+      "National Entrepreneurship Challenge 2026",
+      "APV E-CELL"
+    ],
+    "actions": [
+      {
+        "label": "Register Now",
+        "type": "external",
+        "url": null,
+        "variant": "primary"
+      },
+      {
+        "label": "View Workshop",
+        "type": "scroll",
+        "target": "highlights",
+        "variant": "secondary"
+      }
+    ]
+  },
+
+  "about": {
+    "title": "About The Workshop",
+    "paragraphs": [
+      "Illuminate is an entrepreneurship initiative by Agnel Polytechnic Vashi's E-Cell designed to help students step into the startup world.",
+      "The workshop takes participants through the fundamentals of entrepreneurship, from generating and identifying problems to developing business models, understanding finance, building MVPs and POCs, and presenting ideas effectively.",
+      "Through interactive activities, team-based exercises and expert guidance, participants gain practical exposure to the process of transforming ideas into potential ventures.",
+      "The workshop is open to students from any college and focuses on building entrepreneurial thinking, teamwork and confidence."
+    ],
+    "image": null
+  },
+
+  "highlights": {
+    "title": "Workshop Highlights",
+    "items": [
+      {
+        "title": "Entrepreneurship & Startup Building",
+        "description": "Interactive sessions introducing participants to entrepreneurship and the startup-building process.",
+        "icon": null,
+        "image": null
+      },
+      {
+        "title": "Business Model Canvas",
+        "description": "Learn the key components of the Business Model Canvas and apply them to your own idea with expert guidance.",
+        "icon": null,
+        "image": null
+      },
+      {
+        "title": "Finance for Entrepreneurs",
+        "description": "Understand financial principles, financial viability and planning for entrepreneurial ideas.",
+        "icon": null,
+        "image": null
+      },
+      {
+        "title": "MVPs, POCs & Prototyping",
+        "description": "Explore how startups develop minimum viable products, proofs of concept and prototypes to validate ideas.",
+        "icon": null,
+        "image": null
+      },
+      {
+        "title": "Pitching Workshop & Q&A",
+        "description": "Present your business idea, practice pitching and receive constructive feedback.",
+        "icon": null,
+        "image": null
+      }
+    ]
+  },
+
+  "benefits": {
+    "title": "Benefits To Students",
+    "items": [
+      {
+        "title": "Expert Learning",
+        "description": "Learn directly from seasoned entrepreneurs and industry experts.",
+        "icon": null,
+        "image": null
+      },
+      {
+        "title": "IIT Bombay Startup Kit",
+        "description": "Receive an exclusive IIT Bombay certified startup kit.",
+        "icon": null,
+        "image": null
+      },
+      {
+        "title": "Certificate",
+        "description": "Earn a Certificate of Participation from IIT Bombay.",
+        "icon": null,
+        "image": null
+      },
+      {
+        "title": "Hands-on Experience",
+        "description": "Gain practical startup development and teamwork experience through activities.",
+        "icon": null,
+        "image": null
+      },
+      {
+        "title": "E-Summit Benefits",
+        "description": "Get exclusive discounts on E-Summit passes and accommodation at IIT Bombay.",
+        "icon": null,
+        "image": null
+      }
+    ]
+  },
+
+  "schedule": {
+    "title": "Workshop Flow",
+    "items": [
+      {
+        "time": "10:00 AM",
+        "duration": "15 min",
+        "title": "Introduction",
+        "description": "Interactive exercises designed to help participants connect with one another and become acquainted with the speaker."
+      },
+      {
+        "time": "10:15 AM",
+        "duration": "15 min",
+        "title": "What Is Entrepreneurship?",
+        "description": "Understand the fundamentals of entrepreneurship and why it is important in today's world."
+      },
+      {
+        "time": "10:30 AM",
+        "duration": "15 min",
+        "title": "Team Formation",
+        "description": "Participants are organized into teams to facilitate collaboration and engagement during the workshop."
+      },
+      {
+        "time": "10:45 AM",
+        "duration": "15 min",
+        "title": "Idea Generation & Problem Identification",
+        "description": "A group activity focused on brainstorming, identifying problems and developing creative solutions."
+      },
+      {
+        "time": "11:00 AM",
+        "duration": "60 min",
+        "title": "Business Model Canvas Workshop",
+        "description": "Learn the key components of the Business Model Canvas and understand how to apply it to a chosen idea."
+      },
+      {
+        "time": "12:00 PM",
+        "duration": "60 min",
+        "title": "Team Activity: Filling Out BMC",
+        "description": "Teams identify challenges, devise solutions and collaboratively complete their Business Model Canvas."
+      },
+      {
+        "time": "1:00 PM",
+        "duration": "60 min",
+        "title": "Break",
+        "description": "One-hour break."
+      },
+      {
+        "time": "2:00 PM",
+        "duration": "30 min",
+        "title": "Finance for Entrepreneurs",
+        "description": "Understand financial principles relevant to entrepreneurship, including financial viability and planning."
+      },
+      {
+        "time": "2:30 PM",
+        "duration": "30 min",
+        "title": "Insights Into Startup Development",
+        "description": "Explore MVPs, POCs, prototyping and ways to validate ideas through iterative testing and refinement."
+      },
+      {
+        "time": "3:00 PM",
+        "duration": "30 min",
+        "title": "Pitching Workshop & Q&A",
+        "description": "Present your business idea in groups and participate in a Q&A session to improve pitching skills and receive feedback."
+      }
+    ]
+  },
+
+  "rules": {
+    "title": "Student Rules",
+    "items": [
+      {
+        "title": "Full Attendance",
+        "description": "Students must attend the entire workshop from 10 AM to 4 PM to receive the certificate and kit."
+      },
+      {
+        "title": "Active Participation",
+        "description": "Active participation in all team activities is mandatory."
+      },
+      {
+        "title": "Follow Instructions",
+        "description": "Students should follow instructions provided by faculty members and student coordinators."
+      },
+      {
+        "title": "Discipline & Respect",
+        "description": "Discipline and respect towards the speaker and fellow participants must be maintained."
+      },
+      {
+        "title": "Certificate Eligibility",
+        "description": "Certificates will be issued only after the college completes full payment."
+      },
+      {
+        "title": "Correct Certificate Details",
+        "description": "Participants must enter their correct name and spelling for certificates. Changes cannot be made later."
+      }
+    ]
+  },
+
+  "registration": {
+    "enabled": true,
+    "label": "Register for Illuminate",
+    "deadline": "25th September 2026",
+    "fee": "₹800 per person",
+    "note": "No refunds will be provided under any circumstances. Participants should enter their correct name for the certificate.",
+    "actions": [
+      {
+        "label": "Register Now",
+        "type": "external",
+        "url": null,
+        "variant": "primary"
+      }
+    ],
+    "registrationMethod": "Scan the registration QR code provided in the official event brochure."
+  },
+
+  "location": {
+    "venue": "Agnel Polytechnic",
+    "address": "Juhu Chowpatty Marg, Juhu Nagar, Sector 9A, Vashi, Navi Mumbai - 400703",
+    "city": "Vashi, Navi Mumbai",
+    "mapUrl": null,
+    "directionsUrl": null
+  },
+
+  "contacts": {
+    "title": "For More Details",
+    "people": [
+      {
+        "name": "Mr. Pranavkumar Bhadane",
+        "role": "E-Cell In-Charge",
+        "phone": "+91 7821096591",
+        "email": null,
+        "image": null
+      },
+      {
+        "name": "Ms. Rosemia James",
+        "role": "President",
+        "phone": "+91 9496156934",
+        "email": null,
+        "image": null
+      },
+      {
+        "name": "Mr. Ritesh Jogdankar",
+        "role": "Finance & Operations Head",
+        "phone": "+91 8828671410",
+        "email": null,
+        "image": null
+      }
+    ],
+    "links": [
+      {
+        "label": "APV E-Cell",
+        "type": "instagram",
+        "handle": "apv_ecell",
+        "url": null
+      },
+      {
+        "label": "APV E-Cell",
+        "type": "website",
+        "url": "apvecell.com"
+      }
+    ]
+  },
+
+  "partners": [
+    {
+      "name": "National Entrepreneurship Challenge 2026",
+      "logo": null,
+      "url": null,
+      "role": "Associated Initiative"
+    },
+    {
+      "name": "IIT Bombay",
+      "logo": null,
+      "url": null,
+      "role": "Certificate, Startup Kit & E-Summit Benefits"
+    }
+  ],
+
+  "gallery": [],
+
+  "documents": [
+    {
+      "title": "Illuminate Workshop Brochure",
+      "type": "brochure",
+      "url": null
+    }
+  ]
+}
