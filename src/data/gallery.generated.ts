@@ -11,6 +11,37 @@ export interface GalleryEvent {
 
 export const galleryEvents: GalleryEvent[] = [
   {
+    "year": 2026,
+    "event": "Illuminate 2.0",
+    "cover": "/gallery/2026/Illuminate 2.0/1791121342848.jfif",
+    "imageCount": 9,
+    "images": [
+      "/gallery/2026/Illuminate 2.0/1791121342848.jfif",
+      "/gallery/2026/Illuminate 2.0/1791121343903.jfif",
+      "/gallery/2026/Illuminate 2.0/1791121344118.jfif",
+      "/gallery/2026/Illuminate 2.0/1791121344358.jfif",
+      "/gallery/2026/Illuminate 2.0/1791121400162.jfif",
+      "/gallery/2026/Illuminate 2.0/1791121402474.jfif",
+      "/gallery/2026/Illuminate 2.0/1791121402716.jfif",
+      "/gallery/2026/Illuminate 2.0/1791121404390.jfif",
+      "/gallery/2026/Illuminate 2.0/IMG_1403.JPG"
+    ]
+  },
+  {
+    "year": 2026,
+    "event": "Pitchnova 2.0",
+    "cover": "/gallery/2026/Pitchnova 2.0/1788108449984.jfif",
+    "imageCount": 6,
+    "images": [
+      "/gallery/2026/Pitchnova 2.0/1788108449984.jfif",
+      "/gallery/2026/Pitchnova 2.0/1788108450088.jfif",
+      "/gallery/2026/Pitchnova 2.0/1788108450472.jfif",
+      "/gallery/2026/Pitchnova 2.0/1788108450989.jfif",
+      "/gallery/2026/Pitchnova 2.0/1788108451951.jfif",
+      "/gallery/2026/Pitchnova 2.0/1788108452897.jfif"
+    ]
+  },
+  {
     "year": 2025,
     "event": "Group discussion",
     "cover": "/gallery/2025/Group discussion/grpdis1.jpg",

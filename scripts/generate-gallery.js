@@ -6,7 +6,7 @@ const ROOT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), ".."
 const GALLERY_DIR = path.join(ROOT_DIR, "public", "gallery");
 const OUTPUT_FILE = path.join(ROOT_DIR, "src", "data", "gallery.generated.ts");
 
-const SUPPORTED_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp"]);
+const SUPPORTED_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp", ".jfif"]);
 const YEAR_FOLDER_PATTERN = /^\d{4}$/;
 
 function isSupportedImage(fileName) {

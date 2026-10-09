@@ -49,7 +49,7 @@ const COMMUNITY_LINKS = [
   {
     name: "LinkedIn",
     handle: "APV E-Cell",
-    href: "https://www.linkedin.com/company/apv-ecell",
+    href: "https://www.linkedin.com/company/agnel-polytechnic-vashi-e-cell/posts/",
     color: "#0A66C2",
     bg: "rgba(10,102,194,0.08)",
     border: "rgba(10,102,194,0.2)",
