@@ -13,9 +13,10 @@ export const galleryEvents: GalleryEvent[] = [
   {
     "year": 2026,
     "event": "Illuminate 2.0",
-    "cover": "/gallery/2026/Illuminate 2.0/1791121342848.jfif",
+    "cover": "/gallery/2026/Illuminate 2.0/1.JPG",
     "imageCount": 9,
     "images": [
+      "/gallery/2026/Illuminate 2.0/1.JPG",
       "/gallery/2026/Illuminate 2.0/1791121342848.jfif",
       "/gallery/2026/Illuminate 2.0/1791121343903.jfif",
       "/gallery/2026/Illuminate 2.0/1791121344118.jfif",
@@ -23,8 +24,7 @@ export const galleryEvents: GalleryEvent[] = [
       "/gallery/2026/Illuminate 2.0/1791121400162.jfif",
       "/gallery/2026/Illuminate 2.0/1791121402474.jfif",
       "/gallery/2026/Illuminate 2.0/1791121402716.jfif",
-      "/gallery/2026/Illuminate 2.0/1791121404390.jfif",
-      "/gallery/2026/Illuminate 2.0/IMG_1403.JPG"
+      "/gallery/2026/Illuminate 2.0/1791121404390.jfif"
     ]
   },
   {
